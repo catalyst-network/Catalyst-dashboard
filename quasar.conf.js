@@ -1,5 +1,8 @@
+/* eslint-disable */
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+
+const path = require('path');
 
 module.exports = function (ctx) {
   return {
@@ -44,7 +47,11 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel'
+        'QItemLabel',
+        'QSeparator',
+        'QCard',
+        'QCardSection',
+        'QMarkupTable',
       ],
 
       directives: [
@@ -75,7 +82,12 @@ module.exports = function (ctx) {
           options: {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
-        })
+        });
+
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          '@': path.resolve(__dirname, './src/'),
+        };
       }
     },
 
