@@ -6,13 +6,13 @@
     >
       <div class="col-auto">
         <div class="row items-start q-gutter-md">
-          <div class="col-12 col-md-5 col-lg-auto">
+          <div class="col-12 col-md-5 col-lg">
             <NodeStatus />
           </div>
-          <div class="col-12 col-md-5 col-lg-auto">
+          <div class="col-12 col-md-5 col-lg">
             <NetworkStatus />
           </div>
-          <div class="col-12 col-md-5 col-lg-auto">
+          <div class="col-12 col-md-5 col-lg">
             <Balance />
           </div>
         </div>

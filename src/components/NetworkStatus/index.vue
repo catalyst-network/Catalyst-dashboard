@@ -116,7 +116,7 @@ export default {
 
 <style>
 .small-text {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
 }
 
 .break {

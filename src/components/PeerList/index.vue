@@ -15,22 +15,22 @@
     >
       <thead>
         <tr>
-          <th class="text-left">
+          <th class="text-left text-uppercase text-secondary default-font-bold">
             {{ $t('peerId') }}
           </th>
-          <th class="text-right">
+          <th class="text-right text-uppercase text-secondary default-font-bold">
             {{ $t('address') }}
           </th>
-          <th class="text-right">
+          <th class="text-right text-uppercase text-secondary default-font-bold">
             {{ $t('location') }}
           </th>
-          <th class="text-right">
+          <th class="text-right text-uppercase text-secondary default-font-bold">
             {{ $t('isValidator') }}
           </th>
-          <th class="text-right">
+          <th class="text-right text-uppercase text-secondary default-font-bold">
             {{ $t('latency') }}
           </th>
-          <th class="text-right">
+          <th class="text-right text-uppercase text-secondary default-font-bold">
             {{ $t('uptime') }}
           </th>
         </tr>
@@ -38,7 +38,7 @@
       <tbody>
         <tr>
           <td class="text-left">
-            Frozen Yogurt
+            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
           </td>
           <td class="text-right">
             159
@@ -58,7 +58,7 @@
         </tr>
         <tr>
           <td class="text-left">
-            Ice cream sandwich
+            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
           </td>
           <td class="text-right">
             237
@@ -78,7 +78,7 @@
         </tr>
         <tr>
           <td class="text-left">
-            Eclair
+            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
           </td>
           <td class="text-right">
             262
@@ -98,7 +98,7 @@
         </tr>
         <tr>
           <td class="text-left">
-            Cupcake
+            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
           </td>
           <td class="text-right">
             305
@@ -118,7 +118,7 @@
         </tr>
         <tr>
           <td class="text-left">
-            Gingerbread
+            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
           </td>
           <td class="text-right">
             356
@@ -148,5 +148,7 @@ export default {
 </script>
 
 <style>
-
+.q-table th {
+  opacity: 1;
+}
 </style>
