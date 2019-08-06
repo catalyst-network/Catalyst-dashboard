@@ -9,7 +9,8 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'i18n'
+      'i18n',
+      'vClipboard',
     ],
 
     css: [
@@ -25,7 +26,8 @@ module.exports = function (ctx) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       'roboto-font', // optional, you are not bound to it
-      'material-icons' // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
+      'fontawesome-v5',
     ],
 
     framework: {
@@ -52,6 +54,10 @@ module.exports = function (ctx) {
         'QCard',
         'QCardSection',
         'QMarkupTable',
+        'QCircularProgress',
+        'QAvatar',
+        'QInput',
+        'QField',
       ],
 
       directives: [
