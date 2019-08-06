@@ -9,7 +9,7 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <div class="q-gutter-y-md">
+      <div class="q-gutter-y-lg">
         <div class="row q-gutter-x-md">
           <q-separator
             vertical
