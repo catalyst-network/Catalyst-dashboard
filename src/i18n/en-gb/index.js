@@ -13,6 +13,7 @@ export default {
   uptime: 'Uptime',
   // Balance
   balance: 'Balance',
+  walletAddress: 'Wallet Address',
   // NetworkStatus
   networkStatus: 'Network Status',
   totalLedgerCycles: 'Total Ledger Cycles',

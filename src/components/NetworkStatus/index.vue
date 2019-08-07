@@ -84,18 +84,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'NetworkStatus',
   data() {
     return {
-      network: {
-        ledgerCycles: 12345,
-        avLedgerTime: 14.2,
-        totalTxs: 143536,
-        walletAddrs: 23940,
-      },
       timer: 0,
     };
+  },
+  computed: {
+    ...mapState({
+      network: (state => state.Network),
+    }),
   },
   mounted() {
     this.timeSinceLastLedger();

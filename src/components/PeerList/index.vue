@@ -9,146 +9,67 @@
         {{ $t('connectedPeers') }}
       </div>
     </q-card-section>
-
-    <q-markup-table
-      class="default-font"
-    >
-      <thead>
-        <tr>
-          <th class="text-left text-uppercase text-secondary default-font-bold">
-            {{ $t('peerId') }}
-          </th>
-          <th class="text-right text-uppercase text-secondary default-font-bold">
-            {{ $t('address') }}
-          </th>
-          <th class="text-right text-uppercase text-secondary default-font-bold">
-            {{ $t('location') }}
-          </th>
-          <th class="text-right text-uppercase text-secondary default-font-bold">
-            {{ $t('isValidator') }}
-          </th>
-          <th class="text-right text-uppercase text-secondary default-font-bold">
-            {{ $t('latency') }}
-          </th>
-          <th class="text-right text-uppercase text-secondary default-font-bold">
-            {{ $t('uptime') }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-left">
-            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
-          </td>
-          <td class="text-right">
-            159
-          </td>
-          <td class="text-right">
-            yes
-          </td>
-          <td class="text-right">
-            yes
-          </td>
-          <td class="text-right">
-            4 ms
-          </td>
-          <td class="text-right">
-            100%
-          </td>
-        </tr>
-        <tr>
-          <td class="text-left">
-            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
-          </td>
-          <td class="text-right">
-            237
-          </td>
-          <td class="text-right">
-            9
-          </td>
-          <td class="text-right">
-            yes
-          </td>
-          <td class="text-right">
-            4.3 ms
-          </td>
-          <td class="text-right">
-            100%
-          </td>
-        </tr>
-        <tr>
-          <td class="text-left">
-            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
-          </td>
-          <td class="text-right">
-            262
-          </td>
-          <td class="text-right">
-            16
-          </td>
-          <td class="text-right">
-            yes
-          </td>
-          <td class="text-right">
-            6 ms
-          </td>
-          <td class="text-right">
-            100%
-          </td>
-        </tr>
-        <tr>
-          <td class="text-left">
-            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
-          </td>
-          <td class="text-right">
-            305
-          </td>
-          <td class="text-right">
-            3.7
-          </td>
-          <td class="text-right">
-            yes
-          </td>
-          <td class="text-right">
-            4.3 ms
-          </td>
-          <td class="text-right">
-            100%
-          </td>
-        </tr>
-        <tr>
-          <td class="text-left">
-            QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD
-          </td>
-          <td class="text-right">
-            356
-          </td>
-          <td class="text-right">
-            16
-          </td>
-          <td class="text-right">
-            yes
-          </td>
-          <td class="text-right">
-            3.9 ms
-          </td>
-          <td class="text-right">
-            100%
-          </td>
-        </tr>
-      </tbody>
-    </q-markup-table>
+    <q-card-section>
+      <div class="row peer-header">
+        <div class="col-4 text-left text-uppercase text-secondary default-font-bold">
+          {{ $t('peerId') }}
+        </div>
+        <div class="col text-right text-uppercase text-secondary default-font-bold">
+          {{ $t('address') }}
+        </div>
+        <div class="col text-right text-uppercase text-secondary default-font-bold">
+          {{ $t('location') }}
+        </div>
+        <div class="col text-right text-uppercase text-secondary default-font-bold">
+          {{ $t('isValidator') }}
+        </div>
+        <div class="col text-right text-uppercase text-secondary default-font-bold">
+          {{ $t('latency') }}
+        </div>
+        <div class="col text-right text-uppercase text-secondary default-font-bold">
+          {{ $t('uptime') }}
+        </div>
+      </div>
+      <q-scroll-area class="peer-scrollarea">
+        <PeerListItem
+          v-for="peer in peerList"
+          :key="peer.peerId"
+          :peer="peer"
+        />
+      </q-scroll-area>
+    </q-card-section>
   </q-card>
 </template>
 
 <script>
+import PeerListItem from './PeerListItem';
+import Peer from '../../store/Peer';
+
+
 export default {
   name: 'PeerList',
+  components: {
+    PeerListItem,
+  },
+  computed: {
+    peerList() {
+      return Peer.all();
+    },
+  },
 };
 </script>
 
 <style>
-.q-table th {
-  opacity: 1;
+.peer-header {
+  padding-bottom: 0.75rem;
+}
+.peer-item {
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(0,0,0,0.12);
+  color:darkslategrey;
+}
+.peer-scrollarea {
+  height: 200px;
+  max-height: 300px;
 }
 </style>

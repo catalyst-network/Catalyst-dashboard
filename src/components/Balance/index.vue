@@ -1,69 +1,128 @@
 <template>
-  <q-card
-    flat
-    bordered
-  >
-    <q-card-section>
-      <div class="text-h6 default-font-bold text-primary">
-        {{ $t('balance') }}
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <div class="row justify-center">
-        <q-avatar
-          color="primary"
-          text-color="secondary"
-          size="75px"
-        >
-          <img
-            src="../../assets/icon.png"
+  <div>
+    <q-card
+      flat
+      bordered
+    >
+      <q-card-section>
+        <div class="text-h6 default-font-bold text-primary">
+          {{ $t('balance') }}
+        </div>
+      </q-card-section>
+      <q-card-section>
+        <div class="row justify-center">
+          <q-avatar
+            color="primary"
+            text-color="secondary"
+            size="75px"
           >
-        </q-avatar>
-      </div>
-      <div class="row justify-center">
-        <h6 class="balance">
-          {{ balance }}
-        </h6>
-      </div>
-      <div class="column justify-center">
-        <div class="col-auto text-center ">
-          {{ $t('address') }}:
+            <img
+              src="../../assets/icon.png"
+            >
+          </q-avatar>
         </div>
-        <div class="col-auto text-caption break text-center">
-          {{ address }}
+        <div class="row justify-center">
+          <h6 class="balance">
+            {{ wallet.balance }}
+          </h6>
         </div>
-        <div class="col-auto text-center">
+        <div class="column justify-center">
+          <div class="col-auto text-center ">
+            {{ $t('address') }}:
+          </div>
+          <div class="col-auto text-caption break text-center">
+            {{ wallet.address }}
+          </div>
+          <div class="col-auto text-center">
+            <q-btn
+              v-clipboard="wallet.address"
+              icon="content_copy"
+              size="sm"
+              flat
+              round
+              dense
+              style="padding-top=0"
+            />
+            <q-btn
+              icon="fas fa-qrcode"
+              size="sm"
+              flat
+              round
+              dense
+              style="padding-top=0"
+              @click="qrDialog=true"
+            />
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-dialog v-model="qrDialog">
+      <q-card>
+        <q-card-section class="row items-center">
+          <div class="text-h6">
+            {{ $t('walletAddress') }}
+          </div>
+          <q-space />
           <q-btn
-            v-clipboard="address"
-            icon="content_copy"
-            size="sm"
+            v-close-popup
+            icon="close"
             flat
             round
             dense
-            style="padding-top=0"
           />
-          <q-btn
-            icon="fas fa-qrcode"
-            size="sm"
-            flat
-            round
-            dense
-            style="padding-top=0"
-          />
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
+        </q-card-section>
+        <q-card-section>
+          <div class="qr-code">
+            <img
+              v-if="qrCodeDataURL"
+              :src="qrCodeDataURL"
+            >
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
 
 <script>
+import QRCode from 'qrcode';
+import Wallet from '../../store/Wallet';
+
 export default {
   name: 'Balance',
   data() {
     return {
-      address: '0xbbF5029Fd710d227630c8b7d338051B8E76d50B3',
-      balance: '565.038494 KAT',
+      qrDialog: false,
+      qrCodeDataURL: null,
     };
+  },
+  computed: {
+    wallet() {
+      return Wallet.all()[0];
+    },
+  },
+
+  mounted() {
+    this.qrCode();
+  },
+
+  methods: {
+    async qrCode(qrAddress = this.wallet.address) {
+      const options = {
+        width: 300,
+        height: 300,
+      };
+      if (typeof this.wallet.address === 'string') {
+        await QRCode.toDataURL(qrAddress, options, (err, url) => {
+          if (err) {
+            console.error(err);
+          } else {
+            this.qrCodeDataURL = url;
+          }
+        });
+      }
+    },
   },
 };
 </script>

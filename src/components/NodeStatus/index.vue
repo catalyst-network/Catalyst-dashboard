@@ -42,16 +42,15 @@
 </template>
 
 <script>
+import Node from '../../store/Node';
+
 export default {
   name: 'NodeStatus',
-  data() {
-    return {
-      node: {
-        status: 'Syncing',
-        peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD',
-        version: '0.12',
-      },
-    };
+  computed: {
+    node() {
+      return Node.all()[0];
+    },
+
   },
 };
 </script>
