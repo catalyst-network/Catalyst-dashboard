@@ -14,6 +14,13 @@ export default class Peer extends Model {
       isValidator: this.attr(''),
       latency: this.attr(''),
       uptime: this.attr(''),
+      reputation: this.attr(''),
+      created: this.attr(''),
+      modified: this.attr(''),
+      lastSeen: this.attr(''),
+      blacklisted: this.attr(''),
+      isAwolPeer: this.attr(''),
+      inactiveFor: this.attr(''),
     };
   }
 }

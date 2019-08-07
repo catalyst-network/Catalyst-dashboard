@@ -18,10 +18,6 @@
     >
       <q-item
         clickable
-        tag="a"
-        target="_blank"
-        rel="noopener"
-        href="http://quasar.dev"
       >
         <q-item-section avatar>
           <q-icon name="dashboard" />
@@ -32,10 +28,6 @@
       </q-item>
       <q-item
         clickable
-        tag="a"
-        target="_blank"
-        rel="noopener"
-        href="https://github.quasar.dev"
       >
         <q-item-section avatar>
           <q-icon name="group_work" />
@@ -46,10 +38,6 @@
       </q-item>
       <q-item
         clickable
-        tag="a"
-        target="_blank"
-        rel="noopener"
-        href="http://chat.quasar.dev"
       >
         <q-item-section avatar>
           <q-icon name="settings" />
