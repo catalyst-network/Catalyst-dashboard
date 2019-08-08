@@ -18,6 +18,8 @@
     >
       <q-item
         clickable
+        :active="page === 'main'"
+        active-class="active-tab"
       >
         <q-item-section avatar>
           <q-icon name="dashboard" />
@@ -53,6 +55,12 @@
 <script>
 export default {
   name: 'Sidebar',
+
+  data() {
+    return {
+      page: 'main',
+    };
+  },
 };
 </script>
 
@@ -63,5 +71,10 @@ export default {
 
 .sidebar-nav {
     margin-top: 1rem;
+}
+
+.active-tab {
+    background-color: #133446;
+    color: white;
 }
 </style>

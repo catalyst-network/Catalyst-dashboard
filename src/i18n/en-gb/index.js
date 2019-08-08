@@ -11,6 +11,10 @@ export default {
   isValidator: 'Is Validator',
   latency: 'Latency',
   uptime: 'Uptime',
+  reputation: 'Reputation',
+  created: 'Created',
+  lastSeen: 'Last Seen',
+  activeNodes: 'Active Nodes',
   // Balance
   balance: 'Balance',
   walletAddress: 'Wallet Address',

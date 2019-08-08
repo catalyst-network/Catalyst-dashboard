@@ -12,6 +12,7 @@ export default class Node extends Model {
       peerId: this.attr(''),
       status: this.attr(''),
       version: this.attr(''),
+      reputation: this.attr(''),
       peers: this.hasMany(Peer, 'nodeId'),
       wallet: this.hasOne(Wallet, 'nodeId'),
     };

@@ -2,7 +2,7 @@
   <q-card
     flat
     bordered
-    class="my-card"
+    class="top-row"
   >
     <q-card-section>
       <div class="text-h6 default-font-bold text-primary">
@@ -26,6 +26,14 @@
           </div>
           <div class="col break text-right text-caption">
             {{ node.peerId }}
+          </div>
+        </div>
+        <div class="row justify-between">
+          <div class="col text-secondary default-font-bold text-uppercase">
+            {{ $t('reputation') }}:
+          </div>
+          <div class="col text-right text-caption">
+            {{ node.reputation }}
           </div>
         </div>
         <div class="row justify-between">

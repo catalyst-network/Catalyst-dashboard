@@ -3,6 +3,7 @@
     <q-card
       flat
       bordered
+      class="top-row"
     >
       <q-card-section>
         <div class="text-h6 default-font-bold text-primary">
@@ -23,7 +24,7 @@
         </div>
         <div class="row justify-center">
           <h6 class="balance">
-            {{ wallet.balance }}
+            {{ wallet.balance }} KAT
           </h6>
         </div>
         <div class="column justify-center">

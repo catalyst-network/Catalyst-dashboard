@@ -5,11 +5,18 @@
     class="my-card"
   >
     <q-card-section>
-      <div class="text-h6 default-font-bold text-primary">
-        {{ $t('connectedPeers') }}
+      <div class="row justify-between">
+        <div class="text-h6 default-font-bold text-primary">
+          {{ $t('connectedPeers') }}
+        </div>
+        <div class="text-primary text-uppercase default-font-bold">
+          {{ $t('activeNodes') }}: {{ activeNodes }}/{{ node.peers.length }}
+        </div>
       </div>
     </q-card-section>
-    <q-card-section>
+    <q-card-section
+      style="padding:16px 0"
+    >
       <div class="row peer-header">
         <div class="col-4 text-left text-uppercase text-secondary default-font-bold">
           {{ $t('peerId') }}
@@ -21,18 +28,18 @@
           {{ $t('location') }}
         </div>
         <div class="col text-right text-uppercase text-secondary default-font-bold">
-          {{ $t('isValidator') }}
+          {{ $t('reputation') }}
         </div>
         <div class="col text-right text-uppercase text-secondary default-font-bold">
-          {{ $t('latency') }}
+          {{ $t('created') }}
         </div>
         <div class="col text-right text-uppercase text-secondary default-font-bold">
-          {{ $t('uptime') }}
+          {{ $t('lastSeen') }}
         </div>
       </div>
       <q-scroll-area class="peer-scrollarea">
         <PeerListItem
-          v-for="peer in peerList"
+          v-for="peer in node.peers"
           :key="peer.peerId"
           :peer="peer"
         />
@@ -43,8 +50,7 @@
 
 <script>
 import PeerListItem from './PeerListItem';
-import Peer from '../../store/Peer';
-
+import Node from '../../store/Node';
 
 export default {
   name: 'PeerList',
@@ -52,8 +58,12 @@ export default {
     PeerListItem,
   },
   computed: {
-    peerList() {
-      return Peer.all();
+    node() {
+      return Node.query().withAll().first();
+    },
+    activeNodes() {
+      const active = this.node.peers.filter(peer => peer.lastSeen === 'Online now');
+      return active.length;
     },
   },
 };
@@ -61,10 +71,11 @@ export default {
 
 <style>
 .peer-header {
+  padding: 0 16px;
   padding-bottom: 0.75rem;
 }
 .peer-item {
-  padding: 0.75rem 0;
+  padding: 0.75rem 16px;
   border-top: 1px solid rgba(0,0,0,0.12);
   color:darkslategrey;
 }

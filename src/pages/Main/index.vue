@@ -45,5 +45,7 @@ export default {
 </script>
 
 <style>
-
+ .top-row {
+     min-height: 275px;
+ }
 </style>

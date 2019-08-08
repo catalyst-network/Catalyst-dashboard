@@ -2,6 +2,7 @@
   <q-card
     flat
     bordered
+    class="top-row"
   >
     <q-card-section>
       <div class="text-h6 default-font-bold text-primary">
@@ -15,6 +16,7 @@
             vertical
             color="secondary"
           />
+
           <div class="column">
             <div
               class="col-auto default-font-bold
@@ -75,8 +77,13 @@
             </div>
           </div>
         </div>
-        <div class="row justify-end text-primary">
-          {{ $t('lastLedger') }} {{ timer }}s {{ $t('ago') }}
+        <div
+          class="row"
+          style="margin-top: 20px"
+        />
+        <div class="row justify-end text-primary text-uppercase default-font-bold">
+          {{ $t('lastLedger') }}:
+          <span class="ledger-timer">{{ timer }}s {{ $t('ago') }}</span>
         </div>
       </div>
     </q-card-section>
@@ -126,5 +133,10 @@ export default {
 
 .q-separator--vertical {
     width: 3px;
+}
+
+.ledger-timer {
+    width: 62px;
+    margin-left: 3px;
 }
 </style>

@@ -61,6 +61,8 @@ module.exports = function (ctx) {
         'QScrollArea',
         'QDialog',
         'QSpace',
+        'QRating',
+        'QTooltip',
       ],
 
       directives: [
