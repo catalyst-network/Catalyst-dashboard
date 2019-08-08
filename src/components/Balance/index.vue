@@ -43,7 +43,17 @@
               round
               dense
               style="padding-top=0"
-            />
+              @click="displayCopy"
+            >
+              <q-tooltip
+                anchor="top middle"
+                self="bottom middle"
+                value="false"
+              >
+                {{ copied }}
+              </q-tooltip>
+            </q-btn>
+
             <q-btn
               icon="fas fa-qrcode"
               size="sm"
@@ -96,6 +106,7 @@ export default {
     return {
       qrDialog: false,
       qrCodeDataURL: null,
+      copied: 'copy',
     };
   },
   computed: {
@@ -123,6 +134,13 @@ export default {
           }
         });
       }
+    },
+
+    displayCopy() {
+      this.copied = 'copied';
+      setTimeout(() => {
+        this.copied = 'copy';
+      }, 1000);
     },
   },
 };

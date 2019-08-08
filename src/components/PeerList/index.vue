@@ -80,7 +80,7 @@ export default {
   color:darkslategrey;
 }
 .peer-scrollarea {
-  height: 200px;
+  height: 246px;
   max-height: 300px;
 }
 </style>
