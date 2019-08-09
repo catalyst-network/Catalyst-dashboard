@@ -2,10 +2,10 @@
   <q-card
     flat
     bordered
-    class="top-row"
+    class="top-row bg-info"
   >
     <q-card-section>
-      <div class="text-h6 default-font-bold text-primary">
+      <div class="text-h6 default-font-bold text-warning">
         {{ $t('networkStatus') }}
       </div>
     </q-card-section>
@@ -81,7 +81,7 @@
           class="row"
           style="margin-top: 20px"
         />
-        <div class="row justify-end text-primary text-uppercase default-font-bold">
+        <div class="row justify-end text-warning text-uppercase default-font-bold">
           {{ $t('lastLedger') }}:
           <span class="ledger-timer">{{ timer }}s {{ $t('ago') }}</span>
         </div>

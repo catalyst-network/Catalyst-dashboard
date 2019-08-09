@@ -3,10 +3,10 @@
     <q-card
       flat
       bordered
-      class="top-row"
+      class="top-row bg-info"
     >
       <q-card-section>
-        <div class="text-h6 default-font-bold text-primary">
+        <div class="text-h6 default-font-bold text-warning">
           {{ $t('balance') }}
         </div>
       </q-card-section>
@@ -48,7 +48,6 @@
               <q-tooltip
                 anchor="top middle"
                 self="bottom middle"
-                value="false"
               >
                 {{ copied }}
               </q-tooltip>
@@ -62,7 +61,14 @@
               dense
               style="padding-top=0"
               @click="qrDialog=true"
-            />
+            >
+              <q-tooltip
+                anchor="top middle"
+                self="bottom middle"
+              >
+                {{ $t('qrCode') }}
+              </q-tooltip>
+            </q-btn>
           </div>
         </div>
       </q-card-section>
@@ -137,10 +143,10 @@ export default {
     },
 
     displayCopy() {
-      this.copied = 'copied';
+      this.copied = this.$t('copied');
       setTimeout(() => {
-        this.copied = 'copy';
-      }, 1000);
+        this.copied = this.$t('copy');
+      }, 2000);
     },
   },
 };

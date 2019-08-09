@@ -15,9 +15,16 @@ export default {
   created: 'Created',
   lastSeen: 'Last Seen',
   activeNodes: 'Active Nodes',
+  ipAddress: 'IP Address',
+  peerDetails: 'Peer Details',
+  blacklisted: 'Blacklisted',
+  awol: 'Awol',
   // Balance
   balance: 'Balance',
   walletAddress: 'Wallet Address',
+  copy: 'copy',
+  copied: 'copied',
+  qrCode: 'QR code',
   // NetworkStatus
   networkStatus: 'Network Status',
   totalLedgerCycles: 'Total Ledger Cycles',

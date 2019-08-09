@@ -1,15 +1,20 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout
+    view="hHh lpR fFf"
+    class="bg-accent"
+  >
     <q-drawer
       v-model="leftDrawerOpen"
-      content-class="bg-primary"
+      content-class="bg-primary text-negative"
       class="sidebar"
       :width="205"
     >
       <Sidebar />
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container
+      class="text-negative"
+    >
       <router-view />
     </q-page-container>
   </q-layout>

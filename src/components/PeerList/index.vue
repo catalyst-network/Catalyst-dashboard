@@ -2,14 +2,14 @@
   <q-card
     flat
     bordered
-    class="my-card"
+    class="bg-info"
   >
     <q-card-section>
       <div class="row justify-between">
-        <div class="text-h6 default-font-bold text-primary">
+        <div class="text-h6 default-font-bold text-warning">
           {{ $t('connectedPeers') }}
         </div>
-        <div class="text-primary text-uppercase default-font-bold">
+        <div class="text-warning text-uppercase default-font-bold">
           {{ $t('activeNodes') }}: {{ activeNodes }}/{{ node.peers.length }}
         </div>
       </div>

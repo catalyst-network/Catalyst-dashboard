@@ -5,15 +5,20 @@
 </template>
 
 <script>
+// import { colors } from 'quasar';
 import Node from './store/Node';
 import Peer from './store/Peer';
 import Wallet from './store/Wallet';
-
 
 export default {
   name: 'App',
 
   mounted() {
+    // colors.setBrand('primary', '#0a2d3e');
+    // colors.setBrand('accent', '#19445b');
+    // colors.setBrand('negative', '#eee');
+    // colors.setBrand('info', '#0a2d3e');
+    // colors.setBrand('warning', '#eee');
     Node.insert({
       data: {
         status: 'syncing',
@@ -42,8 +47,10 @@ export default {
           latency: '55ms',
           uptime: '100%',
           reputation: 100,
+          modified: '2 days ago',
           lastSeen: 'Online now',
           created: ' 13:01 05/08/19',
+          isAwolPeer: false,
         },
         {
           peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci89JWdn672cHXHC8GrhD',
@@ -56,6 +63,7 @@ export default {
           reputation: 60,
           lastSeen: 'Online now',
           created: ' 13:01 05/08/19',
+          isAwolPeer: false,
         },
         {
           peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhF',
@@ -68,6 +76,7 @@ export default {
           reputation: 57,
           lastSeen: 'Online now',
           created: ' 13:01 05/08/19',
+          isAwolPeer: false,
         },
         {
           peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhE',
@@ -78,9 +87,10 @@ export default {
           latency: '55ms',
           uptime: '99.96%',
           reputation: 11,
-          lastSeen: 'Online now',
+          lastSeen: '34 minutes ago',
           created: ' 13:01 05/08/19',
           blacklisted: true,
+          isAwolPeer: true,
         },
         {
           peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXXC8GrhD',
@@ -93,6 +103,7 @@ export default {
           reputation: 82,
           lastSeen: '5 minutes ago',
           created: ' 13:01 05/08/19',
+          isAwolPeer: false,
         },
         {
           peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8Prhj',
@@ -105,6 +116,7 @@ export default {
           reputation: 100,
           lastSeen: 'Online now',
           created: ' 13:01 05/08/19',
+          isAwolPeer: false,
         },
         {
           peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8Drhs',
@@ -117,6 +129,7 @@ export default {
           reputation: 100,
           lastSeen: 'Online now',
           created: ' 13:01 05/08/19',
+          isAwolPeer: false,
         },
       ],
     });

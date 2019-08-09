@@ -2,10 +2,12 @@
   <q-card
     flat
     bordered
-    class="top-row"
+    class="top-row bg-info"
   >
     <q-card-section>
-      <div class="text-h6 default-font-bold text-primary">
+      <div
+        class="text-h6 default-font-bold text-warning"
+      >
         {{ $t('nodeStatus') }}
       </div>
     </q-card-section>
