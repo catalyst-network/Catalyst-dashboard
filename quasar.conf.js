@@ -1,12 +1,16 @@
+/* eslint-disable */
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+
+const path = require('path');
 
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'i18n'
+      'i18n',
+      'vClipboard',
     ],
 
     css: [
@@ -22,7 +26,8 @@ module.exports = function (ctx) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       'roboto-font', // optional, you are not bound to it
-      'material-icons' // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
+      'fontawesome-v5',
     ],
 
     framework: {
@@ -44,11 +49,29 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel'
+        'QItemLabel',
+        'QSeparator',
+        'QCard',
+        'QCardSection',
+        'QMarkupTable',
+        'QCircularProgress',
+        'QAvatar',
+        'QInput',
+        'QField',
+        'QScrollArea',
+        'QDialog',
+        'QSpace',
+        'QRating',
+        'QTooltip',
+        'QCardActions',
+        'QChip',
+        'QToggle',
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
+        'ClosePopup',
+
       ],
 
       // Quasar plugins
@@ -75,7 +98,12 @@ module.exports = function (ctx) {
           options: {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
-        })
+        });
+
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          '@': path.resolve(__dirname, './src/'),
+        };
       }
     },
 

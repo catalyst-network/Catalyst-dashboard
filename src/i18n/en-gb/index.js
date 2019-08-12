@@ -1,0 +1,40 @@
+export default {
+// SideBar
+  dashboard: 'Dashboard',
+  peers: 'Peers',
+  settings: 'Settings',
+  // PeerList
+  connectedPeers: 'Connected Peers',
+  peerId: 'Peer ID',
+  address: 'Address',
+  location: 'Location',
+  isValidator: 'Is Validator',
+  latency: 'Latency',
+  uptime: 'Uptime',
+  reputation: 'Reputation',
+  created: 'Created',
+  lastSeen: 'Last Seen',
+  activeNodes: 'Active Nodes',
+  ipAddress: 'IP Address',
+  peerDetails: 'Peer Details',
+  blacklisted: 'Blacklisted',
+  awol: 'Awol',
+  // Balance
+  balance: 'Balance',
+  walletAddress: 'Wallet Address',
+  copy: 'copy',
+  copied: 'copied',
+  qrCode: 'QR code',
+  // NetworkStatus
+  networkStatus: 'Network Status',
+  totalLedgerCycles: 'Total Ledger Cycles',
+  averageLedgerTime: 'Average Ledger Time',
+  totalTransactions: 'Total Transactions',
+  walletAddresses: 'Wallet Addresses',
+  lastLedger: 'Last Ledger',
+  ago: 'ago',
+  // NodeStatus
+  nodeStatus: 'Node Status',
+  status: 'Status',
+  version: 'Version',
+};

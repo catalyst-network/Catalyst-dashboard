@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@vuex-orm/core": "^0.32.1",
+    "qrcode": "^1.4.1",
     "quasar": "^1.0.0",
+    "v-clipboard": "^2.2.2",
     "vue-i18n": "^8.0.0"
   },
   "devDependencies": {
