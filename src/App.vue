@@ -9,15 +9,15 @@ import Node from './store/Node';
 import Peer from './store/Peer';
 import Wallet from './store/Wallet';
 import Tx from './store/Tx';
-import mockPeerList from './statics/mockPeerList';
+// import mockPeerList from './statics/mockPeerList';
 
 export default {
   name: 'App',
 
-  mounted() {
+  async mounted() {
     Node.insert({
       data: {
-        status: 'syncing',
+        status: 'online',
         version: '0.12',
         peerId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD',
         reputation: 97,
@@ -50,19 +50,22 @@ export default {
         },
       ],
     });
-
-    const peers = mockPeerList.map(peer => ({
-      peerId: peer.PeerIdentifier.PublicKey,
-      nodeId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD',
-      reputation: peer.Reputation,
-      address: peer.PeerIdentifier.Ip,
-      created: peer.Created,
-      blacklisted: peer.Blacklisted,
-      modified: peer.Modified,
-      lastSeen: peer.LastSeen,
-      isAwolPeer: peer.IsAwolPeer,
-      inactiveFor: peer.InactiveFor,
-    }));
+    const peerApi = await this.$axios.get('http://51.91.51.88:5005/api/peer');
+    const peers = peerApi.data.map((peer) => {
+      const random = this.getRandomInt(0, 100);
+      return {
+        peerId: peer.PeerIdentifier.PublicKey,
+        nodeId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD',
+        reputation: random,
+        address: peer.PeerIdentifier.Ip,
+        created: peer.Created,
+        blacklisted: peer.Blacklisted,
+        modified: peer.Modified,
+        lastSeen: 'Online now',
+        isAwolPeer: peer.IsAwolPeer,
+        inactiveFor: peer.InactiveFor,
+      };
+    });
 
     Peer.insert({ data: peers });
 
@@ -164,6 +167,14 @@ export default {
     //     },
     //   ],
     // });
+  },
+
+  methods: {
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min;
+    },
   },
 };
 </script>

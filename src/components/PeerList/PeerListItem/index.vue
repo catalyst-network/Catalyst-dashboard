@@ -51,7 +51,7 @@
         </q-tooltip>
       </div>
       <div class="col text-right">
-        {{ peer.created }}
+        {{ new Date(peer.created).toDateString() }}
       </div>
       <div
         class="col text-right"
@@ -120,7 +120,7 @@
               {{ $t('created') }}:
             </div>
             <div class="col-auto">
-              {{ peer.created }}
+              {{ new Date(peer.created) }}
             </div>
           </div>
           <div class="row peer-item justify-between">
@@ -128,7 +128,7 @@
               {{ $t('modified') }}:
             </div>
             <div class="col-auto">
-              {{ peer.modified }}
+              {{ new Date(peer.modified) }}
             </div>
           </div>
           <div class="row peer-item justify-between">
