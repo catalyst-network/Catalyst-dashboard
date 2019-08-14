@@ -17,7 +17,8 @@
     "qrcode": "^1.4.1",
     "quasar": "^1.0.0",
     "v-clipboard": "^2.2.2",
-    "vue-i18n": "^8.0.0"
+    "vue-i18n": "^8.0.0",
+    "vuex-persist": "^2.0.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

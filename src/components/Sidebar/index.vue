@@ -61,6 +61,7 @@
 
 <script>
 import { colors } from 'quasar';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Sidebar',
@@ -68,11 +69,13 @@ export default {
   data() {
     return {
       page: 'main',
-      darkMode: false,
     };
   },
 
   computed: {
+    ...mapState({
+      darkMode: state => state.Settings.darkMode,
+    }),
     setMode: {
       get() {
         return this.darkMode;
@@ -80,14 +83,22 @@ export default {
       set(value) {
         if (value) {
           this.setDarkMode();
-          this.darkMode = true;
+          this.$store.dispatch('Settings/setDarkMode', true);
         }
         if (!value) {
           this.setLightMode();
-          this.darkMode = false;
+          this.$store.dispatch('Settings/setDarkMode', false);
         }
       },
     },
+  },
+
+  mounted() {
+    if (this.darkMode) {
+      this.setDarkMode();
+    } else {
+      this.setLightMode();
+    }
   },
 
   methods: {
