@@ -113,7 +113,8 @@ export default {
       setInterval(() => {
         if (this.timer > 14) {
           this.timer = -1;
-          this.network.ledgerCycles += 1;
+          const newLedgerCycles = this.network.ledgerCycles + 1;
+          this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles);
         }
         this.timer += 1;
       }, 1000);
