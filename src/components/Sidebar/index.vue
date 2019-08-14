@@ -53,6 +53,7 @@
       <q-toggle
         v-model="setMode"
         color="white"
+        icon="fas fa-moon"
       />
     </div>
   </div>
@@ -67,7 +68,7 @@ export default {
   data() {
     return {
       page: 'main',
-      darkMode: true,
+      darkMode: false,
     };
   },
 

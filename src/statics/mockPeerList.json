@@ -1,0 +1,223 @@
+
+export default [
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAkUVqOiICOTAqIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAkUVqOg==', port: 'OTA=', publicKey: 'MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '145.69.106.58',
+      Port: 12345,
+      PublicKey: 'MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '145.69.106.58',
+        Port: 12345,
+      },
+    },
+    Reputation: 0,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5169636',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAx7r9xCICOTAqIDEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAx7r9xA==', port: 'OTA=', publicKey: 'MQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '199.186.253.196',
+      Port: 12345,
+      PublicKey: 'MQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '199.186.253.196',
+        Port: 12345,
+      },
+    },
+    Reputation: 85,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5174572',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAmKwV7SICOTAqIDIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAmKwV7Q==', port: 'OTA=', publicKey: 'MgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '152.172.21.237',
+      Port: 12345,
+      PublicKey: 'MgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '152.172.21.237',
+        Port: 12345,
+      },
+    },
+    Reputation: 19,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5174794',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAA5WnBmiICOTAqIDMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAA5WnBmg==', port: 'OTA=', publicKey: 'MwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '229.105.193.154',
+      Port: 12345,
+      PublicKey: 'MwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '229.105.193.154',
+        Port: 12345,
+      },
+    },
+    Reputation: 54,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5174950',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAA0KNvLSICOTAqIDQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAA0KNvLQ==', port: 'OTA=', publicKey: 'NAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '208.163.111.45',
+      Port: 12345,
+      PublicKey: 'NAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '208.163.111.45',
+        Port: 12345,
+      },
+    },
+    Reputation: 29,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5175085',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAFctMLyICOTAqIDUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAFctMLw==', port: 'OTA=', publicKey: 'NQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '21.203.76.47',
+      Port: 12345,
+      PublicKey: 'NQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '21.203.76.47',
+        Port: 12345,
+      },
+    },
+    Reputation: 9,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5175226',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAZv8n5CICOTAqIDYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAZv8n5A==', port: 'OTA=', publicKey: 'NgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '102.255.39.228',
+      Port: 12345,
+      PublicKey: 'NgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '102.255.39.228',
+        Port: 12345,
+      },
+    },
+    Reputation: 29,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5175359',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAdHQiZiICOTAqIDcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAdHQiZg==', port: 'OTA=', publicKey: 'NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '116.116.34.102',
+      Port: 12345,
+      PublicKey: 'NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '116.116.34.102',
+        Port: 12345,
+      },
+    },
+    Reputation: 28,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5175485',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAwTGZzyICOTAqIDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAwTGZzw==', port: 'OTA=', publicKey: 'OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '193.49.153.207',
+      Port: 12345,
+      PublicKey: 'OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '193.49.153.207',
+        Port: 12345,
+      },
+    },
+    Reputation: 91,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5175673',
+  },
+  {
+    id: 'EgIBABoQAAAAAAAAAAAAAAAAI967yiICOTAqIDkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    PeerIdentifier: {
+      PeerId: {
+        protocolVersion: 'AQA=', ip: 'AAAAAAAAAAAAAAAAI967yg==', port: 'OTA=', publicKey: 'OQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      },
+      Ip: '35.222.187.202',
+      Port: 12345,
+      PublicKey: 'OQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      IpEndPoint: {
+        Address: '35.222.187.202',
+        Port: 12345,
+      },
+    },
+    Reputation: 25,
+    BlackListed: false,
+    Created: '0001-01-01T00:00:00',
+    Modified: null,
+    LastSeen: '0001-01-01T00:00:00',
+    IsAwolPeer: true,
+    InactiveFor: '737284.12:40:14.5175810',
+  },
+];

@@ -1,6 +1,7 @@
 /* eslint-disable */
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+const envparser = require('./config/envparser');
 
 const path = require('path');
 
@@ -11,6 +12,7 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'vClipboard',
+      'axios',
     ],
 
     css: [
@@ -104,7 +106,8 @@ module.exports = function (ctx) {
           ...cfg.resolve.alias,
           '@': path.resolve(__dirname, './src/'),
         };
-      }
+      },
+      env: envparser(),
     },
 
     devServer: {

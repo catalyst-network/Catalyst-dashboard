@@ -37,4 +37,9 @@ export default {
   nodeStatus: 'Node Status',
   status: 'Status',
   version: 'Version',
+  // Mempool
+  txHash: 'Tx Hash',
+  from: 'from',
+  to: 'to',
+  amount: 'amount',
 };

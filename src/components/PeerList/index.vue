@@ -77,7 +77,6 @@ export default {
 .peer-item {
   padding: 0.75rem 16px;
   border-top: 1px solid rgba(0,0,0,0.12);
-  color:darkslategrey;
 }
 .peer-scrollarea {
   height: 246px;
