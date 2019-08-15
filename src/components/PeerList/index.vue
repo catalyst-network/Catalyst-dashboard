@@ -10,7 +10,7 @@
           {{ $t('connectedPeers') }}
         </div>
         <div class="text-warning text-uppercase default-font-bold">
-          {{ $t('activeNodes') }}: {{ node.peers.length }}
+          {{ $t('activeNodes') }}: {{ activeNodes }} / {{ node.peers.length }}
         </div>
       </div>
     </q-card-section>
@@ -69,9 +69,9 @@ export default {
   },
 
   mounted() {
-    setInterval(async () => {
-      await this.refreshPeers();
-    }, 5000);
+    // setInterval(async () => {
+    //   await this.refreshPeers();
+    // }, 5000);
   },
 
   methods: {

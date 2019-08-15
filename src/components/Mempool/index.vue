@@ -7,7 +7,7 @@
     <q-card-section>
       <div class="row justify-between">
         <div class="text-h6 default-font-bold text-warning">
-          {{ $t('New Transactions') }}
+          {{ $t('Pending Transactions') }}
         </div>
         <div class="text-warning text-uppercase default-font-bold">
           {{ $t('Txs') }}: {{ txs.length }}
@@ -17,15 +17,15 @@
     <q-card-section
       style="padding:16px 0"
     >
-      <div class="row peer-header">
-        <div class="col-4 text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('TxHash') }}
+      <div class="row peer-header q-gutter-x-xs">
+        <div class="col text-left text-uppercase text-secondary default-font-bold">
+          {{ $t('txHash') }}
         </div>
         <div class="col text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('From') }}
+          {{ $t('peerId') }}
         </div>
         <div class="col text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('To') }}
+          {{ $t('time') }}
         </div>
         <div class="col-1 text-left text-uppercase text-secondary default-font-bold">
           {{ $t('amount') }}
@@ -46,6 +46,7 @@
 import MempoolTx from './MempoolTx';
 import Tx from '../../store/Tx';
 
+
 export default {
   name: 'Mempool',
   components: {
@@ -53,7 +54,16 @@ export default {
   },
   computed: {
     txs() {
-      return Tx.all();
+      function compare(a, b) {
+        if (a.time > b.time) {
+          return -1;
+        }
+        if (a.time < b.time) {
+          return 1;
+        }
+        return 0;
+      }
+      return Tx.all().sort(compare);
     },
   },
 };

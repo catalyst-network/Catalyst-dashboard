@@ -1,21 +1,20 @@
 <template>
   <div>
     <div
-      class="row peer-item text-negative q-gutter-xs"
+      class="row peer-item text-negative q-gutter-sm"
     >
       <div
-        class="peer-id col-4 overflow"
+        class="peer-id col overflow"
       >
         <span
           class="peer-id"
-          @click="fullDetails=true"
         >{{ tx.txHash }}</span>
       </div>
       <div class="col text-left overflow">
-        {{ tx.from.toLowerCase() }}
+        {{ tx.peerId }}
       </div>
       <div class="col text-left overflow">
-        {{ tx.to.toLowerCase() }}
+        {{ new Date(tx.time).toTimeString() }}
       </div>
       <div
         class="col-1 text-left  overflow"

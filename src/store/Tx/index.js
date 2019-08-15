@@ -8,6 +8,7 @@ export default class Tx extends Model {
   static fields() {
     return {
       txHash: this.attr(''),
+      peerId: this.attr(''),
       to: this.attr(''),
       from: this.attr(''),
       amount: this.attr(''),

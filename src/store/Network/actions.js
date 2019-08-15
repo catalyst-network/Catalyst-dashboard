@@ -13,3 +13,11 @@ export function setTotalTxs(context, payload) {
 export function setWalletAddrs(context, payload) {
   context.commit('SET_WALLET_ADDRS', payload);
 }
+
+export function setLastLedgerDelta(context, payload) {
+  context.commit('SET_LAST_LEDGER_DELTA', payload);
+}
+
+export function setLastLedgerTime(context, payload) {
+  context.commit('SET_LAST_LEDGER_TIME', payload);
+}

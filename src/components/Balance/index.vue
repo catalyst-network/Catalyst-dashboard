@@ -24,7 +24,7 @@
         </div>
         <div class="row justify-center">
           <h6 class="balance">
-            {{ balance }} KAT
+            {{ wallet.balance }} KAT
           </h6>
         </div>
         <div class="column justify-center">
@@ -105,7 +105,6 @@
 <script>
 import QRCode from 'qrcode';
 import Wallet from '../../store/Wallet';
-import Tx from '../../store/Tx';
 
 export default {
   name: 'Balance',
@@ -119,14 +118,6 @@ export default {
   computed: {
     wallet() {
       return Wallet.all()[0];
-    },
-    balance() {
-      const reducer = (accumulator, currentValue) => accumulator + currentValue;
-      const received = Tx.all().filter(tx => tx.to === this.wallet.address)
-        .map(tx => tx.amount).reduce(reducer, 0);
-      const sent = Tx.all().filter(tx => tx.from === this.wallet.address)
-        .map(tx => tx.amount).reduce(reducer, 0);
-      return received - sent;
     },
   },
 

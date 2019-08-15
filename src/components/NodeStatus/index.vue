@@ -18,15 +18,22 @@
             {{ $t('status') }}:
           </div>
           <div class="col text-right text-caption">
-            <span class="dot bg-yellow" />
-            {{ node.status }}
+            <span
+              v-if="online"
+              class="dot bg-green"
+            />
+            <span
+              v-if="!online"
+              class="dot bg-red"
+            />
+            {{ peer.lastSeen }}
           </div>
         </div>
         <div class="row justify-between">
           <div class="col-2 text-secondary default-font-bold text-uppercase">
             {{ $t('peerId') }}:
           </div>
-          <div class="col break text-right text-caption">
+          <div class="col overflow text-right text-caption">
             {{ node.peerId }}
           </div>
         </div>
@@ -53,12 +60,19 @@
 
 <script>
 import Node from '../../store/Node';
+import Peer from '../../store/Peer';
 
 export default {
   name: 'NodeStatus',
   computed: {
     node() {
       return Node.all()[0];
+    },
+    peer() {
+      return Peer.find(this.node.peerId);
+    },
+    online() {
+      return this.peer.lastSeen === 'Online now';
     },
 
   },

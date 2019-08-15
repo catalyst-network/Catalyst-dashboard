@@ -62,6 +62,11 @@
           class="dot bg-green"
           style="margin-left:2px"
         />
+        <span
+          v-if="!online"
+          class="dot bg-red"
+          style="margin-left:2px"
+        />
       </div>
     </div>
     <q-dialog
@@ -79,7 +84,7 @@
             </div>
             <div>
               <q-chip
-                v-if="peer.isAwolPeer"
+                v-if="!online"
                 square
                 color="orange"
                 text-color="white"
@@ -125,14 +130,6 @@
           </div>
           <div class="row peer-item justify-between">
             <div class="col-auto text-secondary text-uppercase default-font-bold">
-              {{ $t('modified') }}:
-            </div>
-            <div class="col-auto">
-              {{ new Date(peer.modified) }}
-            </div>
-          </div>
-          <div class="row peer-item justify-between">
-            <div class="col-auto text-secondary text-uppercase default-font-bold">
               {{ $t('reputation') }}:
             </div>
             <div class="col-auto q-gutter-x-md">
@@ -155,6 +152,11 @@
               <span
                 v-if="online"
                 class="dot bg-green"
+                style="margin-left:2px"
+              />
+              <span
+                v-if="!online"
+                class="dot bg-red"
                 style="margin-left:2px"
               />
             </div>
