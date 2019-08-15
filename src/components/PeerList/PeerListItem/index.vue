@@ -239,7 +239,7 @@ export default {
           city: loc.city,
           country: loc.country_name,
           country_code: loc.country_code,
-          flag: `../../statics/flag-icons/${loc.country_code.toLowerCase()}.svg`,
+          flag: `./statics/flag-icons/${loc.country_code.toLowerCase()}.svg`,
         };
       }
     },

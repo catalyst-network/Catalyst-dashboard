@@ -12,12 +12,12 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <div class="q-gutter-y-md">
-        <div class="row justify-between">
+      <span class="q-gutter-y-md">
+        <span class="row justify-between">
           <div class="col text-secondary default-font-bold text-uppercase">
             {{ $t('status') }}:
           </div>
-          <div class="col text-right text-caption">
+          <span class="col text-right text-caption">
             <span
               v-if="online"
               class="dot bg-green"
@@ -26,9 +26,9 @@
               v-if="!online"
               class="dot bg-red"
             />
-            {{ peer.lastSeen }}
-          </div>
-        </div>
+            <span v-if="peer">{{ peer.lastSeen }}</span>
+          </span>
+        </span>
         <div class="row justify-between">
           <div class="col-2 text-secondary default-font-bold text-uppercase">
             {{ $t('peerId') }}:
@@ -42,7 +42,7 @@
             {{ $t('reputation') }}:
           </div>
           <div class="col text-right text-caption">
-            {{ node.reputation }}
+            <span v-if="peer">{{ peer.reputation }}</span>
           </div>
         </div>
         <div class="row justify-between">
@@ -53,7 +53,7 @@
             {{ node.version }}
           </div>
         </div>
-      </div>
+      </span>
     </q-card-section>
   </q-card>
 </template>
@@ -72,7 +72,10 @@ export default {
       return Peer.find(this.node.peerId);
     },
     online() {
-      return this.peer.lastSeen === 'Online now';
+      if (this.peer) {
+        return this.peer.lastSeen === 'Online now';
+      }
+      return false;
     },
 
   },

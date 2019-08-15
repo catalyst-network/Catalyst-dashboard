@@ -25,15 +25,15 @@ export default {
       data: {
         status: 'online',
         version: '0.12',
-        peerId: 'eOzdzqY+BQHCu6Puno48ujea1Sb+696E31qH21qLmg8=',
+        peerId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
         reputation: 97,
       },
     });
 
     Wallet.insertOrUpdate({
       data: {
-        address: 'eOzdzqY+BQHCu6Puno48ujea1Sb+696E31qH21qLmg8=',
-        nodeId: 'eOzdzqY+BQHCu6Puno48ujea1Sb+696E31qH21qLmg8=',
+        address: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
+        nodeId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
       },
     });
     setInterval(() => {

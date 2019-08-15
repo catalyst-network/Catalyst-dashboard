@@ -29,7 +29,7 @@
         </q-item-section>
       </q-item>
       <q-item
-        clickable
+        disabled
       >
         <q-item-section avatar>
           <q-icon name="group_work" />
@@ -39,7 +39,7 @@
         </q-item-section>
       </q-item>
       <q-item
-        clickable
+        disabled
       >
         <q-item-section avatar>
           <q-icon name="settings" />
