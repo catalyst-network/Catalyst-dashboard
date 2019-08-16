@@ -16,19 +16,40 @@
           </div>
         </div>
       </div>
-
-      <div class="col-auto">
-        <div class="row">
+      <div
+        class="col small"
+        style="position: relative; height:10vh;"
+      >
+        <div class="row items-start q-gutter-md">
           <div class="col">
-            <Mempool />
+            <div class="column">
+              <div class="col default-font-bold">
+                Transactions
+              </div>
+              <line-chart
+                :chart-data="chartData"
+                :options="options"
+              />
+            </div>
           </div>
+          <div class="col" />
+          <div class="col" />
         </div>
       </div>
+      <div class="col-auto q-gutter-y-md">
+        <div class="col-auto">
+          <div class="row">
+            <div class="col">
+              <Mempool />
+            </div>
+          </div>
+        </div>
 
-      <div class="col-auto">
-        <div class="row">
-          <div class="col">
-            <PeerList />
+        <div class="col-auto">
+          <div class="row">
+            <div class="col">
+              <PeerList />
+            </div>
           </div>
         </div>
       </div>
@@ -42,6 +63,7 @@ import NetworkStatus from '../../components/NetworkStatus';
 import Balance from '../../components/Balance';
 import PeerList from '../../components/PeerList';
 import Mempool from '../../components/Mempool';
+import LineChart from '../../components/Chart/index.js';
 
 export default {
   components: {
@@ -50,6 +72,7 @@ export default {
     Balance,
     PeerList,
     Mempool,
+    LineChart,
   },
 };
 </script>
@@ -58,4 +81,7 @@ export default {
  .top-row {
      min-height: 275px;
  }
+ .small {
+    max-height: 250px;
+  }
 </style>

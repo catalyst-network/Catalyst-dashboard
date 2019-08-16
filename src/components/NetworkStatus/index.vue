@@ -83,10 +83,10 @@
         />
         <div class="row justify-end text-warning text-uppercase default-font-bold">
           {{ $t('lastLedger') }}:
-          <!-- <span class="ledger-timer">{{ timer }}s {{ $t('ago') }}</span> -->
-          <span class="ledger-timer">
+          <span class="ledger-timer">{{ timer }}s {{ $t('ago') }}</span>
+          <!-- <span class="ledger-timer">
             {{ new Date(network.lastLedgerTime).toTimeString().substring(0, 8) }}
-          </span>
+          </span> -->
         </div>
       </div>
     </q-card-section>
@@ -109,19 +109,20 @@ export default {
     }),
   },
   mounted() {
-    // this.timeSinceLastLedger();
+    this.timeSinceLastLedger();
   },
   methods: {
-    // timeSinceLastLedger() {
-    //   setInterval(async () => {
-    //     if (this.timer > 14) {
-    //       this.timer = -1;
-    //       const newLedgerCycles = await this.$axios.get('http://51.91.51.88:5005/api/Ledger/GetTotalDeltaCount');
-    //       this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles.data);
-    //     }
-    //     this.timer += 1;
-    //   }, 1000);
-    // },
+    timeSinceLastLedger() {
+      let lastLedger = this.network.lastLedgerTime;
+
+      setInterval(async () => {
+        if (this.network.lastLedgerTime > lastLedger) {
+          this.timer = -1;
+          lastLedger = this.network.lastLedgerTime;
+        }
+        this.timer += 1;
+      }, 1000);
+    },
   },
 };
 </script>
