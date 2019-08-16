@@ -32,7 +32,7 @@
             {{ $t('address') }}:
           </div>
           <div class="col-auto text-caption break text-center">
-            {{ wallet.address }}
+            {{ $base32(wallet.address).toLowerCase() }}
           </div>
           <div class="col-auto text-center">
             <q-btn

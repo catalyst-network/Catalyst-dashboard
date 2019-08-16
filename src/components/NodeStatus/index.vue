@@ -19,6 +19,10 @@
           </div>
           <span class="col text-right text-caption">
             <span
+              v-if="peer"
+              style="padding-right:5px"
+            >{{ peer.lastSeen }}</span>
+            <span
               v-if="online"
               class="dot bg-green"
             />
@@ -26,7 +30,6 @@
               v-if="!online"
               class="dot bg-red"
             />
-            <span v-if="peer">{{ peer.lastSeen }}</span>
           </span>
         </span>
         <div class="row justify-between">
@@ -34,7 +37,7 @@
             {{ $t('peerId') }}:
           </div>
           <div class="col overflow text-right text-caption">
-            {{ node.peerId }}
+            {{ $base32(node.peerId).toLowerCase() }}
           </div>
         </div>
         <div class="row justify-between">

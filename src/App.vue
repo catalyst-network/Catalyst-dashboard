@@ -52,6 +52,8 @@ export default {
       if (newLedgerCycles.data !== this.network.ledgerCycles) {
         this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles.data);
         this.$store.dispatch('Network/setLastLedgerTime', Date.now());
+        const txCount = this.network.totalTxs + 20;
+        this.$store.dispatch('Network/setTotalTxs', txCount);
       }
 
       const latestDelta = await this.$axios.get(`${process.env.NODE_API}/api/Ledger/GetLatestDelta`);

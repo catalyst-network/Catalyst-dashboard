@@ -13,6 +13,7 @@ module.exports = function (ctx) {
       'i18n',
       'vClipboard',
       'axios',
+      'base32',
     ],
 
     css: [

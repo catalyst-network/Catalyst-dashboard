@@ -40,7 +40,7 @@
               {{ $t('averageLedgerTime') }}
             </div>
             <div class="col-auto text-h6">
-              {{ network.avLedgerTime }}
+              {{ network.avLedgerTime }}s
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import axios from 'axios';
 import Wallet from '../../store/Wallet';
 import Tx from '../../store/Tx';
@@ -52,5 +53,6 @@ export async function refreshMempool() {
   const txs = await getMempool();
   storeMempool(txs);
 }
+
 
 export default refreshMempool;

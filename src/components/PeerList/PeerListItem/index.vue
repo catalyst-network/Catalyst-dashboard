@@ -10,7 +10,7 @@
         <span
           class="peer-id"
           @click="fullDetails=true"
-        >{{ peer.peerId }}</span>
+        >{{ $base32(peer.peerId).toLowerCase() }}</span>
       </div>
       <div class="col text-right">
         {{ peer.address }}
@@ -109,7 +109,7 @@
               {{ $t('peerId') }}:
             </div>
             <div class="col-auto">
-              {{ peer.peerId }}
+              {{ $base32(peer.peerId) }}
             </div>
           </div>
           <div class="row peer-item justify-between">
@@ -165,7 +165,7 @@
         <div class="row justify-end">
           <q-card-actions
             align="right"
-            class="bg-white text-black justify-end"
+            class="bg-info text-negative justify-end"
           >
             <q-btn
               v-close-popup
