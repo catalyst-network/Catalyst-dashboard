@@ -10,9 +10,16 @@ import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
 import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
+import Queue from './helpers/QueueFactory';
 
 export default {
   name: 'App',
+
+  data() {
+    return {
+      lastLedgerTxCount: null,
+    };
+  },
 
   computed: {
     ...mapState({
@@ -36,20 +43,23 @@ export default {
         nodeId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
       },
     });
-    setInterval(() => {
-      RefreshPeers();
-      refreshMempool();
-      updateBalance();
-      this.updateNetwork();
-    }, 2000);
+    // setInterval(() => {
+    RefreshPeers();
+    this.lastLedgerTxCount = refreshMempool();
+    updateBalance();
+    this.updateNetwork();
+    // }, 2000);
   },
 
   methods: {
     async updateNetwork() {
+      const txArray = new Queue();
       const newLedgerCycles = await this.$axios.get(`${process.env.NODE_API}/api/Ledger/GetTotalDeltaCount`);
       console.log('ledger cycles: ', newLedgerCycles.data);
       console.log(this.network);
       if (newLedgerCycles.data !== this.network.ledgerCycles) {
+        txArray.add(this.network.lastLedgerTxCount);
+        txArray.remove();
         this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles.data);
         this.$store.dispatch('Network/setLastLedgerTime', Date.now());
         const txCount = this.network.totalTxs + 20;

@@ -21,9 +21,11 @@ function insertTxs(txs) {
 }
 
 export function flushMempool(txs) {
+  const ledgerTxCount = txs.length;
   txs.forEach((tx) => {
     Tx.delete(tx.txHash);
   });
+  return ledgerTxCount;
 }
 
 function storeMempool(txs) {
@@ -35,10 +37,10 @@ function storeMempool(txs) {
     const newTxs = txs.filter(tx => !storedTxs.includes(tx.txHash));
     const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
     insertTxs(newTxs);
-    flushMempool(oldTxs);
-  } else {
-    insertTxs(txs);
+    return flushMempool(oldTxs);
   }
+  insertTxs(txs);
+  return true;
 }
 
 export async function updateBalance() {
@@ -51,7 +53,7 @@ export async function updateBalance() {
 
 export async function refreshMempool() {
   const txs = await getMempool();
-  storeMempool(txs);
+  return storeMempool(txs);
 }
 
 

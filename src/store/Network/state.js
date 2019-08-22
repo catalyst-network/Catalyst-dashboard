@@ -5,4 +5,5 @@ export default {
   walletAddrs: 23956,
   lastLedgerTime: null,
   lastLedgerDelta: null,
+  lastLedgeTxCount: null,
 };

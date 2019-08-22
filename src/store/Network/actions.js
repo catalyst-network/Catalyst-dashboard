@@ -21,3 +21,7 @@ export function setLastLedgerDelta(context, payload) {
 export function setLastLedgerTime(context, payload) {
   context.commit('SET_LAST_LEDGER_TIME', payload);
 }
+
+export function setLastLedgerTxCount(context, payload) {
+  context.commit('SET_LAST_LEDGER_TX_COUNT', payload);
+}

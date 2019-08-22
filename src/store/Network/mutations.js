@@ -21,3 +21,7 @@ export function SET_LAST_LEDGER_DELTA(state, payload) {
 export function SET_LAST_LEDGER_TIME(state, payload) {
   state.lastLedgerTime = payload;
 }
+
+export function SET_LAST_LEDGER_TX_COUNT(state, payload) {
+  state.lastLedgerTxCount = payload;
+}

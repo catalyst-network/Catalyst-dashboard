@@ -1,18 +1,21 @@
-import { Bar } from 'vue-chartjs';
+import { Line } from 'vue-chartjs';
 
 export default {
-  extends: Bar,
+  extends: Line,
   data: () => ({
     chartdata: {
       labels: [],
       datasets: [
         {
-          backgroundColor: '#16ac9f',
+          borderColor: '#16ac9f',
+
           data: [19, 20, 19],
         },
       ],
     },
     options: {
+      backgroundColor: '#16ac9f',
+      borderColor: '#16ac9f',
       legend: {
         display: false,
       },
