@@ -131,10 +131,9 @@ export default {
         });
 
         const ledgerTimeChart = Charts.find('ledgerTime');
-        console.log(ledgerTimeChart);
-        ledgerTimeChart.labels.push(1);
+        ledgerTimeChart.labels.push('');
         ledgerTimeChart.labels.shift();
-        ledgerTimeChart.datasets[0].data.push(6);
+        ledgerTimeChart.datasets[0].data.push(5);
         ledgerTimeChart.datasets[0].data.shift();
 
         Charts.update({
