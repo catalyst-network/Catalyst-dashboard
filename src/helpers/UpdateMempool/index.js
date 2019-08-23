@@ -2,6 +2,7 @@
 import axios from 'axios';
 import Wallet from '../../store/Wallet';
 import Tx from '../../store/Tx';
+import Charts from '../../store/Charts';
 
 
 async function getMempool() {
@@ -21,11 +22,21 @@ function insertTxs(txs) {
 }
 
 export function flushMempool(txs) {
-  const ledgerTxCount = txs.length;
+  const txChart = Charts.find('transactions');
+  txChart.datasets[0].data.push(txs.length);
+  txChart.datasets[0].data.shift();
+  Charts.update({
+    where: 'transactions',
+    data: {
+      datasets: [{
+        data: txChart.datasets[0].data,
+        backgroundColor: txChart.datasets[0].backgroundColor,
+      }],
+    },
+  });
   txs.forEach((tx) => {
     Tx.delete(tx.txHash);
   });
-  return ledgerTxCount;
 }
 
 function storeMempool(txs) {
@@ -37,10 +48,9 @@ function storeMempool(txs) {
     const newTxs = txs.filter(tx => !storedTxs.includes(tx.txHash));
     const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
     insertTxs(newTxs);
-    return flushMempool(oldTxs);
+    flushMempool(oldTxs);
   }
   insertTxs(txs);
-  return true;
 }
 
 export async function updateBalance() {
@@ -53,7 +63,7 @@ export async function updateBalance() {
 
 export async function refreshMempool() {
   const txs = await getMempool();
-  return storeMempool(txs);
+  storeMempool(txs);
 }
 
 

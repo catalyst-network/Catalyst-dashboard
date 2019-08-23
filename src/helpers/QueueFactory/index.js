@@ -1,5 +1,5 @@
 function Queue(size = 50) {
-  this.data = new Array(size).fill(0);
+  this.data = new Array(size).fill(19);
 }
 
 Queue.prototype.add = function add(record) {

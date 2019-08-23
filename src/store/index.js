@@ -8,6 +8,7 @@ import Network from './Network';
 import Wallet from './Wallet';
 import Tx from './Tx';
 import Settings from './Settings';
+import Charts from './Charts';
 
 // import example from './module-example'
 
@@ -24,11 +25,14 @@ database.register(Node);
 database.register(Peer);
 database.register(Wallet);
 database.register(Tx);
+database.register(Charts);
+
 
 window.Node = Node;
 window.Peer = Peer;
 window.Wallet = Wallet;
 window.Tx = Tx;
+window.Charts = Charts;
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation

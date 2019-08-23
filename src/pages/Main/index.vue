@@ -27,8 +27,7 @@
               </div>
               <div>
                 <bar-chart
-                  :chart-data="chartData"
-                  :options="options"
+                  :chart-data="txChartData"
                   style="height:150px"
                 />
               </div>
@@ -37,12 +36,11 @@
           <div class="col">
             <div class="column q-gutter-sm">
               <div class="col default-font-bold">
-                Avg Ledger Time
+                Ledger Time
               </div>
               <div>
                 <bar-chart
-                  :chart-data="chartData"
-                  :options="options"
+                  :chart-data="ledgerTimeChartData"
                   style="height:150px"
                 />
               </div>
@@ -55,8 +53,7 @@
               </div>
               <div>
                 <line-chart
-                  :chart-data="chartData"
-                  :options="options"
+                  :chart-data="txChartData"
                   style="height:150px"
                 />
               </div>
@@ -93,6 +90,7 @@ import PeerList from '../../components/PeerList';
 import Mempool from '../../components/Mempool';
 import BarChart from '../../components/Chart/index.js';
 import LineChart from '../../components/Chart/LineChart';
+import Charts from '../../store/Charts';
 
 export default {
   components: {
@@ -103,6 +101,14 @@ export default {
     Mempool,
     BarChart,
     LineChart,
+  },
+  computed: {
+    txChartData() {
+      return Charts.find('transactions');
+    },
+    ledgerTimeChartData() {
+      return Charts.find('ledgerTime');
+    },
   },
 };
 </script>
