@@ -22,31 +22,37 @@
         <div class="row items-start q-gutter-md">
           <div class="col">
             <div class="column q-gutter-sm">
-              <div class="col default-font-bold">
+              <div
+                class="col default-font-bold"
+                style="padding:0 1rem;"
+              >
                 Transactions
               </div>
               <div>
                 <bar-chart
                   :chart-data="txChartData"
-                  style="height:150px"
+                  style="height:150px; padding:0 1rem;"
                 />
               </div>
             </div>
           </div>
           <div class="col">
             <div class="column q-gutter-sm">
-              <div class="col default-font-bold">
+              <div
+                class="col default-font-bold"
+                style="padding:0 1rem;"
+              >
                 Ledger Time
               </div>
               <div>
                 <bar-chart
                   :chart-data="ledgerTimeChartData"
-                  style="height:150px"
+                  style="height:150px; padding:0 1rem;"
                 />
               </div>
             </div>
           </div>
-          <div class="col">
+          <!-- <div class="col">
             <div class="column q-gutter-sm">
               <div class="col default-font-bold">
                 Transactions
@@ -58,7 +64,7 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-auto q-gutter-y-md">
@@ -89,7 +95,7 @@ import Balance from '../../components/Balance';
 import PeerList from '../../components/PeerList';
 import Mempool from '../../components/Mempool';
 import BarChart from '../../components/Chart/index.js';
-import LineChart from '../../components/Chart/LineChart';
+// import LineChart from '../../components/Chart/LineChart';
 import Charts from '../../store/Charts';
 
 export default {
@@ -100,7 +106,7 @@ export default {
     PeerList,
     Mempool,
     BarChart,
-    LineChart,
+    // LineChart,
   },
   computed: {
     txChartData() {

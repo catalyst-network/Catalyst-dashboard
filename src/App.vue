@@ -8,9 +8,8 @@
 import { mapState } from 'vuex';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
-// import RefreshPeers from './helpers/UpdatePeers';
-// import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
-// import Queue from './helpers/QueueFactory';
+import RefreshPeers from './helpers/UpdatePeers';
+import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
 
 export default {
@@ -48,10 +47,10 @@ export default {
     // Charts.insert({
     //   data: {
     //     id: 'transactions',
-    //     labels: new Queue().data,
+    //     labels: new Array(50).fill(''),
     //     datasets: [{
     //       backgroundColor: '#16ac9f',
-    //       data: new Queue().data,
+    //       data: new Array(50).fill(''),
     //     }],
     //   },
     // });
@@ -66,12 +65,13 @@ export default {
     //     }],
     //   },
     // });
-    // setInterval(() => {
-    // RefreshPeers();
-    // this.lastLedgerTxCount = refreshMempool();
-    // updateBalance();
-    // this.updateNetwork();
-    // }, 2000);
+
+    setInterval(() => {
+      RefreshPeers();
+      refreshMempool();
+      updateBalance();
+      this.updateNetwork();
+    }, 2000);
 
     this.mockChartData();
   },
