@@ -43,28 +43,30 @@ export default {
         nodeId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
       },
     });
+    const charts = Charts.all();
+    if (!charts || charts.length < 2) {
+      Charts.insert({
+        data: {
+          id: 'transactions',
+          labels: new Array(50).fill(''),
+          datasets: [{
+            backgroundColor: '#16ac9f',
+            data: new Array(50).fill(0),
+          }],
+        },
+      });
 
-    // Charts.insert({
-    //   data: {
-    //     id: 'transactions',
-    //     labels: new Array(50).fill(''),
-    //     datasets: [{
-    //       backgroundColor: '#16ac9f',
-    //       data: new Array(50).fill(''),
-    //     }],
-    //   },
-    // });
-
-    // Charts.insert({
-    //   data: {
-    //     id: 'ledgerTime',
-    //     labels: new Array(50).fill(''),
-    //     datasets: [{
-    //       backgroundColor: '#16ac9f',
-    //       data: new Array(50).fill(5),
-    //     }],
-    //   },
-    // });
+      Charts.insert({
+        data: {
+          id: 'ledgerTime',
+          labels: new Array(50).fill(''),
+          datasets: [{
+            backgroundColor: '#16ac9f',
+            data: new Array(50).fill(19),
+          }],
+        },
+      });
+    }
 
     setInterval(() => {
       RefreshPeers();
@@ -73,7 +75,7 @@ export default {
       this.updateNetwork();
     }, 2000);
 
-    this.mockChartData();
+    // this.mockChartData();
   },
 
   methods: {
@@ -90,8 +92,26 @@ export default {
           data: { labels: txChart.labels },
         });
         this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles.data);
+
+        const ledgerTimeChart = Charts.find('ledgerTime');
+        ledgerTimeChart.labels.push('');
+        ledgerTimeChart.labels.shift();
+        ledgerTimeChart.datasets[0].data.push((Date.now() - this.network.lastLedgerTime / 100));
+        ledgerTimeChart.datasets[0].data.shift();
+
+        Charts.update({
+          where: 'ledgerTime',
+          data: {
+            labels: ledgerTimeChart.labels,
+            datasets: [{
+              data: ledgerTimeChart.datasets[0].data,
+              backgroundColor: ledgerTimeChart.datasets[0].backgroundColor,
+            }],
+          },
+        });
         this.$store.dispatch('Network/setLastLedgerTime', Date.now());
-        const txCount = this.network.totalTxs + 20;
+        // const txCount = this.network.totalTxs + 20;
+        const txCount = Charts.find('transactions').datasets[0].data[49];
         this.$store.dispatch('Network/setTotalTxs', txCount);
       }
 
