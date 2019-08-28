@@ -20,7 +20,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-             text-secondary text-uppercase small-text text-caption break"
+              text-secondary text-uppercase small-text text-caption break"
             >
               {{ $t('totalLedgerCycles') }}
             </div>
@@ -35,7 +35,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-               text-secondary text-uppercase small-text text-caption break"
+              text-secondary text-uppercase small-text text-caption break"
             >
               {{ $t('averageLedgerTime') }}
             </div>
@@ -53,7 +53,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-             text-secondary text-uppercase small-text text-caption"
+              text-secondary text-uppercase small-text text-caption"
             >
               {{ $t('totalTransactions') }}
             </div>
@@ -68,7 +68,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-             text-secondary text-uppercase small-text text-caption"
+              text-secondary text-uppercase small-text text-caption"
             >
               {{ $t('walletAddresses') }}
             </div>
@@ -94,35 +94,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 
 export default {
   name: 'NetworkStatus',
-  data() {
-    return {
-      timer: 0,
-    };
-  },
-  computed: {
-    ...mapState({
-      network: (state => state.Network),
-    }),
-  },
-  mounted() {
-    // this.timeSinceLastLedger();
-  },
-  methods: {
-    // timeSinceLastLedger() {
-    //   setInterval(async () => {
-    //     if (this.timer > 14) {
-    //       this.timer = -1;
-    //       const newLedgerCycles = await this.$axios.get('http://51.91.51.88:5005/api/Ledger/GetTotalDeltaCount');
-    //       this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles.data);
-    //     }
-    //     this.timer += 1;
-    //   }, 1000);
-    // },
-  },
 };
 </script>
 
