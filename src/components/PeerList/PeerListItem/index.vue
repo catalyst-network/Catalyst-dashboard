@@ -5,12 +5,12 @@
       :class="blacklisted"
     >
       <div
-        class="peer-id col-4 break"
+        class="peer-id col-4 overflow"
       >
         <span
           class="peer-id"
           @click="fullDetails=true"
-        >{{ peer.peerId }}</span>
+        >{{ $base32(peer.peerId).toLowerCase() }}</span>
       </div>
       <div class="col text-right">
         {{ peer.address }}
@@ -19,13 +19,21 @@
         <img
           width="20px"
           class="flag-icon"
-          :src="flag"
+          :src="location.flag"
         >
         <q-tooltip
+          v-if="location.city"
           anchor="top right"
           self="bottom left"
         >
-          {{ peer.location }}
+          {{ location.city }}, {{ location.country_code }}
+        </q-tooltip>
+        <q-tooltip
+          v-else-if="location.country_code"
+          anchor="top right"
+          self="bottom left"
+        >
+          {{ location.country }}
         </q-tooltip>
       </div>
       <div class="col text-right">
@@ -43,7 +51,7 @@
         </q-tooltip>
       </div>
       <div class="col text-right">
-        {{ peer.created }}
+        {{ new Date(peer.created).toDateString() }}
       </div>
       <div
         class="col text-right"
@@ -54,20 +62,29 @@
           class="dot bg-green"
           style="margin-left:2px"
         />
+        <span
+          v-if="!online"
+          class="dot bg-red"
+          style="margin-left:2px"
+        />
       </div>
     </div>
     <q-dialog
       v-model="fullDetails"
+      class="bg-info"
     >
-      <q-card style="width: 700px; max-width: 80vw;">
+      <q-card
+        class="text-negative bg-info"
+        style="width: 700px; max-width: 80vw;"
+      >
         <q-card-section>
           <div class="row justify-between">
-            <div class="text-h6 text-primary default-font-bold">
+            <div class="text-h6 text-warning default-font-bold">
               {{ $t('peerDetails') }}
             </div>
             <div>
               <q-chip
-                v-if="peer.isAwolPeer"
+                v-if="!online"
                 square
                 color="orange"
                 text-color="white"
@@ -84,13 +101,15 @@
           </div>
         </q-card-section>
 
-        <div>
+        <div
+          class="text-negative"
+        >
           <div class="row peer-item justify-between">
             <div class="col-auto  text-secondary text-uppercase default-font-bold">
               {{ $t('peerId') }}:
             </div>
             <div class="col-auto">
-              {{ peer.peerId }}
+              {{ $base32(peer.peerId) }}
             </div>
           </div>
           <div class="row peer-item justify-between">
@@ -106,15 +125,7 @@
               {{ $t('created') }}:
             </div>
             <div class="col-auto">
-              {{ peer.created }}
-            </div>
-          </div>
-          <div class="row peer-item justify-between">
-            <div class="col-auto text-secondary text-uppercase default-font-bold">
-              {{ $t('modified') }}:
-            </div>
-            <div class="col-auto">
-              {{ peer.modified }}
+              {{ new Date(peer.created) }}
             </div>
           </div>
           <div class="row peer-item justify-between">
@@ -143,13 +154,18 @@
                 class="dot bg-green"
                 style="margin-left:2px"
               />
+              <span
+                v-if="!online"
+                class="dot bg-red"
+                style="margin-left:2px"
+              />
             </div>
           </div>
         </div>
         <div class="row justify-end">
           <q-card-actions
             align="right"
-            class="bg-white text-black justify-end"
+            class="bg-info text-negative justify-end"
           >
             <q-btn
               v-close-popup
@@ -177,6 +193,12 @@ export default {
       rating: (Math.round(this.peer.reputation / 10) / 2),
       detailsRating: Math.round(this.peer.reputation / 10),
       fullDetails: false,
+      location: {
+        city: '',
+        country: '',
+        country_code: '',
+        flag: '',
+      },
     };
   },
   computed: {
@@ -189,14 +211,37 @@ export default {
     online() {
       return this.peer.lastSeen === 'Online now';
     },
-    flag() {
-      if (this.peer.location === 'Glasgow, GB-SCT') {
-        return `../../statics/flag-icons/${this.peer.location.substring(this.peer.location.length - 6).toLowerCase()}.svg`;
+    // flag() {
+    //   if (this.location === 'Glasgow, GB-SCT') {
+    //     return `../../statics/flag-icons/
+    // ${this.peer.location.substring(this.peer.location.length - 6)
+    // .toLowerCase()}.svg`;
+    //   }
+    //   if (this.location) {
+    //     return `../../statics/flag-icons/
+    // ${this.peer.location.substring(this.peer.location.length - 2)
+    // .toLowerCase()}.svg`;
+    //   }
+    //   return null;
+    // },
+  },
+
+  async mounted() {
+    await this.getLocation();
+  },
+
+  methods: {
+    async getLocation() {
+      const query = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=${process.env.IP_API_KEY}`);
+      const loc = query.data;
+      if (loc.country_code) {
+        this.location = {
+          city: loc.city,
+          country: loc.country_name,
+          country_code: loc.country_code,
+          flag: `./statics/flag-icons/${loc.country_code.toLowerCase()}.svg`,
+        };
       }
-      if (this.peer.location) {
-        return `../../statics/flag-icons/${this.peer.location.substring(this.peer.location.length - 2).toLowerCase()}.svg`;
-      }
-      return null;
     },
   },
 };
@@ -209,10 +254,11 @@ export default {
 
 .peer-item {
   padding: 16px;
+  opacity: 0.8;
 }
 
-.peer-id :hover {
-  color: black;
+.peer-item :hover {
+  opacity: 1;
 }
 
 .peer-rating {

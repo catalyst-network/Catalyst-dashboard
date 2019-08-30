@@ -20,7 +20,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-             text-secondary text-uppercase small-text text-caption break"
+              text-secondary text-uppercase small-text text-caption break"
             >
               {{ $t('totalLedgerCycles') }}
             </div>
@@ -35,12 +35,12 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-               text-secondary text-uppercase small-text text-caption break"
+              text-secondary text-uppercase small-text text-caption break"
             >
               {{ $t('averageLedgerTime') }}
             </div>
             <div class="col-auto text-h6">
-              {{ network.avLedgerTime }}
+              {{ network.avLedgerTime }}s
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-             text-secondary text-uppercase small-text text-caption"
+              text-secondary text-uppercase small-text text-caption"
             >
               {{ $t('totalTransactions') }}
             </div>
@@ -68,7 +68,7 @@
           <div class="column">
             <div
               class="col-auto default-font-bold
-             text-secondary text-uppercase small-text text-caption"
+              text-secondary text-uppercase small-text text-caption"
             >
               {{ $t('walletAddresses') }}
             </div>
@@ -83,7 +83,10 @@
         />
         <div class="row justify-end text-warning text-uppercase default-font-bold">
           {{ $t('lastLedger') }}:
-          <span class="ledger-timer">{{ timer }}s {{ $t('ago') }}</span>
+          <!-- <span class="ledger-timer">{{ timer }}s {{ $t('ago') }}</span> -->
+          <span class="ledger-timer">
+            {{ new Date(network.lastLedgerTime).toTimeString().substring(0, 8) }}
+          </span>
         </div>
       </div>
     </q-card-section>
@@ -91,34 +94,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 
 export default {
   name: 'NetworkStatus',
-  data() {
-    return {
-      timer: 0,
-    };
-  },
-  computed: {
-    ...mapState({
-      network: (state => state.Network),
-    }),
-  },
-  mounted() {
-    this.timeSinceLastLedger();
-  },
-  methods: {
-    timeSinceLastLedger() {
-      setInterval(() => {
-        if (this.timer > 14) {
-          this.timer = -1;
-          this.network.ledgerCycles += 1;
-        }
-        this.timer += 1;
-      }, 1000);
-    },
-  },
 };
 </script>
 
@@ -136,7 +114,6 @@ export default {
 }
 
 .ledger-timer {
-    width: 62px;
     margin-left: 3px;
 }
 </style>

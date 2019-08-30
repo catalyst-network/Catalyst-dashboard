@@ -13,3 +13,11 @@ export function SET_TOTAL_TXS(state, payload) {
 export function SET_WALLET_ADDRS(state, payload) {
   state.walletAddrs = payload;
 }
+
+export function SET_LAST_LEDGER_DELTA(state, payload) {
+  state.lastLedgerDelta = payload;
+}
+
+export function SET_LAST_LEDGER_TIME(state, payload) {
+  state.lastLedgerTime = payload;
+}

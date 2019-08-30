@@ -12,22 +12,32 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <div class="q-gutter-y-md">
-        <div class="row justify-between">
+      <span class="q-gutter-y-md">
+        <span class="row justify-between">
           <div class="col text-secondary default-font-bold text-uppercase">
             {{ $t('status') }}:
           </div>
-          <div class="col text-right text-caption">
-            <span class="dot bg-yellow" />
-            {{ node.status }}
-          </div>
-        </div>
+          <span class="col text-right text-caption">
+            <span
+              v-if="peer"
+              style="padding-right:5px"
+            >{{ peer.lastSeen }}</span>
+            <span
+              v-if="online"
+              class="dot bg-green"
+            />
+            <span
+              v-if="!online"
+              class="dot bg-red"
+            />
+          </span>
+        </span>
         <div class="row justify-between">
           <div class="col-2 text-secondary default-font-bold text-uppercase">
             {{ $t('peerId') }}:
           </div>
-          <div class="col break text-right text-caption">
-            {{ node.peerId }}
+          <div class="col overflow text-right text-caption">
+            {{ $base32(node.peerId).toLowerCase() }}
           </div>
         </div>
         <div class="row justify-between">
@@ -35,7 +45,7 @@
             {{ $t('reputation') }}:
           </div>
           <div class="col text-right text-caption">
-            {{ node.reputation }}
+            <span v-if="peer">{{ peer.reputation }}</span>
           </div>
         </div>
         <div class="row justify-between">
@@ -46,19 +56,29 @@
             {{ node.version }}
           </div>
         </div>
-      </div>
+      </span>
     </q-card-section>
   </q-card>
 </template>
 
 <script>
 import Node from '../../store/Node';
+import Peer from '../../store/Peer';
 
 export default {
   name: 'NodeStatus',
   computed: {
     node() {
       return Node.all()[0];
+    },
+    peer() {
+      return Peer.find(this.node.peerId);
+    },
+    online() {
+      if (this.peer) {
+        return this.peer.lastSeen === 'Online now';
+      }
+      return false;
     },
 
   },

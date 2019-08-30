@@ -10,7 +10,7 @@
           {{ $t('connectedPeers') }}
         </div>
         <div class="text-warning text-uppercase default-font-bold">
-          {{ $t('activeNodes') }}: {{ activeNodes }}/{{ node.peers.length }}
+          {{ $t('activeNodes') }}: {{ activeNodes }} / {{ node.peers.length }}
         </div>
       </div>
     </q-card-section>
@@ -34,7 +34,7 @@
           {{ $t('created') }}
         </div>
         <div class="col text-right text-uppercase text-secondary default-font-bold">
-          {{ $t('lastSeen') }}
+          {{ $t('Status') }}
         </div>
       </div>
       <q-scroll-area class="peer-scrollarea">
@@ -51,6 +51,7 @@
 <script>
 import PeerListItem from './PeerListItem';
 import Node from '../../store/Node';
+import Peer from '../../store/Peer';
 
 export default {
   name: 'PeerList',
@@ -66,6 +67,31 @@ export default {
       return active.length;
     },
   },
+
+  mounted() {
+    // setInterval(async () => {
+    //   await this.refreshPeers();
+    // }, 5000);
+  },
+
+  methods: {
+    async refreshPeers() {
+      const peerApi = await this.$axios.get('http://51.91.51.88:5005/api/peer');
+      const peers = peerApi.data.map(peer => ({
+        peerId: peer.PeerIdentifier.PublicKey,
+        nodeId: 'QmeWvqHeabJWV7a5zVT9GRpszci79JWdn672cHXHC8GrhD',
+        address: peer.PeerIdentifier.Ip,
+        created: peer.Created,
+        blacklisted: peer.Blacklisted,
+        modified: peer.Modified,
+        lastSeen: 'Online now',
+        isAwolPeer: peer.IsAwolPeer,
+        inactiveFor: peer.InactiveFor,
+      }));
+
+      Peer.insert({ data: peers });
+    },
+  },
 };
 </script>
 
@@ -77,7 +103,6 @@ export default {
 .peer-item {
   padding: 0.75rem 16px;
   border-top: 1px solid rgba(0,0,0,0.12);
-  color:darkslategrey;
 }
 .peer-scrollarea {
   height: 246px;

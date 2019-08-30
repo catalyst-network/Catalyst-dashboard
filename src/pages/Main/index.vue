@@ -20,6 +20,14 @@
       <div class="col-auto">
         <div class="row">
           <div class="col">
+            <Mempool />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <div class="row">
+          <div class="col">
             <PeerList />
           </div>
         </div>
@@ -33,6 +41,7 @@ import NodeStatus from '../../components/NodeStatus';
 import NetworkStatus from '../../components/NetworkStatus';
 import Balance from '../../components/Balance';
 import PeerList from '../../components/PeerList';
+import Mempool from '../../components/Mempool';
 
 export default {
   components: {
@@ -40,6 +49,7 @@ export default {
     NetworkStatus,
     Balance,
     PeerList,
+    Mempool,
   },
 };
 </script>
