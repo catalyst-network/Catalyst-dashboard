@@ -2,16 +2,16 @@
 import axios from 'axios';
 import Wallet from '../../store/Wallet';
 import Tx from '../../store/Tx';
-import Charts from '../../store/Charts';
+// import Charts from '../../store/Charts';
 
 
 async function getMempool() {
   const txApi = await axios.get(`${process.env.NODE_API}/api/Mempool/GetMempool`);
   const txs = txApi.data.map(tx => ({
-    txHash: tx.id,
-    peerId: tx.Transaction.STEntries[0].PubKey,
-    amount: tx.Transaction.STEntries[0].Amount,
-    time: Date.now(),
+    txHash: tx.Signature.RawBytes,
+    peerId: tx.ContractEntries[0].Base.SenderPublicKey,
+    amount: tx.ContractEntries[0].Data,
+    time: tx.TimeStamp,
   }));
 
   return txs;
@@ -21,34 +21,39 @@ function insertTxs(txs) {
   Tx.insert({ data: txs });
 }
 
-export function flushMempool(txs) {
-  const txChart = Charts.find('transactions');
-  txChart.datasets[0].data.push(txs.length);
-  txChart.datasets[0].data.shift();
-  Charts.update({
-    where: 'transactions',
-    data: {
-      datasets: [{
-        data: txChart.datasets[0].data,
-        backgroundColor: txChart.datasets[0].backgroundColor,
-      }],
-    },
-  });
-  txs.forEach((tx) => {
-    Tx.delete(tx.txHash);
-  });
-}
+// export function flushMempool(txs) {
+//   const txChart = Charts.find('transactions');
+//   txChart.datasets[0].data.push(txs.length);
+//   txChart.datasets[0].data.shift();
+//   Charts.update({
+//     where: 'transactions',
+//     data: {
+//       datasets: [{
+//         data: txChart.datasets[0].data,
+//         backgroundColor: txChart.datasets[0].backgroundColor,
+//       }],
+//     },
+//   });
+//   txs.forEach((tx) => {
+//     Tx.delete(tx.txHash);
+//   });
+// }
 
 function storeMempool(txs) {
   console.log('mempool size: ', txs.length);
   const storedTxs = Tx.all().map(tx => tx.txHash);
-  const txIds = txs.map(tx => tx.txHash);
+  console.log(storedTxs);
+  // const txIds = txs.map(tx => tx.txHash);
 
   if (storedTxs.length > 0) {
     const newTxs = txs.filter(tx => !storedTxs.includes(tx.txHash));
-    const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
-    insertTxs(newTxs);
-    flushMempool(oldTxs);
+    console.log(newTxs);
+    // const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
+    if (newTxs.length > 0) {
+      console.log('called');
+      insertTxs(newTxs);
+    // flushMempool(oldTxs);
+    }
   }
   insertTxs(txs);
 }

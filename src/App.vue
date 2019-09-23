@@ -8,8 +8,8 @@
 import { mapState } from 'vuex';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
-// import RefreshPeers from './helpers/UpdatePeers';
-// import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
+import RefreshPeers from './helpers/UpdatePeers';
+import { refreshMempool } from './helpers/UpdateMempool';
 // import Queue from './helpers/QueueFactory';
 import Charts from './store/Charts';
 
@@ -29,11 +29,14 @@ export default {
   },
 
   async mounted() {
+    const me = await this.$axios.get(`${process.env.NODE_API}/api/Tweet/Me`);
+    console.log(me.data);
+
     Node.insert({
       data: {
         status: 'online',
         version: '0.12',
-        peerId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
+        peerId: me.data.publicKey,
         reputation: 97,
       },
     });
@@ -66,14 +69,14 @@ export default {
     //     }],
     //   },
     // });
-    // setInterval(() => {
-    // RefreshPeers();
-    // this.lastLedgerTxCount = refreshMempool();
-    // updateBalance();
-    // this.updateNetwork();
-    // }, 2000);
+    setInterval(() => {
+      RefreshPeers();
+      this.lastLedgerTxCount = refreshMempool();
+      // updateBalance();
+      // this.updateNetwork();
+    }, 2000);
 
-    this.mockChartData();
+    // this.mockChartData();
   },
 
   methods: {

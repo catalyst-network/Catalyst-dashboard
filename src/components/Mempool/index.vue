@@ -7,7 +7,7 @@
     <q-card-section>
       <div class="row justify-between">
         <div class="text-h6 default-font-bold text-warning">
-          {{ $t('Pending Transactions') }}
+          {{ $t('Transactions') }}
         </div>
         <div class="text-warning text-uppercase default-font-bold">
           {{ $t('Txs') }}: {{ txs.length }}
@@ -28,7 +28,7 @@
           {{ $t('time') }}
         </div>
         <div class="col-1 text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('amount') }}
+          {{ $t('data') }}
         </div>
       </div>
       <q-scroll-area class="peer-scrollarea">

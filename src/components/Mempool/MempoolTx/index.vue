@@ -19,7 +19,7 @@
       <div
         class="col-1 text-left overflow"
       >
-        {{ tx.amount }} KAT
+        {{ tx.amount }}
       </div>
     </div>
   </div>

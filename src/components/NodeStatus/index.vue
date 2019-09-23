@@ -18,10 +18,11 @@
             {{ $t('status') }}:
           </div>
           <span class="col text-right text-caption">
-            <span
+            <!-- <span
               v-if="peer"
               style="padding-right:5px"
-            >{{ peer.lastSeen }}</span>
+            >{{ peer.lastSeen }}</span> -->
+            Online
             <span
               v-if="online"
               class="dot bg-green"
@@ -46,6 +47,7 @@
           </div>
           <div class="col text-right text-caption">
             <span v-if="peer">{{ peer.reputation }}</span>
+            {{ node.reputation }}
           </div>
         </div>
         <div class="row justify-between">
@@ -75,10 +77,11 @@ export default {
       return Peer.find(this.node.peerId);
     },
     online() {
-      if (this.peer) {
-        return this.peer.lastSeen === 'Online now';
-      }
-      return false;
+      // if (this.peer) {
+      //   return this.peer.lastSeen === 'Online now';
+      // }
+      // return false;
+      return true;
     },
 
   },

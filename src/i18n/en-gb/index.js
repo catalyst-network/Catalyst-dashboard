@@ -42,4 +42,5 @@ export default {
   from: 'from',
   to: 'to',
   amount: 'amount',
+  data: 'data',
 };

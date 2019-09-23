@@ -9,14 +9,14 @@
             <NodeStatus />
           </div>
           <div class="col-12 col-md-5 col-lg">
-            <NetworkStatus />
+            <!-- <NetworkStatus /> -->
           </div>
           <div class="col-12 col-md-5 col-lg">
-            <Balance />
+            <!-- <Balance /> -->
           </div>
         </div>
       </div>
-      <div
+      <!-- <div
         class="col"
       >
         <div class="row items-start q-gutter-md">
@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="col-auto q-gutter-y-md">
         <div class="col-auto">
           <div class="row">
@@ -84,23 +84,23 @@
 
 <script>
 import NodeStatus from '../../components/NodeStatus';
-import NetworkStatus from '../../components/NetworkStatus';
-import Balance from '../../components/Balance';
+// import NetworkStatus from '../../components/NetworkStatus';
+// import Balance from '../../components/Balance';
 import PeerList from '../../components/PeerList';
 import Mempool from '../../components/Mempool';
-import BarChart from '../../components/Chart/index.js';
-import LineChart from '../../components/Chart/LineChart';
+// import BarChart from '../../components/Chart/index.js';
+// import LineChart from '../../components/Chart/LineChart';
 import Charts from '../../store/Charts';
 
 export default {
   components: {
     NodeStatus,
-    NetworkStatus,
-    Balance,
+    // NetworkStatus,
+    // Balance,
     PeerList,
     Mempool,
-    BarChart,
-    LineChart,
+    // BarChart,
+    // LineChart,
   },
   computed: {
     txChartData() {
