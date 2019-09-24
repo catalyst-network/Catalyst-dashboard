@@ -47,7 +47,6 @@
           </div>
           <div class="col text-right text-caption">
             <span v-if="peer">{{ peer.reputation }}</span>
-            {{ node.reputation }}
           </div>
         </div>
         <div class="row justify-between">
