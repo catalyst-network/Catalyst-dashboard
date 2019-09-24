@@ -232,7 +232,7 @@ export default {
 
   methods: {
     async getLocation() {
-      const query = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=${process.env.IP_API_KEY}`);
+      const query = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=f8238a603017372d89f7e689c891d0e5`);
       const loc = query.data;
       if (loc.country_code) {
         this.location = {
