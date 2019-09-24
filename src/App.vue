@@ -1,5 +1,8 @@
 <template>
-  <div id="q-app">
+  <div
+    v-if="ready"
+    id="q-app"
+  >
     <router-view />
   </div>
 </template>
@@ -7,7 +10,7 @@
 <script>
 import { mapState } from 'vuex';
 import Node from './store/Node';
-import Wallet from './store/Wallet';
+// import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
 import { refreshMempool } from './helpers/UpdateMempool';
 // import Queue from './helpers/QueueFactory';
@@ -19,6 +22,7 @@ export default {
   data() {
     return {
       lastLedgerTxCount: null,
+      ready: true,
     };
   },
 
@@ -26,27 +30,35 @@ export default {
     ...mapState({
       network: (state => state.Network),
     }),
+    isNode() {
+      return Node.all().length > 0;
+    },
   },
 
   async mounted() {
-    const me = await this.$axios.get(`${process.env.NODE_API}/api/Tweet/Me`);
-    console.log(me.data);
+    if (!this.isNode) {
+      this.ready = false;
+      const me = await this.$axios.get(`${process.env.NODE_API}/api/Tweet/Me`);
+      console.log(me.data);
 
-    Node.insert({
-      data: {
-        status: 'online',
-        version: '0.12',
-        peerId: me.data.publicKey,
-        reputation: 97,
-      },
-    });
+      Node.insert({
+        data: {
+          status: 'online',
+          version: '0.12',
+          peerId: me.data.publicKey,
+          reputation: 97,
+        },
+      });
+      this.ready = true;
+    }
 
-    Wallet.insertOrUpdate({
-      data: {
-        address: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
-        nodeId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
-      },
-    });
+
+    // Wallet.insertOrUpdate({
+    //   data: {
+    //     address: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
+    //     nodeId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
+    //   },
+    // });
 
     // Charts.insert({
     //   data: {

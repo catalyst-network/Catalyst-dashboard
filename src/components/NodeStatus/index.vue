@@ -35,10 +35,10 @@
         </span>
         <div class="row justify-between">
           <div class="col-2 text-secondary default-font-bold text-uppercase">
-            {{ $t('peerId') }}:
+            {{ $t('publicKey') }}:
           </div>
           <div class="col overflow text-right text-caption">
-            {{ $base32(node.peerId).toLowerCase() }}
+            {{ node.peerId }}
           </div>
         </div>
         <div class="row justify-between">

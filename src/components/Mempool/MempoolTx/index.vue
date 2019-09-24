@@ -8,10 +8,10 @@
       >
         <span
           class="peer-id"
-        >{{ $base32(tx.txHash).toLowerCase() }}</span>
+        >{{ tx.txHash }}</span>
       </div>
       <div class="col text-left overflow">
-        {{ $base32(tx.peerId).toLowerCase() }}
+        {{ tx.peerId }}
       </div>
       <div class="col text-left overflow">
         {{ new Date(tx.time).toTimeString() }}

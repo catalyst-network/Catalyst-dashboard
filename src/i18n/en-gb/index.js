@@ -5,6 +5,7 @@ export default {
   settings: 'Settings',
   // PeerList
   connectedPeers: 'Connected Peers',
+  publicKey: 'Public Key',
   peerId: 'Peer ID',
   address: 'Address',
   location: 'Location',

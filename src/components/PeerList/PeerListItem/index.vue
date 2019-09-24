@@ -10,7 +10,7 @@
         <span
           class="peer-id"
           @click="fullDetails=true"
-        >{{ $base32(peer.peerId).toLowerCase() }}</span>
+        >{{ peer.peerId }}</span>
       </div>
       <div class="col text-right">
         {{ peer.address }}
@@ -109,7 +109,7 @@
               {{ $t('peerId') }}:
             </div>
             <div class="col-auto">
-              {{ $base32(peer.peerId) }}
+              {{ peer.peerId }}
             </div>
           </div>
           <div class="row peer-item justify-between">

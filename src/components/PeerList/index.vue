@@ -19,7 +19,7 @@
     >
       <div class="row peer-header">
         <div class="col-4 text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('peerId') }}
+          {{ $t('publicKey') }}
         </div>
         <div class="col text-right text-uppercase text-secondary default-font-bold">
           {{ $t('address') }}
