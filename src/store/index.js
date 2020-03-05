@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexORM from '@vuex-orm/core';
-import VuexPersist from 'vuex-persist';
+// import VuexPersist from 'vuex-persist';
 import Node from './Node';
 import Peer from './Peer';
 import Network from './Network';
@@ -16,10 +16,10 @@ Vue.use(Vuex);
 
 const database = new VuexORM.Database();
 
-const vuexPersist = new VuexPersist({
-  key: 'node-dashboard',
-  storage: localStorage,
-});
+// const vuexPersist = new VuexPersist({
+//   key: 'node-dashboard',
+//   storage: localStorage,
+// });
 
 database.register(Node);
 database.register(Peer);
@@ -44,7 +44,7 @@ export default function (/* { ssrContext } */) {
       Network,
       Settings,
     },
-    plugins: [VuexORM.install(database), vuexPersist.plugin],
+    plugins: [VuexORM.install(database)],
   });
 
   return Store;

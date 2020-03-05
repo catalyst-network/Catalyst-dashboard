@@ -37,7 +37,7 @@
             {{ $t('peerId') }}:
           </div>
           <div class="col overflow text-right text-caption">
-            {{ $base32(node.peerId).toLowerCase() }}
+            {{ node.peerId.toLowerCase() }}
           </div>
         </div>
         <div class="row justify-between">

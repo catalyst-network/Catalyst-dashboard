@@ -32,7 +32,7 @@
             {{ $t('address') }}:
           </div>
           <div class="col-auto text-caption break text-center">
-            {{ $base32(wallet.address).toLowerCase() }}
+            {{ wallet.address }}
           </div>
           <div class="col-auto text-center">
             <q-btn
@@ -42,7 +42,7 @@
               flat
               round
               dense
-              style="padding-top=0"
+              style="padding-top: 0"
               @click="displayCopy"
             >
               <q-tooltip
@@ -59,7 +59,7 @@
               flat
               round
               dense
-              style="padding-top=0"
+              style="padding-top: 0"
               @click="qrDialog=true"
             >
               <q-tooltip

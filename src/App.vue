@@ -6,10 +6,11 @@
 
 <script>
 import { mapState } from 'vuex';
+import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
-// import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
+import { updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
 
 export default {
@@ -18,6 +19,7 @@ export default {
   data() {
     return {
       lastLedgerTxCount: null,
+      rpc: null,
     };
   },
 
@@ -28,19 +30,30 @@ export default {
   },
 
   async mounted() {
+    this.rpc = new ERPC({
+      transport: {
+        host: '192.168.1.45',
+        port: 5005,
+        type: 'http',
+        path: '/api/eth/request',
+      },
+    });
+
+    this.rpc.eth_chainId().then(console.log);
+
     Node.insert({
       data: {
         status: 'online',
         version: '0.12',
-        peerId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
+        peerId: 'GK42OCZ447YBR62MIWNNLYEB7M4UFZDDSGYKHUWJGWOJLRB7PEZQ',
         reputation: 97,
       },
     });
 
     Wallet.insertOrUpdate({
       data: {
-        address: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
-        nodeId: 'VkC84TBQOVjrcX81NYV5swPVrE4RN+nKGzIjxNT2AY0=',
+        address: '0x58BeB247771F0B6f87AA099af479aF767CcC0F00',
+        nodeId: 'GK42OCZ447YBR62MIWNNLYEB7M4UFZDDSGYKHUWJGWOJLRB7PEZQ',
       },
     });
     const charts = Charts.all();
@@ -71,19 +84,20 @@ export default {
     setInterval(() => {
       RefreshPeers();
       // refreshMempool();
-      // updateBalance();
-      // this.updateNetwork();
-    }, 20000);
+      updateBalance();
+      this.updateNetwork();
+    }, 5000);
 
     // this.mockChartData();
   },
 
   methods: {
     async updateNetwork() {
-      const newLedgerCycles = await this.$axios.get(`${process.env.NODE_API}/api/Ledger/GetTotalDeltaCount`);
-      console.log('ledger cycles: ', newLedgerCycles.data);
+      console.log('update network');
+      const newLedgerCycles = await this.rpc.eth_blockNumber();
+      console.log('ledger cycles: ', newLedgerCycles);
       console.log(this.network);
-      if (newLedgerCycles.data !== this.network.ledgerCycles) {
+      if (newLedgerCycles !== this.network.ledgerCycles) {
         const txChart = Charts.find('transactions');
         txChart.labels.push(this.network.ledgerCycles);
         txChart.labels.shift();
@@ -91,7 +105,7 @@ export default {
           where: 'transactions',
           data: { labels: txChart.labels },
         });
-        this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles.data);
+        this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles);
 
         const ledgerTimeChart = Charts.find('ledgerTime');
         ledgerTimeChart.labels.push('');
@@ -115,11 +129,11 @@ export default {
         this.$store.dispatch('Network/setTotalTxs', txCount);
       }
 
-      const latestDelta = await this.$axios.get(`${process.env.NODE_API}/api/Ledger/GetLatestDelta`);
-      console.log('ledger delta: ', latestDelta.data);
+      const latestDelta = await this.rpc.eth_getBlockByNumber('latest', true);
+      console.log('ledger delta: ', latestDelta);
 
-      if (latestDelta.data !== this.network.lastLedgerDelta) {
-        this.$store.dispatch('Network/setLastLedgerDelta', latestDelta.data);
+      if (latestDelta.hash !== this.network.lastLedgerDelta) {
+        this.$store.dispatch('Network/setLastLedgerDelta', latestDelta.hash);
       }
     },
 
