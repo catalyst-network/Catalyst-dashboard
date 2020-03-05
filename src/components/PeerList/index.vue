@@ -63,7 +63,13 @@ export default {
       return Node.query().withAll().first();
     },
     activeNodes() {
-      const active = this.node.peers.filter(peer => peer.lastSeen === 'Online now');
+      const active = this.node.peers.filter((peer) => {
+        const now = Date.now();
+        if ((now - peer.lastSeen) > 20000) {
+          return false;
+        }
+        return true;
+      });
       return active.length;
     },
   },
@@ -84,7 +90,7 @@ export default {
         created: peer.Created,
         blacklisted: peer.Blacklisted,
         modified: peer.Modified,
-        lastSeen: 'Online now',
+        lastSeen: new Date(peer.LastSeen).getTime(),
         isAwolPeer: peer.IsAwolPeer,
         inactiveFor: peer.InactiveFor,
       }));

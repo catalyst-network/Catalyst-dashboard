@@ -9,7 +9,7 @@ import { mapState } from 'vuex';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
-import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
+// import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
 
 export default {
@@ -70,10 +70,10 @@ export default {
 
     setInterval(() => {
       RefreshPeers();
-      refreshMempool();
-      updateBalance();
-      this.updateNetwork();
-    }, 2000);
+      // refreshMempool();
+      // updateBalance();
+      // this.updateNetwork();
+    }, 20000);
 
     // this.mockChartData();
   },

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Node from '../../store/Node';
 import Peer from '../../store/Peer';
+import { bytesToBase32 } from '../../boot/base32';
 
 
 function getRandomInt(min, max) {
@@ -11,28 +12,30 @@ function getRandomInt(min, max) {
 
 async function getPeers() {
   const peerApi = await axios.get(`${process.env.NODE_API}/api/Peer/GetAllPeers`);
+  console.log(peerApi);
   const peers = peerApi.data.map(peer => ({
-    peerId: peer.PeerIdentifier.PublicKey,
+    peerId: bytesToBase32(peer.PeerId.PublicKey),
     nodeId: Node.all()[0].peerId,
-    address: peer.PeerIdentifier.Ip,
+    address: peer.PeerId.IpAddress,
     created: peer.Created,
     blacklisted: peer.Blacklisted,
     modified: peer.Modified,
-    lastSeen: 'Online now',
+    lastSeen: new Date(peer.LastSeen).getTime(),
     isAwolPeer: peer.IsAwolPeer,
     inactiveFor: peer.InactiveFor,
   }));
+  console.log('peers:', peers);
 
   return peers;
 }
-function setPeersOffline(peers) {
-  peers.forEach((peer) => {
-    Peer.update({
-      where: peer.peerId,
-      data: { lastSeen: 'Offline' },
-    });
-  });
-}
+// function setPeersOffline(peers) {
+//   peers.forEach((peer) => {
+//     Peer.update({
+//       where: peer.peerId,
+//       data: { lastSeen: 'Offline' },
+//     });
+//   });
+// }
 
 function insertPeers(peers) {
   peers.forEach((peer) => {
@@ -60,9 +63,11 @@ function storePeers(peers) {
     const foundPeers = peers.filter(peer => storedPeers.includes(peer.peerId));
     const newPeers = peers.filter(peer => !storedPeers.includes(peer.peerId));
     const offlinePeers = Peer.all().filter(peer => !peerIds.includes(peer.peerId));
+    console.log(offlinePeers);
+
     updatePeers(foundPeers);
     insertPeers(newPeers);
-    setPeersOffline(offlinePeers);
+    // setPeersOffline(offlinePeers);
   } else {
     insertPeers(peers);
   }

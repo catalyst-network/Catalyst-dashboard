@@ -10,7 +10,7 @@
         <span
           class="peer-id"
           @click="fullDetails=true"
-        >{{ $base32(peer.peerId).toLowerCase() }}</span>
+        >{{ peer.peerId }}</span>
       </div>
       <div class="col text-right">
         {{ peer.address }}
@@ -56,7 +56,7 @@
       <div
         class="col text-right"
       >
-        {{ peer.lastSeen }}
+        {{ status }}
         <span
           v-if="online"
           class="dot bg-green"
@@ -109,7 +109,7 @@
               {{ $t('peerId') }}:
             </div>
             <div class="col-auto">
-              {{ $base32(peer.peerId) }}
+              {{ peer.peerId }}
             </div>
           </div>
           <div class="row peer-item justify-between">
@@ -148,7 +148,7 @@
               {{ $t('lastSeen') }}:
             </div>
             <div class="col-auto">
-              {{ peer.lastSeen }}
+              {{ status }}
               <span
                 v-if="online"
                 class="dot bg-green"
@@ -208,8 +208,15 @@ export default {
       }
       return '';
     },
+    status() {
+      const now = Date.now();
+      if ((now - this.peer.lastSeen) > 20000) {
+        return 'Offline';
+      }
+      return 'Online now';
+    },
     online() {
-      return this.peer.lastSeen === 'Online now';
+      return this.status === 'Online now';
     },
     // flag() {
     //   if (this.location === 'Glasgow, GB-SCT') {
@@ -232,14 +239,24 @@ export default {
 
   methods: {
     async getLocation() {
-      const query = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=${process.env.IP_API_KEY}`);
-      const loc = query.data;
-      if (loc.country_code) {
+      console.log(this.peer.address.substring(0, 3));
+      if (this.peer.address.substring(0, 3) !== '192') {
+        const query = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=${process.env.IP_API_KEY}`);
+        const loc = query.data;
+        if (loc.country_code) {
+          this.location = {
+            city: loc.city,
+            country: loc.country_name,
+            country_code: loc.country_code,
+            flag: `./statics/flag-icons/${loc.country_code.toLowerCase()}.svg`,
+          };
+        }
+      } else {
         this.location = {
-          city: loc.city,
-          country: loc.country_name,
-          country_code: loc.country_code,
-          flag: `./statics/flag-icons/${loc.country_code.toLowerCase()}.svg`,
+          city: 'London',
+          country: 'United Kingdom',
+          country_code: 'UK',
+          flag: './statics/flag-icons/gb.svg',
         };
       }
     },

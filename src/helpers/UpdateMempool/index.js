@@ -7,6 +7,7 @@ import Charts from '../../store/Charts';
 
 async function getMempool() {
   const txApi = await axios.get(`${process.env.NODE_API}/api/Mempool/GetMempool`);
+  console.log(txApi);
   const txs = txApi.data.map(tx => ({
     txHash: tx.id,
     peerId: tx.Transaction.STEntries[0].PubKey,
