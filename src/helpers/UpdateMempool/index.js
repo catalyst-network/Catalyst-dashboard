@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import ERPC from '@etclabscore/ethereum-json-rpc';
 import Wallet from '../../store/Wallet';
-// import Tx from '../../store/Tx';
+import Tx from '../../store/Tx';
 // import Charts from '../../store/Charts';
 
 
@@ -15,18 +15,18 @@ const rpc = new ERPC({
 });
 
 
-// async function getMempool() {
-//   const txApi = await axios.get(`${process.env.NODE_API}/api/Mempool/GetMempool`);
-//   console.log(txApi);
-//   const txs = txApi.data.map(tx => ({
-//     txHash: tx.id,
-//     peerId: tx.Transaction.STEntries[0].PubKey,
-//     amount: tx.Transaction.STEntries[0].Amount,
-//     time: Date.now(),
-//   }));
+async function getMempool() {
+  const txApi = await rpc.eth_pendingTransactions();
+  console.log(txApi);
+  const txs = txApi.map(tx => ({
+    txHash: tx.id,
+    peerId: tx.from,
+    amount: tx.value,
+    time: Date.now(),
+  }));
 
-//   return txs;
-// }
+  return txs;
+}
 
 // function insertTxs(txs) {
 //   Tx.insert({ data: txs });
@@ -50,19 +50,21 @@ const rpc = new ERPC({
 //   });
 // }
 
-// function storeMempool(txs) {
-//   console.log('mempool size: ', txs.length);
-//   const storedTxs = Tx.all().map(tx => tx.txHash);
-//   const txIds = txs.map(tx => tx.txHash);
+function storeMempool(txs) {
+  // console.log('mempool size: ', txs.length);
+  // const storedTxs = Tx.all().map(tx => tx.txHash);
+  // const txIds = txs.map(tx => tx.txHash);
 
-//   if (storedTxs.length > 0) {
-//     const newTxs = txs.filter(tx => !storedTxs.includes(tx.txHash));
-//     const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
-//     insertTxs(newTxs);
-//     flushMempool(oldTxs);
-//   }
-//   insertTxs(txs);
-// }
+  // if (storedTxs.length > 0) {
+  //   const newTxs = txs.filter(tx => !storedTxs.includes(tx.txHash));
+  //   const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
+  //   insertTxs(newTxs);
+  //   flushMempool(oldTxs);
+  // }
+  // insertTxs(txs);
+
+  Tx.create(txs);
+}
 
 export async function updateBalance() {
   const { address } = Wallet.all()[0];
@@ -73,10 +75,10 @@ export async function updateBalance() {
   });
 }
 
-// export async function refreshMempool() {
-//   const txs = await getMempool();
-//   storeMempool(txs);
-// }
+export async function refreshMempool() {
+  const txs = await getMempool();
+  storeMempool(txs);
+}
 
 
-// export default refreshMempool;
+export default refreshMempool;
