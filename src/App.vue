@@ -123,7 +123,6 @@ export default {
       this.$store.dispatch('Network/setLedgerCycles', parseInt(latestDelta.number, 16));
 
       if (latestDelta.hash !== this.network.lastLedgerDelta) {
-        console.log(latestDelta.timestamp - this.network.lastLedgerTime);
         this.$store.dispatch('Network/setLastLedgerDelta', latestDelta.hash);
 
         if (this.network.lastLedgerTime) {
@@ -134,6 +133,9 @@ export default {
             (latestDelta.timestamp - this.network.lastLedgerTime),
           );
           ledgerTimeChart.datasets[0].data.shift();
+          const sum = ledgerTimeChart.datasets[0].data.reduce((a, b) => a + b, 0);
+          const avg = (sum / ledgerTimeChart.datasets[0].data.length) || 0;
+          this.$store.dispatch('Network/setAvLedgerTime', avg);
 
           Charts.update({
             where: 'ledgerTime',
@@ -149,9 +151,11 @@ export default {
         const txChart = Charts.find('transactions');
         txChart.labels.push('');
         txChart.labels.shift();
-        console.log('txChart: ', txChart.datasets[0].data);
         txChart.datasets[0].data.push(latestDelta.transactions.length);
         txChart.datasets[0].data.shift();
+        const sum = txChart.datasets[0].data.reduce((a, b) => a + b, 0);
+        const avg = (sum / txChart.datasets[0].data.length) || 0;
+        this.$store.dispatch('Network/setTotalTxs', avg);
         Charts.update({
           where: 'transactions',
           data: {

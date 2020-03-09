@@ -61,11 +61,11 @@
               {{ network.totalTxs }}
             </div>
           </div>
-          <q-separator
+          <!-- <q-separator
             vertical
             color="secondary"
-          />
-          <div class="column">
+          /> -->
+          <!-- <div class="column">
             <div
               class="col-auto default-font-bold
              text-secondary text-uppercase small-text text-caption"
@@ -75,7 +75,7 @@
             <div class="col-auto text-h6">
               {{ network.walletAddrs }}
             </div>
-          </div>
+          </div> -->
         </div>
         <div
           class="row"
