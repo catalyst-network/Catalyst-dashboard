@@ -21,7 +21,7 @@
             <span
               v-if="peer"
               style="padding-right:5px"
-            >{{ peer.lastSeen }}</span>
+            >{{ status }}</span>
             <span
               v-if="online"
               class="dot bg-green"
@@ -82,11 +82,15 @@ export default {
     peer() {
       return Peer.find(this.node.peerId);
     },
-    online() {
-      if (this.peer) {
-        return this.peer.lastSeen === 'Online now';
+    status() {
+      const now = Date.now();
+      if ((now - this.peer.lastSeen) > 20000) {
+        return 'Offline';
       }
-      return false;
+      return 'Online now';
+    },
+    online() {
+      return this.status === 'Online now';
     },
 
   },
