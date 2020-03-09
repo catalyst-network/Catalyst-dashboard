@@ -41,7 +41,7 @@ export default {
         }],
         yAxes: [{
           ticks: {
-            min: 18,
+            min: 10,
             display: false,
           },
           gridLines: {

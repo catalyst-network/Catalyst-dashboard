@@ -22,7 +22,7 @@
           {{ $t('txHash') }}
         </div>
         <div class="col text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('peerId') }}
+          {{ $t('from') }}
         </div>
         <div class="col text-left text-uppercase text-secondary default-font-bold">
           {{ $t('time') }}

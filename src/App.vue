@@ -10,8 +10,10 @@ import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
-import { updateBalance } from './helpers/UpdateMempool';
+import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
+import { publicKeyToAddress } from './helpers/Common';
+
 
 export default {
   name: 'App',
@@ -49,10 +51,11 @@ export default {
         reputation: 97,
       },
     });
+    const address = publicKeyToAddress(Node.all()[0].peerId);
 
     Wallet.insertOrUpdate({
       data: {
-        address: '0x58BeB247771F0B6f87AA099af479aF767CcC0F00',
+        address,
         nodeId: 'GK42OCZ447YBR62MIWNNLYEB7M4UFZDDSGYKHUWJGWOJLRB7PEZQ',
       },
     });
@@ -83,7 +86,7 @@ export default {
 
     setInterval(() => {
       RefreshPeers();
-      // refreshMempool();
+      refreshMempool();
       updateBalance();
       this.updateNetwork();
     }, 5000);
@@ -93,47 +96,74 @@ export default {
 
   methods: {
     async updateNetwork() {
-      console.log('update network');
-      const newLedgerCycles = await this.rpc.eth_blockNumber();
-      console.log('ledger cycles: ', newLedgerCycles);
-      console.log(this.network);
-      if (newLedgerCycles !== this.network.ledgerCycles) {
-        const txChart = Charts.find('transactions');
-        txChart.labels.push(this.network.ledgerCycles);
-        txChart.labels.shift();
-        Charts.update({
-          where: 'transactions',
-          data: { labels: txChart.labels },
-        });
-        this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles);
+      // console.log('update network');
+      // const newLedgerCycles = await this.rpc.eth_blockNumber();
 
-        const ledgerTimeChart = Charts.find('ledgerTime');
-        ledgerTimeChart.labels.push('');
-        ledgerTimeChart.labels.shift();
-        ledgerTimeChart.datasets[0].data.push((Date.now() - this.network.lastLedgerTime / 100));
-        ledgerTimeChart.datasets[0].data.shift();
+      // console.log('ledger cycles: ', newLedgerCycles);
+      // console.log(this.network);
+      // if (newLedgerCycles !== this.network.ledgerCycles) {
+      //   const txChart = Charts.find('transactions');
+      //   txChart.labels.push(this.network.ledgerCycles);
+      //   txChart.labels.shift();
+      //   Charts.update({
+      //     where: 'transactions',
+      //     data: { labels: txChart.labels },
+      //   });
+      //   this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles);
 
-        Charts.update({
-          where: 'ledgerTime',
-          data: {
-            labels: ledgerTimeChart.labels,
-            datasets: [{
-              data: ledgerTimeChart.datasets[0].data,
-              backgroundColor: ledgerTimeChart.datasets[0].backgroundColor,
-            }],
-          },
-        });
-        this.$store.dispatch('Network/setLastLedgerTime', Date.now());
-        // const txCount = this.network.totalTxs + 20;
-        const txCount = Charts.find('transactions').datasets[0].data[49];
-        this.$store.dispatch('Network/setTotalTxs', txCount);
-      }
+
+      //   this.$store.dispatch('Network/setLastLedgerTime', Date.now());
+      //   // const txCount = this.network.totalTxs + 20;
+      //   const txCount = Charts.find('transactions').datasets[0].data[49];
+      //   this.$store.dispatch('Network/setTotalTxs', txCount);
+      // }
 
       const latestDelta = await this.rpc.eth_getBlockByNumber('latest', true);
       console.log('ledger delta: ', latestDelta);
+      this.$store.dispatch('Network/setLedgerCycles', parseInt(latestDelta.number, 16));
 
       if (latestDelta.hash !== this.network.lastLedgerDelta) {
+        console.log(latestDelta.timestamp - this.network.lastLedgerTime);
         this.$store.dispatch('Network/setLastLedgerDelta', latestDelta.hash);
+
+        if (this.network.lastLedgerTime) {
+          const ledgerTimeChart = Charts.find('ledgerTime');
+          ledgerTimeChart.labels.push('');
+          ledgerTimeChart.labels.shift();
+          ledgerTimeChart.datasets[0].data.push(
+            (latestDelta.timestamp - this.network.lastLedgerTime),
+          );
+          ledgerTimeChart.datasets[0].data.shift();
+
+          Charts.update({
+            where: 'ledgerTime',
+            data: {
+              labels: ledgerTimeChart.labels,
+              datasets: [{
+                data: ledgerTimeChart.datasets[0].data,
+                backgroundColor: ledgerTimeChart.datasets[0].backgroundColor,
+              }],
+            },
+          });
+        }
+        const txChart = Charts.find('transactions');
+        txChart.labels.push('');
+        txChart.labels.shift();
+        console.log('txChart: ', txChart.datasets[0].data);
+        txChart.datasets[0].data.push(latestDelta.transactions.length);
+        txChart.datasets[0].data.shift();
+        Charts.update({
+          where: 'transactions',
+          data: {
+            labels: txChart.labels,
+            datasets: [{
+              data: txChart.datasets[0].data,
+              backgroundColor: txChart.datasets[0].backgroundColor,
+            }],
+          },
+        });
+
+        this.$store.dispatch('Network/setLastLedgerTime', latestDelta.timestamp);
       }
     },
 

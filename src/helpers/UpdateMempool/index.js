@@ -17,13 +17,13 @@ const rpc = new ERPC({
 
 async function getMempool() {
   const txApi = await rpc.eth_pendingTransactions();
-  console.log(txApi);
   const txs = txApi.map(tx => ({
-    txHash: tx.id,
+    txHash: tx.hash,
     peerId: tx.from,
-    amount: tx.value,
+    amount: parseInt(tx.value, 16),
     time: Date.now(),
   }));
+  console.log('txs:', txs);
 
   return txs;
 }
@@ -63,7 +63,7 @@ function storeMempool(txs) {
   // }
   // insertTxs(txs);
 
-  Tx.create(txs);
+  Tx.create({ data: txs });
 }
 
 export async function updateBalance() {

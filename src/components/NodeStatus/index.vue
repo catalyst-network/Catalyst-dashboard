@@ -37,7 +37,7 @@
             {{ $t('peerId') }}:
           </div>
           <div class="col overflow text-right text-caption">
-            {{ node.peerId.toLowerCase() }}
+            {{ toAddress(node.peerId) }}
           </div>
         </div>
         <div class="row justify-between">
@@ -64,9 +64,17 @@
 <script>
 import Node from '../../store/Node';
 import Peer from '../../store/Peer';
+import { publicKeyToAddress } from '../../helpers/Common';
 
 export default {
   name: 'NodeStatus',
+
+  data() {
+    return {
+      toAddress: publicKeyToAddress,
+    };
+  },
+
   computed: {
     node() {
       return Node.all()[0];
