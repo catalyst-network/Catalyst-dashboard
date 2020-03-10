@@ -154,8 +154,7 @@ export default {
         txChart.datasets[0].data.push(latestDelta.transactions.length);
         txChart.datasets[0].data.shift();
         const sum = txChart.datasets[0].data.reduce((a, b) => a + b, 0);
-        const avg = (sum / txChart.datasets[0].data.length) || 0;
-        this.$store.dispatch('Network/setTotalTxs', avg);
+        this.$store.dispatch('Network/setTotalTxs', sum);
         Charts.update({
           where: 'transactions',
           data: {

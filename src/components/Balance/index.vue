@@ -69,6 +69,15 @@
                 {{ $t('qrCode') }}
               </q-tooltip>
             </q-btn>
+            <q-btn
+              icon="fas fa-qrcode"
+              size="sm"
+              flat
+              round
+              dense
+              style="padding-top: 0"
+              @click="walletDialog=true"
+            />
           </div>
         </div>
       </q-card-section>
@@ -99,20 +108,39 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog
+      v-model="walletDialog"
+      class="bg-info"
+    >
+      <q-card
+        class="text-negative bg-info q-pa-lg"
+        style="width: 700px; max-width: 80vw;"
+      >
+        <div class="col-auto text-center">
+          <LoadKeystore />
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import QRCode from 'qrcode';
 import Wallet from '../../store/Wallet';
+import LoadKeystore from '../Wallet/LoadKeystore';
 
 export default {
   name: 'Balance',
+  components: {
+    LoadKeystore,
+  },
   data() {
     return {
       qrDialog: false,
       qrCodeDataURL: null,
       copied: 'copy',
+      walletDialog: false,
     };
   },
   computed: {

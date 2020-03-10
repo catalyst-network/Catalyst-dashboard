@@ -12,3 +12,12 @@ export function publicKeyToAddress(pubKey) {
 
   return `0x${hexStringFromBytes(addressBytes)}`;
 }
+
+export const getBlocks = (from, to, erpc) => {
+  const promises = [];
+
+  for (let i = from; i <= to; i += 1) {
+    promises.push(erpc.eth_getBlockByNumber(`0x${i.toString(16)}`, true));
+  }
+  return Promise.all(promises);
+};
