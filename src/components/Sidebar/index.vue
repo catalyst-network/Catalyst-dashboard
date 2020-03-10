@@ -53,7 +53,7 @@
       <q-toggle
         v-model="setMode"
         color="white"
-        icon="fas fa-moon"
+        icon="fas fa-sun"
       />
     </div>
   </div>
@@ -78,14 +78,14 @@ export default {
     }),
     setMode: {
       get() {
-        return this.darkMode;
+        return !this.darkMode;
       },
       set(value) {
-        if (value) {
+        if (!value) {
           this.setDarkMode();
           this.$store.dispatch('Settings/setDarkMode', true);
         }
-        if (!value) {
+        if (value) {
           this.setLightMode();
           this.$store.dispatch('Settings/setDarkMode', false);
         }
