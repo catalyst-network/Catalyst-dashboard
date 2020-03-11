@@ -11,7 +11,7 @@
         </div>
       </q-card-section>
       <q-card-section>
-        <Balance v-if="!wallet" />
+        <Balance v-if="wallet" />
         <LoadKeystore v-else />
       </q-card-section>
     </q-card>

@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { loadKeystore, getPrivateKey } from '../../../helpers/SendTx';
+import { loadKeystore, getPrivateKey, getWallet } from '../../../helpers/SendTx';
 
 export default {
   name: 'LoadKeystore',
@@ -97,8 +97,10 @@ export default {
     },
 
     async importKey() {
-      const json = await loadKeystore(this.file);
-      const key = await getPrivateKey(this.pwd, json);
+      const key = await getPrivateKey(this.pwd, this.json);
+      console.log(key);
+      const wallet = await getWallet(key);
+      console.log('wallet: ', wallet);
       const hexKey = this.toHexString(key);
       this.$q.localStorage.set('catalyst-node-key', hexKey);
     },

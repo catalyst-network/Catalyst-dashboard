@@ -43,22 +43,29 @@ export default {
 
     this.rpc.eth_chainId().then(console.log);
 
-    Node.insert({
+    Node.create({
       data: {
         status: 'online',
         version: '0.12',
-        peerId: 'GK42OCZ447YBR62MIWNNLYEB7M4UFZDDSGYKHUWJGWOJLRB7PEZQ',
+        peerId: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
         reputation: 97,
       },
     });
     const address = publicKeyToAddress(Node.all()[0].peerId);
 
-    Wallet.insertOrUpdate({
-      data: {
-        address,
-        nodeId: 'GK42OCZ447YBR62MIWNNLYEB7M4UFZDDSGYKHUWJGWOJLRB7PEZQ',
-      },
-    });
+    if (this.$q.localStorage.getItem(address)) {
+      Wallet.create({
+        data: {
+          address,
+          nodeId: Node.all()[0].peerId,
+        },
+      });
+    } else {
+      Wallet.create({
+        data: [],
+      });
+    }
+
     const charts = Charts.all();
     if (!charts || charts.length < 2) {
       Charts.insert({
