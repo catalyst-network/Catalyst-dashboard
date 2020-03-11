@@ -3,12 +3,6 @@ import { HDWalletProvider } from '@catalyst-net-js/truffle-provider';
 import keythereum from 'keythereum';
 
 
-const mnemonic = 'silly funny task remove diamond maximum rack awesome sting chalk recycle also social banner verify';
-
-const provider = new HDWalletProvider(mnemonic, 'http://192.168.1.233:5005/api/eth/request');
-const web3 = new Web3(provider);
-
-
 export async function getPrivateKey(password, json) {
   return keythereum.recover(password, JSON.parse(json));
 }
@@ -29,7 +23,13 @@ export async function loadKeystore(file) {
   });
 }
 
-export function sendTransaction(to, amount) {
+function getProvider(pKey) {
+  return new HDWalletProvider([pKey], process.env.NODE_API);
+}
+
+export function sendTransaction(to, amount, pKey) {
+  const provider = getProvider(pKey);
+  const web3 = new Web3(provider);
   const value = `0x${(amount * (10 ** 18)).toString(16)}`;
   const address = provider.getAddress();
   web3.eth.sendTransaction({

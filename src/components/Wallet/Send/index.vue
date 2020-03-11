@@ -1,6 +1,14 @@
 <template>
   <div>
-    Send Transaction
+    <div class="row">
+      Send Transaction
+    </div>
+    <q-input
+      label="to"
+    />
+    <q-input
+      label="value"
+    />
   </div>
 </template>
 <script>

@@ -69,6 +69,7 @@ module.exports = function (ctx) {
         'QCardActions',
         'QChip',
         'QToggle',
+        'QFile',
       ],
 
       directives: [
@@ -79,7 +80,8 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'LocalStorage',
       ]
     },
 

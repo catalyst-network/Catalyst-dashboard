@@ -34,7 +34,7 @@ export default {
   async mounted() {
     this.rpc = new ERPC({
       transport: {
-        host: '192.168.1.45',
+        host: '77.68.110.194',
         port: 5005,
         type: 'http',
         path: '/api/eth/request',

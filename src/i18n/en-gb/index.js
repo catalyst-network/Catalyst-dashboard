@@ -21,6 +21,7 @@ export default {
   awol: 'Awol',
   // Balance
   balance: 'Balance',
+  wallet: 'Wallet',
   walletAddress: 'Wallet Address',
   copy: 'copy',
   copied: 'copied',

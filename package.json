@@ -22,7 +22,7 @@
     "ethereumjs-util": "^6.2.0",
     "keythereum": "^1.0.4",
     "qrcode": "^1.4.1",
-    "quasar": "^1.0.0",
+    "quasar": "^1.8.0",
     "v-clipboard": "^2.2.2",
     "vue-chartjs": "^3.4.2",
     "vue-i18n": "^8.0.0",
@@ -36,7 +36,8 @@
     "dotenv": "^8.0.0",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^5.0.0"
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.13.1"
   },
   "engines": {
     "node": ">= 8.9.0",
