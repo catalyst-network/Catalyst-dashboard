@@ -10,6 +10,7 @@ export default class Wallet extends Model {
       balance: this.attr(''),
       nodeId: this.attr(''),
       address: this.attr(''),
+      secret: this.attr(''),
     };
   }
 }

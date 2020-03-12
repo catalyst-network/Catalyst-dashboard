@@ -10,7 +10,7 @@ import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
-import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
+import { refreshMempool } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
 import { publicKeyToAddress } from './helpers/Common';
 
@@ -34,7 +34,7 @@ export default {
   async mounted() {
     this.rpc = new ERPC({
       transport: {
-        host: '77.68.110.194',
+        host: '77.68.110.197',
         port: 5005,
         type: 'http',
         path: '/api/eth/request',
@@ -94,7 +94,7 @@ export default {
     setInterval(() => {
       RefreshPeers();
       refreshMempool();
-      updateBalance();
+      // updateBalance();
       this.updateNetwork();
     }, 5000);
 

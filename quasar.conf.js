@@ -103,7 +103,20 @@ module.exports = function (ctx) {
           options: {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
-        });
+        },
+        {
+          test: /\.wasm$/,
+          type: 'javascript/auto',
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'wasm/[name].[hash].[ext]',
+                      publicPath: '../'
+                  }
+              }
+          ]
+      });
 
         cfg.resolve.alias = {
           ...cfg.resolve.alias,

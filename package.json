@@ -11,9 +11,9 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@catalyst-net-js/common": "0.0.10-alpha.5",
-    "@catalyst-net-js/truffle-provider": "0.0.9",
-    "@catalyst-net-js/wallet": "0.0.10-alpha.5",
+    "@catalyst-net-js/truffle-provider": "0.1",
+    "@catalyst-net-js/wallet": "0.1",
+    "@catalyst-net-js/common": "0.1",
     "@etclabscore/ethereum-json-rpc": "^1.3.6",
     "@quasar/extras": "^1.0.0",
     "@vuex-orm/core": "^0.32.1",

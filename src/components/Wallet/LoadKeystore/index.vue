@@ -68,6 +68,9 @@
 
 <script>
 import { loadKeystore, getPrivateKey, getWallet } from '../../../helpers/SendTx';
+import Wallet from '../../../store/Wallet';
+import Node from '../../../store/Node';
+
 
 export default {
   name: 'LoadKeystore',
@@ -102,7 +105,14 @@ export default {
       const wallet = await getWallet(key);
       console.log('wallet: ', wallet);
       const hexKey = this.toHexString(key);
-      this.$q.localStorage.set('catalyst-node-key', hexKey);
+      this.$q.localStorage.set(wallet.getAddressString(), hexKey);
+      Wallet.create({
+        data: {
+          address: wallet.getAddressString(),
+          nodeId: Node.all()[0].peerId,
+          secret: hexKey,
+        },
+      });
     },
   },
 };

@@ -1,15 +1,20 @@
 import Web3 from 'web3';
 import { HDWalletProvider } from '@catalyst-net-js/truffle-provider';
-import Wallet from '@catalyst-net-js/wallet';
+// import * as Wallet from '@catalyst-net-js/wallet';
 import keythereum from 'keythereum';
 
+async function loadWallet() {
+  return import('@catalyst-net-js/wallet');
+}
 
 export async function getPrivateKey(password, json) {
   return keythereum.recover(password, JSON.parse(json));
 }
 
 export async function getWallet(privateKey) {
-  return Wallet.generateFromPrivateKey(privateKey);
+  const Wallet = await loadWallet();
+  console.log(Wallet);
+  return Wallet.default.generateFromPrivateKey(privateKey);
 }
 
 
