@@ -4,16 +4,32 @@ import { HDWalletProvider } from '@catalyst-net-js/truffle-provider';
 import keythereum from 'keythereum';
 
 async function loadWallet() {
-  return import('@catalyst-net-js/wallet');
+  const Wallet = await import('@catalyst-net-js/wallet');
+  return Wallet;
+}
+
+async function loadWasm() {
+  return import('@catalyst-net-js/wasm-ed25519ph');
+}
+
+async function publicKeyFor32BytePrivateKey(privateKey) {
+  const wasmLib = await loadWasm();
+  const publicKey = new Uint8Array(32);
+  wasmLib.public_key_from_private(publicKey, privateKey);
+  return publicKey;
 }
 
 export async function getPrivateKey(password, json) {
   return keythereum.recover(password, JSON.parse(json));
 }
 
+
 export async function getWallet(privateKey) {
   const Wallet = await loadWallet();
-  console.log(Wallet);
+  const publicKey = publicKeyFor32BytePrivateKey(privateKey);
+  const secretKey = new Uint8Array(64);
+  secretKey.set(privateKey);
+  secretKey.set(publicKey, privateKey.length);
   return Wallet.default.generateFromPrivateKey(privateKey);
 }
 

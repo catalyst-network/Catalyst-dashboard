@@ -5,6 +5,7 @@ const envparser = require('./config/envparser');
 
 const path = require('path');
 
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
@@ -102,21 +103,14 @@ module.exports = function (ctx) {
           exclude: /node_modules/,
           options: {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
-          }
-        },
-        {
-          test: /\.wasm$/,
-          type: 'javascript/auto',
-          use: [
-              {
-                  loader: 'file-loader',
-                  options: {
-                      name: 'wasm/[name].[hash].[ext]',
-                      publicPath: '../'
-                  }
-              }
-          ]
-      });
+          },
+        });
+
+        // cfg.entry = "./bootstrap.js";
+        // cfg.output = {
+        //   path: path.resolve(__dirname, "dist"),
+        //   filename: "bootstrap.js",
+        // };
 
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
