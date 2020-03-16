@@ -12,7 +12,7 @@
             <NetworkStatus />
           </div>
           <div class="col-12 col-md-5 col-lg">
-            <Wallet />
+            <Balance />
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@
 <script>
 import NodeStatus from '../../components/NodeStatus';
 import NetworkStatus from '../../components/NetworkStatus';
-import Wallet from '../../components/Wallet';
+import Balance from '../../components/Wallet';
 import PeerList from '../../components/PeerList';
 import Mempool from '../../components/Mempool';
 import BarChart from '../../components/Chart/index.js';
@@ -102,7 +102,7 @@ export default {
   components: {
     NodeStatus,
     NetworkStatus,
-    Wallet,
+    Balance,
     PeerList,
     Mempool,
     BarChart,

@@ -7,7 +7,7 @@
     >
       <q-card-section>
         <div class="text-h6 default-font-bold text-warning">
-          {{ $t('wallet') }}
+          {{ $t('balance') }}
         </div>
       </q-card-section>
       <q-card-section>

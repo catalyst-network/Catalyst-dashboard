@@ -34,14 +34,12 @@ export default {
   async mounted() {
     this.rpc = new ERPC({
       transport: {
-        host: '77.68.110.197',
+        host: process.env.NODE_API,
         port: 5005,
         type: 'http',
         path: '/api/eth/request',
       },
     });
-
-    this.rpc.eth_chainId().then(console.log);
 
     Node.create({
       data: {
@@ -53,18 +51,18 @@ export default {
     });
     const address = publicKeyToAddress(Node.all()[0].peerId);
 
-    if (this.$q.localStorage.getItem(address)) {
-      Wallet.create({
-        data: {
-          address,
-          nodeId: Node.all()[0].peerId,
-        },
-      });
-    } else {
-      Wallet.create({
-        data: [],
-      });
-    }
+    // if (this.$q.localStorage.getItem(address)) {
+    Wallet.create({
+      data: {
+        address,
+        nodeId: Node.all()[0].peerId,
+      },
+    });
+    // } else {
+    //   Wallet.create({
+    //     data: [],
+    //   });
+    // }
 
     const charts = Charts.all();
     if (!charts || charts.length < 2) {

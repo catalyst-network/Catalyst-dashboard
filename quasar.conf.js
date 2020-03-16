@@ -15,6 +15,7 @@ module.exports = function (ctx) {
       'vClipboard',
       'axios',
       'base32',
+      'wallet',
     ],
 
     css: [
@@ -105,6 +106,27 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           },
         });
+
+        const wasmExtensionRegExp = /\.wasm$/;
+
+        cfg.resolve.extensions.push('.wasm');
+
+        // cfg.module.rules.forEach(rule => {
+        //   (rule.oneOf || []).forEach(oneOf => {
+        //   if (oneOf.loader && oneOf.loader.indexOf('file-loader') >= 0) {
+        //   // make file-loader ignore WASM files
+        //   oneOf.exclude.push(wasmExtensionRegExp);
+        // }
+        // });
+        // });
+
+        // add a dedicated loader for WASM
+        cfg.module.rules.push({
+        test: wasmExtensionRegExp,
+        type: 'javascript/auto',
+        // include: path.resolve(__dirname, './src/'),
+        use: [{ loader: require.resolve('wasm-loader'), options: {} }]
+      });
 
         // cfg.entry = "./bootstrap.js";
         // cfg.output = {

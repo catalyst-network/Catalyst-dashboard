@@ -36,7 +36,10 @@
           <div class="col-2 text-secondary default-font-bold text-uppercase">
             {{ $t('peerId') }}:
           </div>
-          <div class="col overflow text-right text-caption">
+          <div
+            v-if="node"
+            class="col overflow text-right text-caption"
+          >
             {{ toAddress(node.peerId) }}
           </div>
         </div>
@@ -52,7 +55,10 @@
           <div class="col text-secondary default-font-bold text-uppercase">
             {{ $t('version') }}:
           </div>
-          <div class="col text-right text-caption">
+          <div
+            v-if="node"
+            class="col text-right text-caption"
+          >
             {{ node.version }}
           </div>
         </div>
@@ -80,14 +86,20 @@ export default {
       return Node.all()[0];
     },
     peer() {
-      return Peer.find(this.node.peerId);
+      if (this.node) {
+        return Peer.find(this.node.peerId);
+      }
+      return null;
     },
     status() {
       const now = Date.now();
-      if ((now - this.peer.lastSeen) > 20000) {
-        return 'Offline';
+      if (this.node) {
+        if ((now - this.peer.lastSeen) > 20000) {
+          return 'Offline';
+        }
+        return 'Online now';
       }
-      return 'Online now';
+      return 'Offline';
     },
     online() {
       return this.status === 'Online now';

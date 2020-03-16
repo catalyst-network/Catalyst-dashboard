@@ -7,7 +7,7 @@ export default class Wallet extends Model {
 
   static fields() {
     return {
-      balance: this.attr(''),
+      balance: this.attr(0),
       nodeId: this.attr(''),
       address: this.attr(''),
       secret: this.attr(''),

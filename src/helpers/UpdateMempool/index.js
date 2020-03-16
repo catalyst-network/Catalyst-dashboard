@@ -7,7 +7,7 @@ import Tx from '../../store/Tx';
 
 const rpc = new ERPC({
   transport: {
-    host: '192.168.1.45',
+    host: process.env.NODE_API,
     port: 5005,
     type: 'http',
     path: '/api/eth/request',

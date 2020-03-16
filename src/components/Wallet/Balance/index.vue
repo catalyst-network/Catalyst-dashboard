@@ -33,7 +33,7 @@
           {{ copied }}
         </q-tooltip>
       </div>
-      <div class="col-auto text-center">
+      <div class="col-auto q-pt-sm text-center">
         <!-- <q-btn
           v-clipboard="wallet.address"
           icon="content_copy"
@@ -68,7 +68,7 @@
             {{ $t('qrCode') }}
           </q-tooltip>
         </q-btn>
-        <q-btn
+        <!-- <q-btn
           icon="fas fa-paper-plane"
           size="sm"
           flat
@@ -83,7 +83,7 @@
           >
             {{ $t('send transaction') }}
           </q-tooltip>
-        </q-btn>
+        </q-btn> -->
       </div>
     </div>
     <q-dialog v-model="qrDialog">

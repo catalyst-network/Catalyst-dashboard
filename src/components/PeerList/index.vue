@@ -10,7 +10,7 @@
           {{ $t('connectedPeers') }}
         </div>
         <div class="text-warning text-uppercase default-font-bold">
-          {{ $t('activeNodes') }}: {{ activeNodes }} / {{ node.peers.length }}
+          {{ $t('activeNodes') }}: {{ activeNodes }} / {{ peers.length }}
         </div>
       </div>
     </q-card-section>
@@ -39,7 +39,7 @@
       </div>
       <q-scroll-area class="peer-scrollarea">
         <PeerListItem
-          v-for="peer in node.peers"
+          v-for="peer in peers"
           :key="peer.peerId"
           :peer="peer"
         />
@@ -62,15 +62,22 @@ export default {
     node() {
       return Node.query().withAll().first();
     },
+    peers() {
+      if (this.node) return this.node.peers;
+      return [];
+    },
     activeNodes() {
-      const active = this.node.peers.filter((peer) => {
-        const now = Date.now();
-        if ((now - peer.lastSeen) > 20000) {
-          return false;
-        }
-        return true;
-      });
-      return active.length;
+      if (this.node) {
+        const active = this.node.peers.filter((peer) => {
+          const now = Date.now();
+          if ((now - peer.lastSeen) > 20000) {
+            return false;
+          }
+          return true;
+        });
+        return active.length;
+      }
+      return 0;
     },
   },
 

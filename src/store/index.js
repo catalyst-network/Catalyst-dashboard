@@ -28,11 +28,11 @@ database.register(Tx);
 database.register(Charts);
 
 
-window.Node = Node;
-window.Peer = Peer;
-window.Wallet = Wallet;
-window.Tx = Tx;
-window.Charts = Charts;
+// window.Node = Node;
+// window.Peer = Peer;
+// window.Wallet = Wallet;
+// window.Tx = Tx;
+// window.Charts = Charts;
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation
