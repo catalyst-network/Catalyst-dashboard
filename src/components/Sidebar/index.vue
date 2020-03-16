@@ -48,6 +48,29 @@
           <q-item-label>{{ $t('settings') }}</q-item-label>
         </q-item-section>
       </q-item>
+      <q-select
+        v-model="options[0]"
+        filled
+        :options="options"
+        label="Node:"
+        color="teal"
+        options-selected-class="primary"
+        @input="changeNode"
+      >
+        <template v-slot:option="scope">
+          <q-item
+            v-bind="scope.itemProps"
+            v-on="scope.itemEvents"
+          >
+            <q-item-section>
+              <q-item-label v-html="scope.opt.label" />
+              <q-item-label caption>
+                {{ scope.opt.description }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-select>
     </q-list>
     <div class="row justify-center dark-mode">
       <q-toggle
@@ -69,6 +92,40 @@ export default {
   data() {
     return {
       page: 'main',
+      options: [
+        {
+          label: 'Node 1',
+          value: 'Google',
+          description: 'Testnet Node 1 (linux)',
+        },
+        {
+          label: 'Node 2',
+          value: 'Facebook',
+          description: 'Testnet Node 2 (linux)',
+        },
+        {
+          label: 'Node 3',
+          value: 'Twitter',
+          description: 'Testnet Node 3 (linux)',
+        },
+        {
+          label: 'Node 4',
+          value: 'Apple',
+          description: 'Testnet Node 4 (windows)',
+        },
+        {
+          label: 'Node 5',
+          value: 'Oracle',
+          disable: true,
+          description: 'Non POA node',
+        },
+      ],
+      model: {
+        label: 'Node 1',
+        value: 'Google',
+        description: 'Testnet Node 1 (linux)',
+        icon: 'mail',
+      },
     };
   },
 
@@ -115,6 +172,9 @@ export default {
       colors.setBrand('negative', '#000000');
       colors.setBrand('info', '#ffffff');
       colors.setBrand('warning', '#19445b');
+    },
+    changeNode(node) {
+      console.log('node: ', node);
     },
   },
 };

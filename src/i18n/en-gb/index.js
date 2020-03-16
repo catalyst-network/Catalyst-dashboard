@@ -28,9 +28,9 @@ export default {
   qrCode: 'QR code',
   // NetworkStatus
   networkStatus: 'Network Status',
-  totalLedgerCycles: 'Total Ledger Cycles',
-  averageLedgerTime: 'Average Ledger Time',
-  totalTransactions: 'Total Transactions',
+  totalLedgerCycles: 'Total Deltas',
+  averageLedgerTime: 'Average Delta Time',
+  totalTransactions: 'Transactions in last 50 Deltas',
   walletAddresses: 'Wallet Addresses',
   lastLedger: 'Last Ledger',
   ago: 'ago',

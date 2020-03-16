@@ -72,6 +72,9 @@ module.exports = function (ctx) {
         'QChip',
         'QToggle',
         'QFile',
+        'QInnerLoading',
+        'QSpinner',
+        'QSelect',
       ],
 
       directives: [
@@ -84,6 +87,7 @@ module.exports = function (ctx) {
       plugins: [
         'Notify',
         'LocalStorage',
+        'Loading',
       ]
     },
 

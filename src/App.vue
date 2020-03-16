@@ -1,6 +1,18 @@
 <template>
-  <div id="q-app">
+  <div
+    v-if="!loading"
+    id="q-app"
+  >
     <router-view />
+    <q-inner-loading
+      dark
+      :showing="loading"
+    >
+      <q-spinner
+        size="75px"
+        color="secondary"
+      />
+    </q-inner-loading>
   </div>
 </template>
 
@@ -22,6 +34,7 @@ export default {
     return {
       lastLedgerTxCount: null,
       rpc: null,
+      loading: true,
     };
   },
 
@@ -32,6 +45,8 @@ export default {
   },
 
   async mounted() {
+    this.loading = true;
+
     this.rpc = new ERPC({
       transport: {
         host: process.env.NODE_API,
@@ -111,41 +126,20 @@ export default {
         },
       });
     }
-
-    setInterval(() => {
+    const update = () => {
       RefreshPeers();
       refreshMempool();
       updateBalance();
       this.updateNetwork();
-    }, 5000);
+    };
 
-    // this.mockChartData();
+    setInterval(update, 5000);
+    await update();
+    this.loading = false;
   },
 
   methods: {
     async updateNetwork() {
-      // console.log('update network');
-      // const newLedgerCycles = await this.rpc.eth_blockNumber();
-
-      // console.log('ledger cycles: ', newLedgerCycles);
-      // console.log(this.network);
-      // if (newLedgerCycles !== this.network.ledgerCycles) {
-      //   const txChart = Charts.find('transactions');
-      //   txChart.labels.push(this.network.ledgerCycles);
-      //   txChart.labels.shift();
-      //   Charts.update({
-      //     where: 'transactions',
-      //     data: { labels: txChart.labels },
-      //   });
-      //   this.$store.dispatch('Network/setLedgerCycles', newLedgerCycles);
-
-
-      //   this.$store.dispatch('Network/setLastLedgerTime', Date.now());
-      //   // const txCount = this.network.totalTxs + 20;
-      //   const txCount = Charts.find('transactions').datasets[0].data[49];
-      //   this.$store.dispatch('Network/setTotalTxs', txCount);
-      // }
-
       const latestDelta = await this.rpc.eth_getBlockByNumber('latest', true);
       console.log('ledger delta: ', latestDelta);
       this.$store.dispatch('Network/setLedgerCycles', parseInt(latestDelta.number, 16));
@@ -197,59 +191,13 @@ export default {
         this.$store.dispatch('Network/setLastLedgerTime', latestDelta.timestamp);
       }
     },
-
-    mockChartData() {
-      function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min;
-      }
-      let ledgerCycles = 1;
-
-      setInterval(() => {
-        const txChart = Charts.find('transactions');
-        txChart.labels.push(`Ledger Cycle: ${ledgerCycles}`);
-        txChart.labels.shift();
-        const newTxs = getRandomInt(19, 25);
-        txChart.datasets[0].data.push(newTxs);
-        txChart.datasets[0].data.shift();
-
-        Charts.update({
-          where: 'transactions',
-          data: {
-            labels: txChart.labels,
-            datasets: [{
-              data: txChart.datasets[0].data,
-              backgroundColor: txChart.datasets[0].backgroundColor,
-            }],
-          },
-        });
-
-        const ledgerTimeChart = Charts.find('ledgerTime');
-        ledgerTimeChart.labels.push('');
-        ledgerTimeChart.labels.shift();
-        ledgerTimeChart.datasets[0].data.push(5);
-        ledgerTimeChart.datasets[0].data.shift();
-
-        Charts.update({
-          where: 'ledgerTime',
-          data: {
-            labels: ledgerTimeChart.labels,
-            datasets: [{
-              data: ledgerTimeChart.datasets[0].data,
-              backgroundColor: ledgerTimeChart.datasets[0].backgroundColor,
-            }],
-          },
-        });
-
-        const txCount = this.network.totalTxs + newTxs;
-        this.$store.dispatch('Network/setTotalTxs', txCount);
-        ledgerCycles += 1;
-      }, 5000);
-    },
   },
 };
 </script>
 
-<style>
+<style lang="stylus" scoped>
+
+.q-inner-loading--dark
+  background $primary
+
 </style>
