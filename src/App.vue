@@ -10,9 +10,9 @@ import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
-import { refreshMempool } from './helpers/UpdateMempool';
+import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
-import { publicKeyToAddress } from './helpers/Common';
+import { publicKeyToAddress, getBlocks } from './helpers/Common';
 
 
 export default {
@@ -64,6 +64,29 @@ export default {
     //   });
     // }
 
+    const blockHeight = await this.rpc.eth_blockNumber();
+    let blocks;
+    if (blockHeight >= 50) {
+      blocks = await getBlocks((blockHeight - 49), blockHeight, this.rpc);
+    } else {
+      blocks = await getBlocks(0, blockHeight, this.rpc);
+    }
+
+    const txs = blocks.map(({ transactions }) => transactions.length);
+    for (let i = 0; i < (50 - txs.length); i += 1) {
+      txs.unshift(0);
+    }
+
+    const deltaTimes = blocks.map(({ timestamp }, i) => {
+      if (blocks[i + 1]) {
+        return -(parseInt(timestamp, 16) - parseInt(blocks[i + 1].timestamp, 16));
+      }
+      return null;
+    }).filter(Number);
+    for (let i = 0; i < (50 - deltaTimes.length); i += 1) {
+      deltaTimes.unshift(0);
+    }
+
     const charts = Charts.all();
     if (!charts || charts.length < 2) {
       Charts.insert({
@@ -72,7 +95,7 @@ export default {
           labels: new Array(50).fill(''),
           datasets: [{
             backgroundColor: '#16ac9f',
-            data: new Array(50).fill(0),
+            data: txs,
           }],
         },
       });
@@ -83,7 +106,7 @@ export default {
           labels: new Array(50).fill(''),
           datasets: [{
             backgroundColor: '#16ac9f',
-            data: new Array(50).fill(19),
+            data: deltaTimes,
           }],
         },
       });
@@ -92,7 +115,7 @@ export default {
     setInterval(() => {
       RefreshPeers();
       refreshMempool();
-      // updateBalance();
+      updateBalance();
       this.updateNetwork();
     }, 5000);
 
