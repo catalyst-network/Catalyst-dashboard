@@ -79,7 +79,7 @@
         </div>
         <div
           class="row"
-          style="margin-top: 20px"
+          style="margin-top: 5px"
         />
         <div class="row justify-end text-warning text-uppercase default-font-bold">
           {{ $t('lastLedger') }}:
