@@ -41,9 +41,11 @@ export default {
     ...mapState({
       network: (state => state.Network),
     }),
+    node() {
+      return Node.all()[0] ? Node.all()[0] : null;
+    },
     rpc() {
-      if (Node.all()[0]) return Node.all()[0].rpc;
-      return null;
+      return this.node ? this.node.rpc : null;
     },
   },
 
@@ -53,9 +55,10 @@ export default {
     await this.start();
 
     const update = () => {
+      console.log('Node: ', this.node);
       RefreshPeers();
-      refreshMempool();
-      updateBalance();
+      refreshMempool(this.rpc);
+      updateBalance(this.rpc);
       this.updateNetwork();
     };
 

@@ -53,8 +53,9 @@
         filled
         :options="options"
         label="Network:"
+        label-color="white"
         color="secondary"
-        options-selected-class="primary"
+        options-selected-class="secondary"
         @input="changeNode"
       >
         <template v-slot:option="scope">
@@ -232,5 +233,9 @@ export default {
 
 .dark-mode {
     margin-top: 3rem;
+}
+
+.q-field__marginal {
+  color: white;
 }
 </style>

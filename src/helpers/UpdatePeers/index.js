@@ -11,7 +11,7 @@ import { bytesToBase32 } from '../../boot/base32';
 // }
 
 async function getPeers() {
-  const peerApi = await axios.get(`http://${process.env.NODE_API}:5005/api/Peer/GetAllPeers`);
+  const peerApi = await axios.get(`http://${Node.all()[0].ipAddress}:5005/api/Peer/GetAllPeers`);
   console.log(peerApi);
   const peers = peerApi.data.map(peer => ({
     peerId: bytesToBase32(peer.PeerId.PublicKey),

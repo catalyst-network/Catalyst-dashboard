@@ -1,21 +1,21 @@
 /* eslint-disable no-nested-ternary */
-import ERPC from '@etclabscore/ethereum-json-rpc';
+// import ERPC from '@etclabscore/ethereum-json-rpc';
 import Wallet from '../../store/Wallet';
 import Tx from '../../store/Tx';
 // import Charts from '../../store/Charts';
 
 
-const rpc = new ERPC({
-  transport: {
-    host: process.env.NODE_API,
-    port: 5005,
-    type: 'http',
-    path: '/api/eth/request',
-  },
-});
+// const rpc = new ERPC({
+//   transport: {
+//     host: process.env.NODE_API,
+//     port: 5005,
+//     type: 'http',
+//     path: '/api/eth/request',
+//   },
+// });
 
 
-async function getMempool() {
+async function getMempool(rpc) {
   const txApi = await rpc.eth_pendingTransactions();
   const txs = txApi.map(tx => ({
     txHash: tx.hash,
@@ -52,22 +52,10 @@ async function getMempool() {
 // }
 
 function storeMempool(txs) {
-  // console.log('mempool size: ', txs.length);
-  // const storedTxs = Tx.all().map(tx => tx.txHash);
-  // const txIds = txs.map(tx => tx.txHash);
-
-  // if (storedTxs.length > 0) {
-  //   const newTxs = txs.filter(tx => !storedTxs.includes(tx.txHash));
-  //   const oldTxs = Tx.all().filter(tx => !txIds.includes(tx.txHash));
-  //   insertTxs(newTxs);
-  //   flushMempool(oldTxs);
-  // }
-  // insertTxs(txs);
-
   Tx.create({ data: txs });
 }
 
-export async function updateBalance() {
+export async function updateBalance(rpc) {
   const { address } = Wallet.all()[0];
   const balance = await rpc.eth_getBalance(address);
   Wallet.update({
@@ -76,8 +64,8 @@ export async function updateBalance() {
   });
 }
 
-export async function refreshMempool() {
-  const txs = await getMempool();
+export async function refreshMempool(rpc) {
+  const txs = await getMempool(rpc);
   storeMempool(txs);
 }
 
