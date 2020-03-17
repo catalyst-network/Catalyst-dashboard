@@ -23,4 +23,10 @@ export default class Peer extends Model {
       inactiveFor: this.attr(''),
     };
   }
+
+  get rating() {
+    if (this.reputation === 0) return 100;
+
+    return 100 - ((Math.abs(this.reputation) / 10000) * 100);
+  }
 }

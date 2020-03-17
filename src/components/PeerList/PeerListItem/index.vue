@@ -47,7 +47,7 @@
           anchor="top right"
           self="bottom left"
         >
-          {{ peer.reputation }} / 100
+          {{ peer.rating }}%
         </q-tooltip>
       </div>
       <div class="col text-right">
@@ -140,7 +140,7 @@
                 readonly
                 class="peer-rating"
               />
-              {{ peer.reputation }}
+              {{ peer.rating }}%
             </div>
           </div>
           <div class="row peer-item justify-between">
@@ -190,8 +190,8 @@ export default {
   },
   data() {
     return {
-      rating: (Math.round(this.peer.reputation / 10) / 2),
-      detailsRating: Math.round(this.peer.reputation / 10),
+      rating: (Math.round(this.peer.rating / 10) / 2),
+      detailsRating: Math.round(this.peer.rating / 10),
       fullDetails: false,
       location: {
         city: '',
@@ -239,10 +239,11 @@ export default {
 
   methods: {
     async getLocation() {
-      console.log(this.peer.address.substring(0, 3));
+      console.log('called');
       if (this.peer.address.substring(0, 3) !== '192') {
-        const query = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=${process.env.IP_API_KEY}`);
-        const loc = query.data;
+        const location = await this.$axios.get(`http://api.ipstack.com/${this.peer.address}?access_key=${process.env.IP_API_KEY}`);
+        const loc = location.data;
+        console.log(location);
         if (loc.country_code) {
           this.location = {
             city: loc.city,

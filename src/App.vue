@@ -53,7 +53,6 @@ export default {
     this.loading = true;
 
     await this.start();
-
     const update = () => {
       console.log('Node: ', this.node);
       RefreshPeers();
