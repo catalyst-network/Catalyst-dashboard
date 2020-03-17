@@ -18,7 +18,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import ERPC from '@etclabscore/ethereum-json-rpc';
+// import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from './store/Node';
 import Wallet from './store/Wallet';
 import RefreshPeers from './helpers/UpdatePeers';
@@ -33,7 +33,6 @@ export default {
   data() {
     return {
       lastLedgerTxCount: null,
-      rpc: null,
       loading: true,
     };
   },
@@ -42,25 +41,30 @@ export default {
     ...mapState({
       network: (state => state.Network),
     }),
+    rpc() {
+      if (Node.all()[0]) return Node.all()[0].rpc;
+      return null;
+    },
   },
 
   async mounted() {
     this.loading = true;
 
-    this.rpc = new ERPC({
-      transport: {
-        host: process.env.NODE_API,
-        port: 5005,
-        type: 'http',
-        path: '/api/eth/request',
-      },
-    });
+    // this.rpc = new ERPC({
+    //   transport: {
+    //     host: process.env.NODE_API,
+    //     port: 5005,
+    //     type: 'http',
+    //     path: '/api/eth/request',
+    //   },
+    // });
 
     Node.create({
       data: {
         status: 'online',
         version: '0.12',
         peerId: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
+        ipAddress: '77.68.110.197',
         reputation: 97,
       },
     });
@@ -78,7 +82,7 @@ export default {
     //     data: [],
     //   });
     // }
-
+    console.log(this.rpc);
     const blockHeight = await this.rpc.eth_blockNumber();
     let blocks;
     if (blockHeight >= 50) {

@@ -52,8 +52,8 @@
         v-model="options[0]"
         filled
         :options="options"
-        label="Node:"
-        color="teal"
+        label="Network:"
+        color="secondary"
         options-selected-class="primary"
         @input="changeNode"
       >
@@ -95,36 +95,53 @@ export default {
       options: [
         {
           label: 'Node 1',
-          value: 'Google',
+          value: {
+            ipAddress: '77.68.110.194',
+            publicKey: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
+          },
           description: 'Testnet Node 1 (linux)',
         },
         {
           label: 'Node 2',
-          value: 'Facebook',
+          value: {
+            ipAddress: '77.68.110.195',
+            publicKey: 'AOWRYB5LXZVZ3PT4ENCBMQ6FYOKBZWB4I7LRDYKUNCZUBPOWYQEQ',
+          },
           description: 'Testnet Node 2 (linux)',
         },
         {
           label: 'Node 3',
-          value: 'Twitter',
+          value: {
+            ipAddress: '77.68.110.196',
+            publicKey: 'F3PXMGUZLIUZV3MK6BKDM4QRO5QV5JVWEUTKVXTQFG35QNZFVOGQ',
+          },
           description: 'Testnet Node 3 (linux)',
         },
         {
           label: 'Node 4',
-          value: 'Apple',
+          value: {
+            ipAddress: '77.68.110.197',
+            publicKey: '3S3VLMIVYOOX7HYUK6ZBPITI5LFVNVP2BTWOUBGP6I3UI5X4NYDQ',
+          },
           description: 'Testnet Node 4 (windows)',
         },
         {
           label: 'Node 5',
-          value: 'Oracle',
+          value: {
+            ipAddress: '77.68.110.13',
+            publicKey: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
+          },
           disable: true,
           description: 'Non POA node',
         },
       ],
       model: {
-        label: 'Node 1',
-        value: 'Google',
-        description: 'Testnet Node 1 (linux)',
-        icon: 'mail',
+        label: 'Node 4',
+        value: {
+          ipAddress: '77.68.110.97',
+          publicKey: '3S3VLMIVYOOX7HYUK6ZBPITI5LFVNVP2BTWOUBGP6I3UI5X4NYDQ',
+        },
+        description: 'Testnet Node 4 (windows)',
       },
     };
   },
