@@ -14,7 +14,7 @@
         {{ tx.peerId }}
       </div>
       <div class="col text-left overflow">
-        {{ new Date(tx.time).toTimeString() }}
+        {{ tx.to }}
       </div>
       <div
         class="col-1 text-left overflow"

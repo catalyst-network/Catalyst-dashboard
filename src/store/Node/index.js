@@ -1,5 +1,10 @@
 import { Model } from '@vuex-orm/core';
 import ERPC from '@etclabscore/ethereum-json-rpc';
+import {
+  addressFromPublicKey,
+  hexStringFromBytes,
+  bytesFromBase32String,
+} from '@catalyst-net-js/common';
 import Peer from '../Peer';
 import Wallet from '../Wallet';
 
@@ -18,6 +23,13 @@ export default class Node extends Model {
       peers: this.hasMany(Peer, 'nodeId'),
       wallet: this.hasOne(Wallet, 'nodeId'),
     };
+  }
+
+  get address() {
+    const bytes = bytesFromBase32String(this.peerId);
+    const addressBytes = addressFromPublicKey(bytes);
+
+    return `0x${hexStringFromBytes(addressBytes)}`;
   }
 
   get rpc() {

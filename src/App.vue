@@ -50,86 +50,8 @@ export default {
   async mounted() {
     this.loading = true;
 
-    // this.rpc = new ERPC({
-    //   transport: {
-    //     host: process.env.NODE_API,
-    //     port: 5005,
-    //     type: 'http',
-    //     path: '/api/eth/request',
-    //   },
-    // });
+    await this.start();
 
-    Node.create({
-      data: {
-        status: 'online',
-        version: '0.12',
-        peerId: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
-        ipAddress: '77.68.110.197',
-        reputation: 97,
-      },
-    });
-    const address = publicKeyToAddress(Node.all()[0].peerId);
-
-    // if (this.$q.localStorage.getItem(address)) {
-    Wallet.create({
-      data: {
-        address,
-        nodeId: Node.all()[0].peerId,
-      },
-    });
-    // } else {
-    //   Wallet.create({
-    //     data: [],
-    //   });
-    // }
-    console.log(this.rpc);
-    const blockHeight = await this.rpc.eth_blockNumber();
-    let blocks;
-    if (blockHeight >= 50) {
-      blocks = await getBlocks((blockHeight - 49), blockHeight, this.rpc);
-    } else {
-      blocks = await getBlocks(0, blockHeight, this.rpc);
-    }
-
-    const txs = blocks.map(({ transactions }) => transactions.length);
-    for (let i = 0; i < (50 - txs.length); i += 1) {
-      txs.unshift(0);
-    }
-
-    const deltaTimes = blocks.map(({ timestamp }, i) => {
-      if (blocks[i + 1]) {
-        return -(parseInt(timestamp, 16) - parseInt(blocks[i + 1].timestamp, 16));
-      }
-      return null;
-    }).filter(Number);
-    for (let i = 0; i < (50 - deltaTimes.length); i += 1) {
-      deltaTimes.unshift(0);
-    }
-
-    const charts = Charts.all();
-    if (!charts || charts.length < 2) {
-      Charts.insert({
-        data: {
-          id: 'transactions',
-          labels: new Array(50).fill(''),
-          datasets: [{
-            backgroundColor: '#16ac9f',
-            data: txs,
-          }],
-        },
-      });
-
-      Charts.insert({
-        data: {
-          id: 'ledgerTime',
-          labels: new Array(50).fill(''),
-          datasets: [{
-            backgroundColor: '#16ac9f',
-            data: deltaTimes,
-          }],
-        },
-      });
-    }
     const update = () => {
       RefreshPeers();
       refreshMempool();
@@ -143,6 +65,80 @@ export default {
   },
 
   methods: {
+    async start() {
+      Node.create({
+        data: {
+          status: 'online',
+          version: '0.12',
+          peerId: '3S3VLMIVYOOX7HYUK6ZBPITI5LFVNVP2BTWOUBGP6I3UI5X4NYDQ',
+          ipAddress: '77.68.110.197',
+          reputation: 97,
+        },
+      });
+      const address = publicKeyToAddress(Node.all()[0].peerId);
+
+      // if (this.$q.localStorage.getItem(address)) {
+      Wallet.create({
+        data: {
+          address,
+          nodeId: Node.all()[0].peerId,
+        },
+      });
+      // } else {
+      //   Wallet.create({
+      //     data: [],
+      //   });
+      // }
+      console.log(this.rpc);
+      const blockHeight = await this.rpc.eth_blockNumber();
+      let blocks;
+      if (blockHeight >= 50) {
+        blocks = await getBlocks((blockHeight - 49), blockHeight, this.rpc);
+      } else {
+        blocks = await getBlocks(0, blockHeight, this.rpc);
+      }
+
+      const txs = blocks.map(({ transactions }) => transactions.length);
+      for (let i = 0; i < (50 - txs.length); i += 1) {
+        txs.unshift(0);
+      }
+
+      const deltaTimes = blocks.map(({ timestamp }, i) => {
+        if (blocks[i + 1]) {
+          return -(parseInt(timestamp, 16) - parseInt(blocks[i + 1].timestamp, 16));
+        }
+        return null;
+      }).filter(Number);
+      for (let i = 0; i < (50 - deltaTimes.length); i += 1) {
+        deltaTimes.unshift(0);
+      }
+
+      const charts = Charts.all();
+      if (!charts || charts.length < 2) {
+        Charts.insert({
+          data: {
+            id: 'transactions',
+            labels: new Array(50).fill(''),
+            datasets: [{
+              backgroundColor: '#16ac9f',
+              data: txs,
+            }],
+          },
+        });
+
+        Charts.insert({
+          data: {
+            id: 'ledgerTime',
+            labels: new Array(50).fill(''),
+            datasets: [{
+              backgroundColor: '#16ac9f',
+              data: deltaTimes,
+            }],
+          },
+        });
+      }
+    },
+
     async updateNetwork() {
       const latestDelta = await this.rpc.eth_getBlockByNumber('latest', true);
       console.log('ledger delta: ', latestDelta);

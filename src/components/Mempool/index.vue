@@ -25,7 +25,7 @@
           {{ $t('from') }}
         </div>
         <div class="col text-left text-uppercase text-secondary default-font-bold">
-          {{ $t('time') }}
+          {{ $t('to') }}
         </div>
         <div class="col-1 text-left text-uppercase text-secondary default-font-bold">
           {{ $t('amount') }}

@@ -20,6 +20,7 @@ async function getMempool() {
   const txs = txApi.map(tx => ({
     txHash: tx.hash,
     peerId: tx.from,
+    to: tx.to,
     amount: parseInt(tx.value, 16),
     time: Date.now(),
   }));

@@ -28,7 +28,7 @@
           <q-item-label>{{ $t('dashboard') }}</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item
+      <!-- <q-item
         disabled
       >
         <q-item-section avatar>
@@ -47,9 +47,9 @@
         <q-item-section>
           <q-item-label>{{ $t('settings') }}</q-item-label>
         </q-item-section>
-      </q-item>
+      </q-item> -->
       <q-select
-        v-model="options[0]"
+        v-model="model"
         filled
         :options="options"
         label="Network:"
@@ -85,6 +85,8 @@
 <script>
 import { colors } from 'quasar';
 import { mapState } from 'vuex';
+import Node from '../../store/Node';
+import Wallet from '../../store/Wallet';
 
 export default {
   name: 'Sidebar',
@@ -190,8 +192,25 @@ export default {
       colors.setBrand('info', '#ffffff');
       colors.setBrand('warning', '#19445b');
     },
-    changeNode(node) {
+    async changeNode(node) {
       console.log('node: ', node);
+      Node.create({
+        data: {
+          status: 'online',
+          version: '0.12',
+          peerId: node.value.publicKey,
+          ipAddress: node.value.ipAddress,
+          reputation: 97,
+        },
+      });
+
+      // if (this.$q.localStorage.getItem(address)) {
+      await Wallet.create({
+        data: {
+          address: Node.all()[0].address,
+          nodeId: Node.all()[0].peerId,
+        },
+      });
     },
   },
 };
