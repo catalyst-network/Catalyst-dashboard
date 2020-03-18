@@ -64,7 +64,9 @@
             v-on="scope.itemEvents"
           >
             <q-item-section>
-              <q-item-label v-html="scope.opt.label" />
+              <q-item-label>
+                {{ scope.opt.label }}
+              </q-item-label>
               <q-item-label caption>
                 {{ scope.opt.description }}
               </q-item-label>
@@ -86,8 +88,8 @@
 <script>
 import { colors } from 'quasar';
 import { mapState } from 'vuex';
-import Node from '../../store/Node';
-import Wallet from '../../store/Wallet';
+import { loadNode } from '../../helpers/LoadNode';
+
 
 export default {
   name: 'Sidebar',
@@ -195,23 +197,10 @@ export default {
     },
     async changeNode(node) {
       console.log('node: ', node);
-      Node.create({
-        data: {
-          status: 'online',
-          version: '0.12',
-          peerId: node.value.publicKey,
-          ipAddress: node.value.ipAddress,
-          reputation: 97,
-        },
-      });
+      this.$store.dispatch('Settings/setLoading', true);
 
-      // if (this.$q.localStorage.getItem(address)) {
-      await Wallet.create({
-        data: {
-          address: Node.all()[0].address,
-          nodeId: Node.all()[0].peerId,
-        },
-      });
+      await loadNode(node.value.publicKey, node.value.ipAddress);
+      this.$store.dispatch('Settings/setLoading', false);
     },
   },
 };

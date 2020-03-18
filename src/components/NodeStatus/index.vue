@@ -48,7 +48,7 @@
             {{ $t('reputation') }}:
           </div>
           <div class="col text-right text-caption">
-            <span v-if="peer">{{ peer.reputation }}</span>
+            <span v-if="peer">{{ peer.rating }}%</span>
           </div>
         </div>
         <div class="row justify-between">

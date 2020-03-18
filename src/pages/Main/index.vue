@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md">
     <div
+      v-if="!loading"
       class="column justify-center q-gutter-y-md"
     >
       <div class="col-auto">
@@ -85,10 +86,20 @@
         </div>
       </div>
     </div>
+    <q-inner-loading
+      dark
+      :showing="loading"
+    >
+      <q-spinner
+        size="75px"
+        color="secondary"
+      />
+    </q-inner-loading>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import NodeStatus from '../../components/NodeStatus';
 import NetworkStatus from '../../components/NetworkStatus';
 import Balance from '../../components/Wallet';
@@ -109,6 +120,9 @@ export default {
     // LineChart,
   },
   computed: {
+    ...mapState({
+      loading: (state => state.Settings.loading),
+    }),
     txChartData() {
       return Charts.find('transactions');
     },
@@ -123,4 +137,10 @@ export default {
  .top-row {
      min-height: 275px;
  }
+</style>
+<style lang="stylus" scoped>
+
+.q-inner-loading--dark
+  background $primary
+
 </style>
