@@ -133,10 +133,9 @@ export default {
         {
           label: 'Node 5',
           value: {
-            ipAddress: '77.68.110.13',
-            publicKey: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
+            ipAddress: '77.68.110.49',
+            publicKey: 'BVE7BZVVRVQI26VQWGMGKHY6SMB2KZ7J4TE2K3C2HJF4CDAG45GA',
           },
-          disable: true,
           description: 'Non POA node',
         },
       ],

@@ -31,13 +31,19 @@
           {{ $t('amount') }}
         </div>
       </div>
-      <q-scroll-area class="peer-scrollarea">
+      <q-scroll-area :class=" txs.length > 0 ? 'peer-scrollarea ':'no-tx-scrollarea'">
         <MempoolTx
           v-for="tx in txs"
           :key="tx.txHash"
           :tx="tx"
         />
       </q-scroll-area>
+      <div
+        v-if="txs.length === 0"
+        class="q-pa-md flex justify-center"
+      >
+        There are no pending transactions
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -80,6 +86,11 @@ export default {
 }
 .peer-scrollarea {
   height: 246px;
+  max-height: 300px;
+}
+
+.no-tx-scrollarea {
+  height: 0px;
   max-height: 300px;
 }
 </style>
