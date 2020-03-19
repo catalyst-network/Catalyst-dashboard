@@ -44,7 +44,7 @@
             v-if="node"
             class="col overflow text-right text-caption"
           >
-            {{ toAddress(node.peerId) }}
+            {{ node.peerId }}
           </div>
         </div>
         <div class="row justify-between">
@@ -74,14 +74,13 @@
 <script>
 import Node from '../../store/Node';
 import Peer from '../../store/Peer';
-import { publicKeyToAddress } from '../../helpers/Common';
 
 export default {
   name: 'NodeStatus',
 
   data() {
     return {
-      toAddress: publicKeyToAddress,
+      isOnline: false,
     };
   },
 
