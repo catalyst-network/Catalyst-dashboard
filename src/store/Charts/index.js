@@ -8,6 +8,7 @@ export default class Charts extends Model {
       id: this.attr(''),
       labels: this.attr(''),
       datasets: this.attr(''),
+      nodeId: this.attr(''),
     };
   }
 }

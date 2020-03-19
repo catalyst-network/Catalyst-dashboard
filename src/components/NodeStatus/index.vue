@@ -23,11 +23,15 @@
               style="padding-right:5px"
             >{{ status }}</span>
             <span
-              v-if="online"
+              v-if="status === 'online'"
               class="dot bg-green"
             />
             <span
-              v-if="!online"
+              v-if="status === 'syncing'"
+              class="dot bg-yellow"
+            />
+            <span
+              v-if="status === 'offline'"
               class="dot bg-red"
             />
           </span>
@@ -92,17 +96,21 @@ export default {
       return null;
     },
     status() {
+      if (this.node.syncing) {
+        return 'syncing';
+      }
+
       const now = Date.now();
       if (this.node) {
         if ((now - this.peer.lastSeen) > 20000) {
-          return 'Offline';
+          return 'offline';
         }
-        return 'Online now';
+        return 'online';
       }
-      return 'Offline';
+      return 'offline';
     },
     online() {
-      return this.status === 'Online now';
+      return this.status === 'Online';
     },
 
   },

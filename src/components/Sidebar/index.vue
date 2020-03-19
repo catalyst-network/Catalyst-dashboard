@@ -88,7 +88,7 @@
 <script>
 import { colors } from 'quasar';
 import { mapState } from 'vuex';
-import { loadNode } from '../../helpers/LoadNode';
+import { loadNode, isSyncing, loadCharts } from '../../helpers/LoadNode';
 
 
 export default {
@@ -196,10 +196,12 @@ export default {
       colors.setBrand('warning', '#19445b');
     },
     async changeNode(node) {
-      console.log('node: ', node);
       this.$store.dispatch('Settings/setLoading', true);
 
       await loadNode(node.value.publicKey, node.value.ipAddress);
+      await isSyncing();
+      await loadCharts();
+
       this.$store.dispatch('Settings/setLoading', false);
     },
   },

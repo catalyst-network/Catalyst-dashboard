@@ -23,7 +23,7 @@ import Node from './store/Node';
 import RefreshPeers from './helpers/UpdatePeers';
 import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
-import { loadNode } from './helpers/LoadNode';
+import { loadNode, isSyncing, loadCharts } from './helpers/LoadNode';
 
 
 export default {
@@ -52,6 +52,8 @@ export default {
     this.$store.dispatch('Settings/setLoading', true);
     await loadNode('3S3VLMIVYOOX7HYUK6ZBPITI5LFVNVP2BTWOUBGP6I3UI5X4NYDQ', '77.68.110.197');
     const update = () => {
+      isSyncing();
+      loadCharts();
       RefreshPeers();
       refreshMempool(this.rpc);
       updateBalance(this.rpc);

@@ -1,7 +1,7 @@
 export default {
   ledgerCycles: 0,
-  avLedgerTime: 19.9,
-  totalTxs: 143749,
+  avLedgerTime: null,
+  totalTxs: 0,
   walletAddrs: 23956,
   lastLedgerTime: null,
   lastLedgerDelta: null,

@@ -25,7 +25,7 @@
               {{ $t('totalLedgerCycles') }}
             </div>
             <div class="col-auto text-h6">
-              {{ network.ledgerCycles }}
+              {{ deltas }}
             </div>
           </div>
           <q-separator
@@ -95,6 +95,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import Node from '../../store/Node';
+
 
 export default {
   name: 'NetworkStatus',
@@ -107,6 +109,11 @@ export default {
     ...mapState({
       network: (state => state.Network),
     }),
+    deltas() {
+      const { syncing } = Node.all()[0];
+      if (syncing) return `${parseInt(syncing.currentBlock, 16)} / ${parseInt(syncing.highestBlock, 16)}`;
+      return this.network.ledgerCycles;
+    },
   },
   mounted() {
     this.timeSinceLastLedger();
