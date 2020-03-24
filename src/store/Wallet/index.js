@@ -13,4 +13,8 @@ export default class Wallet extends Model {
       secret: this.attr(''),
     };
   }
+
+  get katBalance() {
+    return this.balance / 1000000000000000000;
+  }
 }

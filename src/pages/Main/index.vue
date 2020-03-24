@@ -21,7 +21,10 @@
         class="col"
       >
         <div class="row items-start q-gutter-md">
-          <div class="col">
+          <div
+            v-if="totalTxs !== 0"
+            class="col"
+          >
             <div class="column q-gutter-sm">
               <div
                 class="col default-font-bold"
@@ -38,7 +41,10 @@
             </div>
           </div>
           <div class="col">
-            <div class="column q-gutter-sm">
+            <div
+              v-if="!deltaHeight < 50"
+              class="column q-gutter-sm"
+            >
               <div
                 class="col default-font-bold"
                 style="padding:0 1rem;"
@@ -122,6 +128,8 @@ export default {
   computed: {
     ...mapState({
       loading: (state => state.Settings.loading),
+      deltaHeight: (state => state.Network.ledgerCycles),
+      totalTxs: (state => state.Network.totalTxs),
     }),
     txChartData() {
       return Charts.find('transactions');

@@ -49,6 +49,7 @@ export default {
   },
 
   async mounted() {
+    Window.$store = this.$store;
     this.$store.dispatch('Settings/setLoading', true);
     await loadNode('ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ', '77.68.110.194');
     const update = () => {
@@ -76,7 +77,7 @@ export default {
 
         if (this.network.lastLedgerTime) {
           const ledgerTimeChart = Charts.find('ledgerTime');
-          ledgerTimeChart.labels.push('');
+          ledgerTimeChart.labels.push(`Delta ${parseInt(latestDelta.number, 16)}`);
           ledgerTimeChart.labels.shift();
           ledgerTimeChart.datasets[0].data.push(
             (latestDelta.timestamp - this.network.lastLedgerTime),

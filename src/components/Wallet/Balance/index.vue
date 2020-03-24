@@ -13,7 +13,7 @@
     </div>
     <div class="row justify-center">
       <h6 class="balance">
-        {{ wallet.balance }} KAT
+        {{ wallet.katBalance }} KAT
       </h6>
     </div>
     <div class="column justify-center">

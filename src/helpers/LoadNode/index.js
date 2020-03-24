@@ -44,6 +44,8 @@ export async function loadCharts() {
     const rpc = Node.all()[0] ? Node.all()[0].rpc : null;
 
     const blockHeight = await rpc.eth_blockNumber();
+    Window.$store.dispatch('Network/setLedgerCycles', parseInt(blockHeight, 16));
+
 
     let blocks;
     if (blockHeight >= 50) {
@@ -56,16 +58,32 @@ export async function loadCharts() {
     for (let i = 0; i < (50 - txs.length); i += 1) {
       txs.unshift(0);
     }
+    const totalTxs = txs.reduce((a, b) => a + b, 0);
+    Window.$store.dispatch('Network/setTotalTxs', totalTxs);
 
-    const deltaTimes = blocks.map(({ timestamp }, i) => {
+    const deltaTimes = blocks.map(({ timestamp, number }, i) => {
       if (blocks[i + 1]) {
-        return -(parseInt(timestamp, 16) - parseInt(blocks[i + 1].timestamp, 16));
+        const time = -(parseInt(timestamp, 16) - parseInt(blocks[i + 1].timestamp, 16));
+        return {
+          time,
+          number,
+        };
       }
       return null;
-    }).filter(Number);
+    }).filter(x => x);
     for (let i = 0; i < (50 - deltaTimes.length); i += 1) {
-      deltaTimes.unshift(0);
+      deltaTimes.unshift({ time: 0, number: 0 });
     }
+    const times = deltaTimes.map(({ time }) => time);
+    const totalTime = times.reduce((a, b) => a + b, 0);
+    const avgTime = totalTime / times.length;
+    Window.$store.dispatch('Network/setAvLedgerTime', avgTime);
+
+
+    const numbers = deltaTimes.map(({ number }) => {
+      if (number > 0) { return `Delta ${parseInt(number, 16)}`; }
+      return '';
+    });
 
     Charts.create({
       data: [{
@@ -79,11 +97,11 @@ export async function loadCharts() {
       },
       {
         id: 'ledgerTime',
-        labels: new Array(50).fill(''),
+        labels: numbers,
         nodeId: peerId,
         datasets: [{
           backgroundColor: '#16ac9f',
-          data: deltaTimes,
+          data: times,
         }],
       },
       ],

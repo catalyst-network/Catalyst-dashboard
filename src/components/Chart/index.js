@@ -14,6 +14,9 @@ export default {
         displayColors: false,
         model: 'index',
         axis: 'x',
+        callbacks: {
+          afterBody: (tooltipItems, data) => (data.id === 'ledgerTime' ? 'seconds' : 'transactions'),
+        },
       },
       maintainAspectRatio: false,
       scales: {

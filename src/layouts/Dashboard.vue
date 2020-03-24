@@ -1,6 +1,6 @@
 <template>
   <q-layout
-    view="hHh lpR fFf"
+    view="hHh LpR fFf"
     class="bg-accent"
   >
     <q-drawer
