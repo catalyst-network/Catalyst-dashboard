@@ -45,12 +45,11 @@ export async function loadCharts() {
 
     const blockHeight = await rpc.eth_blockNumber();
 
-
     let blocks;
     if (blockHeight >= 50) {
       blocks = await getBlocks((blockHeight - 49), blockHeight, rpc);
     } else {
-      blocks = await getBlocks(0, blockHeight, this.rpc);
+      blocks = await getBlocks(0, blockHeight, rpc);
     }
 
     const txs = blocks.map(({ transactions }) => transactions.length);

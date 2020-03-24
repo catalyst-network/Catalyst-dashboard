@@ -50,7 +50,7 @@ export default {
 
   async mounted() {
     this.$store.dispatch('Settings/setLoading', true);
-    await loadNode('3S3VLMIVYOOX7HYUK6ZBPITI5LFVNVP2BTWOUBGP6I3UI5X4NYDQ', '77.68.110.197');
+    await loadNode('ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ', '77.68.110.194');
     const update = () => {
       isSyncing();
       loadCharts();

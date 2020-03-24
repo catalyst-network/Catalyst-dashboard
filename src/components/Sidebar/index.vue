@@ -140,12 +140,12 @@ export default {
         },
       ],
       model: {
-        label: 'Node 4',
+        label: 'Node 1',
         value: {
-          ipAddress: '77.68.110.97',
-          publicKey: '3S3VLMIVYOOX7HYUK6ZBPITI5LFVNVP2BTWOUBGP6I3UI5X4NYDQ',
+          ipAddress: '77.68.110.194',
+          publicKey: 'ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ',
         },
-        description: 'Testnet Node 4 (windows)',
+        description: 'Testnet Node 1 (linux)',
       },
     };
   },

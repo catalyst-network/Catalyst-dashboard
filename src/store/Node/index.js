@@ -16,7 +16,7 @@ export default class Node extends Model {
   static fields() {
     return {
       peerId: this.attr(''),
-      ipAddress: this.attr('77.68.110.197'),
+      ipAddress: this.attr('77.68.110.194'),
       status: this.attr(''),
       version: this.attr(''),
       reputation: this.attr(''),
