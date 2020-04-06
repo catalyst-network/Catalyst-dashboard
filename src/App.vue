@@ -99,22 +99,24 @@ export default {
           });
         }
         const txChart = Charts.find('transactions');
-        txChart.labels.push('');
-        txChart.labels.shift();
-        txChart.datasets[0].data.push(latestDelta.transactions.length);
-        txChart.datasets[0].data.shift();
-        const sum = txChart.datasets[0].data.reduce((a, b) => a + b, 0);
-        this.$store.dispatch('Network/setTotalTxs', sum);
-        Charts.update({
-          where: 'transactions',
-          data: {
-            labels: txChart.labels,
-            datasets: [{
-              data: txChart.datasets[0].data,
-              backgroundColor: txChart.datasets[0].backgroundColor,
-            }],
-          },
-        });
+        if (txChart) {
+          txChart.labels.push('');
+          txChart.labels.shift();
+          txChart.datasets[0].data.push(latestDelta.transactions.length);
+          txChart.datasets[0].data.shift();
+          const sum = txChart.datasets[0].data.reduce((a, b) => a + b, 0);
+          this.$store.dispatch('Network/setTotalTxs', sum);
+          Charts.update({
+            where: 'transactions',
+            data: {
+              labels: txChart.labels,
+              datasets: [{
+                data: txChart.datasets[0].data,
+                backgroundColor: txChart.datasets[0].backgroundColor,
+              }],
+            },
+          });
+        }
 
         this.$store.dispatch('Network/setLastLedgerTime', latestDelta.timestamp);
       }

@@ -100,7 +100,7 @@ export default {
       }
 
       const now = Date.now();
-      if (this.node) {
+      if (this.node && this.peer) {
         if ((now - this.peer.lastSeen) > 20000) {
           return 'offline';
         }

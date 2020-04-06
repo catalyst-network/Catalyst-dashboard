@@ -22,7 +22,7 @@
       >
         <div class="row items-start q-gutter-md">
           <div
-            v-if="totalTxs !== 0"
+            v-if="totalTxs !== 0 && txChartData"
             class="col"
           >
             <div class="column q-gutter-sm">
@@ -42,7 +42,7 @@
           </div>
           <div class="col">
             <div
-              v-if="!deltaHeight < 50"
+              v-if="(!deltaHeight < 50) && ledgerTimeChartData"
               class="column q-gutter-sm"
             >
               <div
