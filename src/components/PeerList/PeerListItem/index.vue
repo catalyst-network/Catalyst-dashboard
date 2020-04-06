@@ -113,6 +113,24 @@
             </div>
           </div>
           <div class="row peer-item justify-between">
+            <div class="col-auto  text-secondary text-uppercase default-font-bold">
+              {{ $t('address') }}:
+            </div>
+            <div
+              v-clipboard="peer.katAddress"
+              class="col-auto cursor-pointer"
+              @click="displayCopy"
+            >
+              {{ peer.katAddress }}
+              <q-tooltip
+                anchor="top middle"
+                self="bottom middle"
+              >
+                {{ copied }}
+              </q-tooltip>
+            </div>
+          </div>
+          <div class="row peer-item justify-between">
             <div class="col-auto text-secondary text-uppercase default-font-bold">
               {{ $t('ipAddress') }}:
             </div>
@@ -193,6 +211,7 @@ export default {
       rating: (Math.round(this.peer.rating / 10) / 2),
       detailsRating: Math.round(this.peer.rating / 10),
       fullDetails: false,
+      copied: 'copy address',
       location: {
         city: '',
         country: '',
@@ -260,6 +279,12 @@ export default {
           flag: './statics/flag-icons/gb.svg',
         };
       }
+    },
+    displayCopy() {
+      this.copied = this.$t('copied');
+      setTimeout(() => {
+        this.copied = this.$t('copy');
+      }, 2000);
     },
   },
 };

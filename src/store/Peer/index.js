@@ -1,4 +1,9 @@
 import { Model } from '@vuex-orm/core';
+import {
+  addressFromPublicKey,
+  hexStringFromBytes,
+  bytesFromBase32String,
+} from '@catalyst-net-js/common';
 
 export default class Peer extends Model {
   static entity = 'peers';
@@ -28,5 +33,12 @@ export default class Peer extends Model {
     if (this.reputation === 0) return 100;
 
     return 100 - ((Math.abs(this.reputation) / 10000) * 100);
+  }
+
+  get katAddress() {
+    const bytes = bytesFromBase32String(this.peerId);
+    const addressBytes = addressFromPublicKey(bytes);
+
+    return `0x${hexStringFromBytes(addressBytes)}`;
   }
 }
