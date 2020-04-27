@@ -9,7 +9,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
-    "install-wsl": "export npm_config_platform=win32 && npm install"
+    "install-wsl": "export npm_config_platform=win32 && npm install",
+    "dev-electron": "export npm_config_platform=win32 && quasar dev -m electron"
   },
   "dependencies": {
     "@catalyst-net-js/common": "^0.3.5",
@@ -40,7 +41,7 @@
     "dotenv": "^8.0.0",
     "electron": "^8.2.3",
     "electron-debug": "^3.0.1",
-    "electron-devtools-installer": "^3.0.0",
+    "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^5.0.0",
