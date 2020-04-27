@@ -1,10 +1,17 @@
 
 const routes = [
+  // {
+  //   path: '/',
+  //   component: () => import('layouts/Dashboard.vue'),
+  //   children: [
+  //     { path: '', component: () => import('pages/Main') },
+  //   ],
+  // },
   {
     path: '/',
-    component: () => import('layouts/Dashboard.vue'),
+    component: () => import('layouts/NoSidebar.vue'),
     children: [
-      { path: '', component: () => import('pages/Main') },
+      { path: '', component: () => import('pages/Setup') },
     ],
   },
 ];

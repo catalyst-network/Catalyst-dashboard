@@ -4,7 +4,7 @@
     class="bg-accent"
   >
     <q-page-container
-      class="text-negative"
+      class="flex flex-center"
     >
       <router-view />
     </q-page-container>

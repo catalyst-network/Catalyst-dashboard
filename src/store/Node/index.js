@@ -16,11 +16,12 @@ export default class Node extends Model {
   static fields() {
     return {
       peerId: this.attr(''),
+      userId: this.attr(''),
       ipAddress: this.attr('77.68.110.194'),
       status: this.attr(''),
       version: this.attr(''),
       reputation: this.attr(''),
-      syncing: this.attr(false),
+      syncing: this.boolean(false),
       peers: this.hasMany(Peer, 'nodeId'),
       wallet: this.hasOne(Wallet, 'nodeId'),
     };
