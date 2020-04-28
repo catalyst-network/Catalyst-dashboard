@@ -1,13 +1,29 @@
 <template>
   <div>
+    <div class="q-py-md">
+      <div class="row justify-center">
+        <div class="slide-icon">
+          <q-icon
+            name="fas fa-plus-circle"
+            color="white"
+            size="30px"
+          />
+        </div>
+      </div>
+
+
+      <div class=" text-h6 q-mt-sm text-bold text-negative">
+        Add Node
+      </div>
+    </div>
     <div
-      class="text-left text-negative"
+      class="text-center text-negative"
       style="width: 100%"
     >
       Is your node on this computer or a remote server?
     </div>
     <div
-      class="row q-mt-md justify-between text-negative"
+      class="row q-mt-xl justify-between text-negative"
       style="width: 100%; font-size: 18px;"
     >
       <div

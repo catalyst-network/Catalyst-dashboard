@@ -59,27 +59,46 @@
         <NodeType @nodeType="selectNodeType" />
       </q-carousel-slide>
       <q-carousel-slide
-        name="layers"
+        name="nodeName"
         class="column no-wrap flex-center"
       >
-        <q-icon
-          name="layers"
+        <!-- <q-icon
+          name="style"
           size="56px"
-        />
-        <div class="q-mt-md text-center text-black">
-          {{ lorem }}
+        /> -->
+        <div
+          class="text-left text-negative"
+          style="width: 100%"
+        >
+          Let's give your node a name
         </div>
-      </q-carousel-slide>
-      <q-carousel-slide
-        name="map"
-        class="column no-wrap flex-center"
-      >
-        <q-icon
-          name="terrain"
-          size="56px"
-        />
-        <div class="q-mt-md text-center text-black">
-          {{ lorem }}
+        <div>
+          <q-input
+            v-model="nodeName"
+            dark
+            autofocus
+            navigation
+            placeholder="Type a name for your node here..."
+            color="primary"
+            text-color="negative"
+            input-style="min-width: 400px; font-size:24px;"
+            @keydown.enter.prevent=" nodeName ? slide='node' : null"
+          />
+        </div>
+        <div
+          v-if="nodeName"
+          class="q-mt-xl q-pt-lg q-ml-md row text-left text-negative absolute"
+          style="width: 100%"
+        >
+          <q-btn
+            unelevated
+            color="secondary"
+            label="OK✓"
+            @click="slide='node'"
+          />
+          <div class="q-pl-sm key-text flex flex-center">
+            Press Enter ↵
+          </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -95,13 +114,14 @@ export default {
     return {
       slide: 'node',
       name: null,
+      nodeName: null,
     };
   },
 
   methods: {
     selectNodeType(value) {
-      if (value === 'local') this.slide = 'name';
-      else this.slide = 'map';
+      if (value === 'local') this.slide = 'nodeName';
+      else this.slide = 'name';
     },
   },
 };
@@ -131,5 +151,12 @@ export default {
   background:#ffffffb3;
   color: #0A2D3E;
   border-radius: 5px;
+}
+
+.slide-icon {
+  border-radius: 50px;
+  border: 4px solid;
+  width: fit-content;
+  padding: 15px;
 }
 </style>
