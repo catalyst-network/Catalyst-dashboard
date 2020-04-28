@@ -59,6 +59,13 @@
         <NodeType @nodeType="selectNodeType" />
       </q-carousel-slide>
       <q-carousel-slide
+        name="remoteNode"
+        e
+        class="column no-wrap flex-center"
+      >
+        <RemoteNode @nodeAdded="selectNodeType" />
+      </q-carousel-slide>
+      <q-carousel-slide
         name="nodeName"
         class="column no-wrap flex-center"
       >
@@ -106,10 +113,12 @@
 </template>
 <script>
 import NodeType from './NodeType';
+import RemoteNode from './RemoteNode';
+
 
 export default {
   name: 'SetupStepper',
-  components: { NodeType },
+  components: { NodeType, RemoteNode },
   data() {
     return {
       slide: 'node',
@@ -121,7 +130,7 @@ export default {
   methods: {
     selectNodeType(value) {
       if (value === 'local') this.slide = 'nodeName';
-      else this.slide = 'name';
+      else this.slide = 'remoteNode';
     },
   },
 };

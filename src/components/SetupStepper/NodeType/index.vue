@@ -27,6 +27,7 @@
       style="width: 100%; font-size: 18px;"
     >
       <div
+        tabIndex="1"
         class="col node-item q-gutter-y-md"
         @click="selectLocal"
       >
