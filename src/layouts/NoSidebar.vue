@@ -1,7 +1,7 @@
 <template>
   <q-layout
     view="hHh LpR fFf"
-    class="bg-accent"
+    class="bg-primary"
   >
     <q-page-container
       class="flex flex-center"

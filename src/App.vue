@@ -20,10 +20,11 @@
 import { mapState } from 'vuex';
 // import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from './store/Node';
-import RefreshPeers from './helpers/UpdatePeers';
-import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
+import User from './store/User';
+// import RefreshPeers from './helpers/UpdatePeers';
+// import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 import Charts from './store/Charts';
-import { loadNode, isSyncing, loadCharts } from './helpers/LoadNode';
+// import { loadNode, isSyncing, loadCharts } from './helpers/LoadNode';
 
 
 export default {
@@ -51,18 +52,23 @@ export default {
   async mounted() {
     Window.$store = this.$store;
     this.$store.dispatch('Settings/setLoading', true);
-    await loadNode('ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ', '77.68.110.194');
-    const update = () => {
-      isSyncing();
-      loadCharts();
-      RefreshPeers();
-      refreshMempool(this.rpc);
-      updateBalance(this.rpc);
-      this.updateNetwork();
-    };
+    User.insert({
+      data: {
+        darkMode: true,
+      },
+    });
+    // await loadNode('ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ', '77.68.110.194');
+    // const update = () => {
+    //   isSyncing();
+    //   loadCharts();
+    //   RefreshPeers();
+    //   refreshMempool(this.rpc);
+    //   updateBalance(this.rpc);
+    //   this.updateNetwork();
+    // };
 
-    setInterval(update, 5000);
-    await update();
+    // setInterval(update, 5000);
+    // await update();
     this.$store.dispatch('Settings/setLoading', false);
   },
 

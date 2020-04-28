@@ -9,7 +9,7 @@ export default class User extends Model {
 
   static fields() {
     return {
-      id: this.uid(),
+      id: this.increment(),
       name: this.attr(''),
       darkMode: this.boolean(true),
       nodes: this.hasMany(Node, 'userId'),
