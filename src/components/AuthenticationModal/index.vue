@@ -77,7 +77,6 @@ export default {
       error: false,
       errorMessage: null,
       loading: false,
-      key: this.keystore,
     };
   },
 
@@ -87,7 +86,7 @@ export default {
 
       console.log('called');
       try {
-        const wallet = await getWalletFromKeystore(this.key, this.password);
+        const wallet = await getWalletFromKeystore(this.keystore, this.password);
         console.log(wallet);
         this.$emit('authSuccess', wallet);
         this.loading = false;

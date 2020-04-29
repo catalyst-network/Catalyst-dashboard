@@ -128,7 +128,7 @@
     </div>
     <AuthenticationModal
       :display="auth"
-      :keystore="remote.keystore"
+      :keystore="remote.key"
       @authSuccess="authSuccess"
       @authFail="authFail"
     />
@@ -147,6 +147,7 @@ export default {
         host: null,
         port: null,
         keystore: null,
+        key: {},
       //   keystore: {
       //     Name: 'self',
       //     Id: '12D3KooWH242bviubcv3HCmZGCF2PNuJfVRL4vrMs1FKKBaHhETG',
@@ -184,6 +185,7 @@ export default {
     //   ujyPf5/T
     //   -----END ENCRYPTED PRIVATE KEY-----`,
     // };
+    // console.log(JSON.stringify(keyFile));
 
     // const Keystore = await loadKeystoreLib();
     // console.log(Keystore);
@@ -193,8 +195,11 @@ export default {
 
   methods: {
     async readKeyfile() {
-      const key = await this.remote.keystore.text();
-      console.log(key);
+      if (this.remote.keystore) {
+        const keyJSON = await this.remote.keystore.text();
+        this.remote.key = await JSON.parse(keyJSON);
+        this.auth = true;
+      }
     },
 
     authSuccess(wallet) {
