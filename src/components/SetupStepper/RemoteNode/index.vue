@@ -28,6 +28,7 @@
     >
       <div class="col-12">
         <q-input
+          v-model="remote.nodeName"
           dark
           dense
           filled
@@ -38,7 +39,7 @@
             <q-icon
               name="fas fa-tag"
               color="secondary"
-              size="xs"
+              size="15px"
             />
           </template>
         </q-input>
@@ -50,6 +51,7 @@
     >
       <div class="col-7">
         <q-input
+          v-model="remote.host"
           dark
           dense
           filled
@@ -61,13 +63,14 @@
             <q-icon
               name="fas fa-server"
               color="secondary"
-              size="xs"
+              size="15px"
             />
           </template>
         </q-input>
       </div>
       <div class="col-5">
         <q-input
+          v-model="remote.port"
           dark
           dense
           filled
@@ -78,7 +81,7 @@
             <q-icon
               name="fab fa-megaport"
               color="secondary"
-              size="xs"
+              size="15px"
             />
           </template>
         </q-input>
@@ -90,17 +93,19 @@
     >
       <div class="col-12">
         <q-file
+          v-model="remote.keystore"
           dark
           dense
           filled
           color="negative"
           label="add your keystore file (eg key.pem)"
+          @input="readKeyfile"
         >
           <template v-slot:prepend>
             <q-icon
               name="fas fa-key"
               color="secondary"
-              size="xs"
+              size="15px"
             />
           </template>
         </q-file>
@@ -115,17 +120,26 @@
         unelevated
         color="secondary"
         label="OK✓"
-        @click="slide='node'"
+        @click="auth=true"
       />
       <div class="q-pl-sm key-text flex flex-center">
         Press Enter ↵
       </div>
     </div>
+    <AuthenticationModal
+      :display="auth"
+      :keystore="remote.keystore"
+      @authSuccess="authSuccess"
+      @authFail="authFail"
+    />
   </div>
 </template>
 <script>
+import AuthenticationModal from '../../AuthenticationModal';
+
 export default {
   name: 'RemoteNode',
+  components: { AuthenticationModal },
   data() {
     return {
       remote: {
@@ -133,33 +147,62 @@ export default {
         host: null,
         port: null,
         keystore: null,
+      //   keystore: {
+      //     Name: 'self',
+      //     Id: '12D3KooWH242bviubcv3HCmZGCF2PNuJfVRL4vrMs1FKKBaHhETG',
+      //     Pem: ` -----BEGIN ENCRYPTED PRIVATE KEY-----
+      // MIHDMF8GCSqGSIb3DQEFDTBSMDEGCSqGSIb3DQEFDDAkBBChnsxjyrP9HINy9/h8
+      // gpOUAgInEDAMBggqhkiG9w0CCwUAMB0GCWCGSAFlAwQBKgQQfTMISwFnpba5AwI6
+      // NEbGdARg3/4/yHuJhLr3YATj/2k4q/U73he+JboNfy0GkDa95U16sTobep/mN9Oa
+      // ewjTvZS6B6f+BBjq02ZdqvNZ7z9tLrDHHzf6/wm1BOFautq5M0qUyBH6AO+FQO6c
+      // ujyPf5/T
+      // -----END ENCRYPTED PRIVATE KEY-----`,
+      //   },
       },
+      auth: false,
     };
   },
   computed: {
     showConfirm() {
-      return Object.entries(this.remote).filter((key) => {
-        if (!this.remote[key]) return true;
+      return Object.values(this.remote).filter((key) => {
+        console.log(key);
+        if (!key) return true;
         return false;
       }).length === 0;
     },
   },
 
-  created() {
-    window.addEventListener('keyup', this.keyListener);
+  async mounted() {
+    // const keyFile = {
+    //   Name: 'self',
+    //   Id: '12D3KooWH242bviubcv3HCmZGCF2PNuJfVRL4vrMs1FKKBaHhETG',
+    //   Pem: ` -----BEGIN ENCRYPTED PRIVATE KEY-----
+    //   MIHDMF8GCSqGSIb3DQEFDTBSMDEGCSqGSIb3DQEFDDAkBBChnsxjyrP9HINy9/h8
+    //   gpOUAgInEDAMBggqhkiG9w0CCwUAMB0GCWCGSAFlAwQBKgQQfTMISwFnpba5AwI6
+    //   NEbGdARg3/4/yHuJhLr3YATj/2k4q/U73he+JboNfy0GkDa95U16sTobep/mN9Oa
+    //   ewjTvZS6B6f+BBjq02ZdqvNZ7z9tLrDHHzf6/wm1BOFautq5M0qUyBH6AO+FQO6c
+    //   ujyPf5/T
+    //   -----END ENCRYPTED PRIVATE KEY-----`,
+    // };
+
+    // const Keystore = await loadKeystoreLib();
+    // console.log(Keystore);
+    // const keystore = new Keystore(keyFile, 'test');
+    // console.log(keystore);
   },
 
   methods: {
-    keyListener(event) {
-      if (event.which === 65) this.selectLocal();
-      if (event.which === 66) this.selectRemote();
+    async readKeyfile() {
+      const key = await this.remote.keystore.text();
+      console.log(key);
     },
 
-    selectLocal() {
-      this.$emit('nodeType', 'local');
+    authSuccess(wallet) {
+      this.auth = false;
+      console.log(wallet);
     },
 
-    selectRemote() {
+    authFail() {
       this.$emit('nodeType', 'remote');
     },
   },

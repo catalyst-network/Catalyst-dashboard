@@ -16,8 +16,11 @@ export default class Node extends Model {
   static fields() {
     return {
       peerId: this.attr(''),
+      publicKey: this.attr(''),
+      name: this.attr(''),
       userId: this.attr(''),
       ipAddress: this.attr('77.68.110.194'),
+      port: this.attr(5005),
       status: this.attr(''),
       version: this.attr(''),
       reputation: this.attr(''),
@@ -38,7 +41,7 @@ export default class Node extends Model {
     return new ERPC({
       transport: {
         host: this.ipAddress,
-        port: 5005,
+        port: this.port,
         type: 'http',
         path: '/api/eth/request',
       },
