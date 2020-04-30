@@ -19,10 +19,11 @@ export async function createUser(name) {
 }
 
 
-export async function createNode(node, userId) {
+export async function createNode(node, userId, wallet) {
   const newNode = await Node.insert({
     data: {
-      peerId: node.keystore.Id,
+      peerId: node.key.Id,
+      publickey: wallet.getPublicKeyString(),
       name: node.name,
       userId,
       ipAddress: node.host,

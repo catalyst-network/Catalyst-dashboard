@@ -144,8 +144,8 @@ export default {
 
     async nodeSuccess(wallet, node) {
       const user = await createUser(this.name);
-      await createNode(node, user);
-      await createWallet(wallet, node.keystore.Id, user);
+      await createNode(node, user, wallet);
+      await createWallet(wallet, node.key.Id, user);
       this.slide = 'success';
     },
 
