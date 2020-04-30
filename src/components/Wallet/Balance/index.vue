@@ -4,7 +4,7 @@
       <q-avatar
         color="primary"
         text-color="secondary"
-        size="75px"
+        size="50px"
       >
         <img
           src="../../../assets/icon.png"
@@ -20,7 +20,7 @@
       <!-- <div class="col-auto text-center ">
         {{ $t('address') }}:
       </div> -->
-      <div
+      <!-- <div
         v-clipboard="wallet.address"
         class="col-auto text-caption break text-center"
         @click="displayCopy"
@@ -32,8 +32,9 @@
         >
           {{ copied }}
         </q-tooltip>
-      </div>
-      <div class="col-auto q-pt-sm text-center">
+      </div> -->
+      <div class="col-auto text-center">
+        <WalletItem :wallet="wallet" />
         <!-- <q-btn
           v-clipboard="wallet.address"
           icon="content_copy"
@@ -52,7 +53,7 @@
           </q-tooltip>
         </q-btn> -->
 
-        <q-btn
+        <!-- <q-btn
           icon="fas fa-qrcode"
           size="sm"
           flat
@@ -67,7 +68,7 @@
           >
             {{ $t('qrCode') }}
           </q-tooltip>
-        </q-btn>
+        </q-btn> -->
         <!-- <q-btn
           icon="fas fa-paper-plane"
           size="sm"
@@ -116,9 +117,11 @@
 <script>
 import QRCode from 'qrcode';
 import Wallet from '../../../store/Wallet';
+import WalletItem from '../WalletItem';
 
 export default {
   name: 'Balance',
+  components: { WalletItem },
 
   data() {
     return {

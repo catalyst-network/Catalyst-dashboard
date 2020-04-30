@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div
+      <!-- <div
         class="col"
       >
         <div class="row items-start q-gutter-md">
@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col">
+         <div class="col">
             <div class="column q-gutter-sm">
               <div class="col default-font-bold">
                 Transactions
@@ -71,18 +71,10 @@
                 />
               </div>
             </div>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-auto q-gutter-y-md">
-        <div class="col-auto">
-          <div class="row">
-            <div class="col">
-              <Mempool />
-            </div>
           </div>
-        </div>
-
+    </div>
+  </div> -->
+      <div class="col-auto q-gutter-y-md">
         <div class="col-auto">
           <div class="row">
             <div class="col">
@@ -90,6 +82,14 @@
             </div>
           </div>
         </div>
+
+        <!-- <div class="col-auto">
+          <div class="row">
+            <div class="col">
+              <Mempool />
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
     <q-inner-loading
@@ -110,10 +110,10 @@ import NodeStatus from '../../components/NodeStatus';
 import NetworkStatus from '../../components/NetworkStatus';
 import Balance from '../../components/Wallet';
 import PeerList from '../../components/PeerList';
-import Mempool from '../../components/Mempool';
-import BarChart from '../../components/Chart/index.js';
+//  import Mempool from '../../components/Mempool';
+// import BarChart from '../../components/Chart/index.js';
 // import LineChart from '../../components/Chart/LineChart';
-import Charts from '../../store/Charts';
+// import Charts from '../../store/Charts';
 
 export default {
   components: {
@@ -121,8 +121,8 @@ export default {
     NetworkStatus,
     Balance,
     PeerList,
-    Mempool,
-    BarChart,
+    // Mempool,
+    // BarChart,
     // LineChart,
   },
   computed: {
@@ -131,12 +131,12 @@ export default {
       deltaHeight: (state => state.Network.ledgerCycles),
       totalTxs: (state => state.Network.totalTxs),
     }),
-    txChartData() {
-      return Charts.find('transactions');
-    },
-    ledgerTimeChartData() {
-      return Charts.find('ledgerTime');
-    },
+    // txChartData() {
+    //   return Charts.find('transactions');
+    // },
+    // ledgerTimeChartData() {
+    //   return Charts.find('ledgerTime');
+    // },
   },
 };
 </script>

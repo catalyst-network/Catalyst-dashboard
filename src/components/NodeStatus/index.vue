@@ -42,7 +42,7 @@
           </div>
           <div
             v-if="node"
-            class="col overflow text-right text-caption"
+            class="q-ml-sm col overflow text-right text-caption"
           >
             {{ node.peerId }}
           </div>
@@ -126,5 +126,11 @@ export default {
   width: 10px;
   border-radius: 50%;
   display: inline-block;
+}
+
+.overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
