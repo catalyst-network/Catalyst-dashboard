@@ -1,3 +1,4 @@
+import User from '../../store/User';
 import Node from '../../store/Node';
 import Wallet from '../../store/Wallet';
 
@@ -11,6 +12,11 @@ export async function getWalletFromKeystore(keyFile, password) {
   const wallet = new Keystore(keyFile, password);
   return wallet;
 }
+
+export async function createUser(name) {
+  User.insert({ data: { name } });
+}
+
 
 export async function createNode(node, userId) {
   Node.insert({

@@ -41,14 +41,14 @@
         class="bg-negative text-primary"
       >
         <q-btn
-          v-close-popup
           flat
           label="CANCEL"
+          @click="$emit('authFail')"
         />
         <q-btn
           flat
           label="OK"
-          @click="password ? getWallet : null"
+          @click="getWallet"
         />
       </q-card-actions>
     </q-card>

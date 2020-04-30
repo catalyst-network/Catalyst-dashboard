@@ -29,6 +29,7 @@
       <div class="col-12">
         <q-input
           v-model="remote.nodeName"
+          autofocus
           dark
           dense
           filled
@@ -93,6 +94,7 @@
     >
       <div class="col-12">
         <q-file
+          ref="filePicker"
           v-model="remote.keystore"
           dark
           dense
@@ -117,10 +119,13 @@
       style="width: 100%"
     >
       <q-btn
+        ref="confirmButton"
+        tab-index="0"
         unelevated
         color="secondary"
         label="OK✓"
         @click="auth=true"
+        @keydown.enter.prevent="auth=true"
       />
       <div class="q-pl-sm key-text flex flex-center">
         Press Enter ↵
@@ -130,7 +135,7 @@
       :display="auth"
       :keystore="remote.key"
       @authSuccess="authSuccess"
-      @authFail="authFail"
+      @authFail="authCancel"
     />
   </div>
 </template>
@@ -148,17 +153,6 @@ export default {
         port: null,
         keystore: null,
         key: {},
-      //   keystore: {
-      //     Name: 'self',
-      //     Id: '12D3KooWH242bviubcv3HCmZGCF2PNuJfVRL4vrMs1FKKBaHhETG',
-      //     Pem: ` -----BEGIN ENCRYPTED PRIVATE KEY-----
-      // MIHDMF8GCSqGSIb3DQEFDTBSMDEGCSqGSIb3DQEFDDAkBBChnsxjyrP9HINy9/h8
-      // gpOUAgInEDAMBggqhkiG9w0CCwUAMB0GCWCGSAFlAwQBKgQQfTMISwFnpba5AwI6
-      // NEbGdARg3/4/yHuJhLr3YATj/2k4q/U73he+JboNfy0GkDa95U16sTobep/mN9Oa
-      // ewjTvZS6B6f+BBjq02ZdqvNZ7z9tLrDHHzf6/wm1BOFautq5M0qUyBH6AO+FQO6c
-      // ujyPf5/T
-      // -----END ENCRYPTED PRIVATE KEY-----`,
-      //   },
       },
       auth: false,
     };
@@ -166,31 +160,10 @@ export default {
   computed: {
     showConfirm() {
       return Object.values(this.remote).filter((key) => {
-        console.log(key);
         if (!key) return true;
         return false;
       }).length === 0;
     },
-  },
-
-  async mounted() {
-    // const keyFile = {
-    //   Name: 'self',
-    //   Id: '12D3KooWH242bviubcv3HCmZGCF2PNuJfVRL4vrMs1FKKBaHhETG',
-    //   Pem: ` -----BEGIN ENCRYPTED PRIVATE KEY-----
-    //   MIHDMF8GCSqGSIb3DQEFDTBSMDEGCSqGSIb3DQEFDDAkBBChnsxjyrP9HINy9/h8
-    //   gpOUAgInEDAMBggqhkiG9w0CCwUAMB0GCWCGSAFlAwQBKgQQfTMISwFnpba5AwI6
-    //   NEbGdARg3/4/yHuJhLr3YATj/2k4q/U73he+JboNfy0GkDa95U16sTobep/mN9Oa
-    //   ewjTvZS6B6f+BBjq02ZdqvNZ7z9tLrDHHzf6/wm1BOFautq5M0qUyBH6AO+FQO6c
-    //   ujyPf5/T
-    //   -----END ENCRYPTED PRIVATE KEY-----`,
-    // };
-    // console.log(JSON.stringify(keyFile));
-
-    // const Keystore = await loadKeystoreLib();
-    // console.log(Keystore);
-    // const keystore = new Keystore(keyFile, 'test');
-    // console.log(keystore);
   },
 
   methods: {
@@ -198,17 +171,22 @@ export default {
       if (this.remote.keystore) {
         const keyJSON = await this.remote.keystore.text();
         this.remote.key = await JSON.parse(keyJSON);
-        this.auth = true;
+        this.$refs.filePicker.blur();
+        if (this.showConfirm) this.authenticate();
       }
+    },
+
+    async authenticate() {
+      this.auth = true;
     },
 
     authSuccess(wallet) {
       this.auth = false;
-      console.log(wallet);
+      this.$emit('nodeAdded', wallet);
     },
 
-    authFail() {
-      this.$emit('nodeType', 'remote');
+    authCancel() {
+      this.auth = false;
     },
   },
 };

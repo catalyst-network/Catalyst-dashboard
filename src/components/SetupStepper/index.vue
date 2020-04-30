@@ -60,10 +60,9 @@
       </q-carousel-slide>
       <q-carousel-slide
         name="remoteNode"
-        e
         class="column no-wrap flex-center"
       >
-        <RemoteNode @nodeAdded="selectNodeType" />
+        <RemoteNode @nodeAdded="nodeSuccess" />
       </q-carousel-slide>
       <q-carousel-slide
         name="nodeName"
@@ -108,20 +107,27 @@
           </div>
         </div>
       </q-carousel-slide>
+      <q-carousel-slide
+        name="success"
+        class="column no-wrap flex-center"
+      >
+        <Complete @goToDashboard="goToDashboard" />
+      </q-carousel-slide>
     </q-carousel>
   </div>
 </template>
 <script>
 import NodeType from './NodeType';
 import RemoteNode from './RemoteNode';
+import Complete from './Complete';
 
 
 export default {
   name: 'SetupStepper',
-  components: { NodeType, RemoteNode },
+  components: { NodeType, RemoteNode, Complete },
   data() {
     return {
-      slide: 'node',
+      slide: 'name',
       name: null,
       nodeName: null,
     };
@@ -131,6 +137,16 @@ export default {
     selectNodeType(value) {
       if (value === 'local') this.slide = 'nodeName';
       else this.slide = 'remoteNode';
+    },
+
+    nodeSuccess(wallet) {
+      // TODO create user, node and wallet
+      console.log(wallet);
+      this.slide = 'success';
+    },
+
+    goToDashboard() {
+      console.log('called');
     },
   },
 };
