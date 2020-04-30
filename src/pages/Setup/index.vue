@@ -4,7 +4,6 @@
       v-if="!loading"
       class="column text-center justify-center"
     >
-      Dashboard Setup
       <SetupStepper />
     </div>
     <q-inner-loading

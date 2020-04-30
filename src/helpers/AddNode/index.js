@@ -14,12 +14,13 @@ export async function getWalletFromKeystore(keyFile, password) {
 }
 
 export async function createUser(name) {
-  User.insert({ data: { name } });
+  const user = await User.insert({ data: { name } });
+  return user.users[0].id;
 }
 
 
 export async function createNode(node, userId) {
-  Node.insert({
+  const newNode = await Node.insert({
     data: {
       peerId: node.keystore.Id,
       name: node.name,
@@ -28,11 +29,11 @@ export async function createNode(node, userId) {
       port: node.port,
     },
   });
+  return newNode;
 }
 
-export async function createWallet(keyFile, password, nodeId, userId) {
-  const wallet = await getWalletFromKeystore(keyFile, password);
-  Wallet.insert({
+export async function createWallet(wallet, nodeId, userId) {
+  const newWallet = await Wallet.insert({
     data: {
       address: wallet.getAddressString(),
       nodeId,
@@ -40,4 +41,5 @@ export async function createWallet(keyFile, password, nodeId, userId) {
       secret: wallet.getPrivateKeyString(),
     },
   });
+  return newWallet;
 }

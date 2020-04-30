@@ -1,14 +1,14 @@
 
 const routes = [
-  // {
-  //   path: '/',
-  //   component: () => import('layouts/Dashboard.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Main') },
-  //   ],
-  // },
   {
     path: '/',
+    component: () => import('layouts/Dashboard.vue'),
+    children: [
+      { path: '', component: () => import('pages/Main') },
+    ],
+  },
+  {
+    path: '/setup',
     component: () => import('layouts/NoSidebar.vue'),
     children: [
       { path: '', component: () => import('pages/Setup') },

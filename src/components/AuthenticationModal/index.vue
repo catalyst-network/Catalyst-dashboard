@@ -29,6 +29,7 @@
           :error="error"
           :loading="loading"
           bg-color="white"
+          color="black"
           type="password"
           placeholder="Password"
           :error-message="errorMessage"

@@ -228,4 +228,10 @@ export default {
 .q-field__marginal {
   color: white;
 }
+.sidebar-nav .q-field__native {
+    width: 100%;
+    min-width: 0;
+    outline: 0 !important;
+    color: white
+}
 </style>

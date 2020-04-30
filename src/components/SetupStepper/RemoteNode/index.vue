@@ -182,7 +182,7 @@ export default {
 
     authSuccess(wallet) {
       this.auth = false;
-      this.$emit('nodeAdded', wallet);
+      this.$emit('nodeAdded', wallet, this.remote);
     },
 
     authCancel() {

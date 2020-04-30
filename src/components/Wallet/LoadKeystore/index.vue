@@ -119,12 +119,6 @@ export default {
 </script>
 <style lang="scss">
 
-.q-field__native {
-    width: 100%;
-    min-width: 0;
-    outline: 0 !important;
-    color: white
-}
 
 .q-file .q-chip {
   background: none;

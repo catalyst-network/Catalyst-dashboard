@@ -120,6 +120,9 @@
 import NodeType from './NodeType';
 import RemoteNode from './RemoteNode';
 import Complete from './Complete';
+import {
+  createUser, createNode, createWallet,
+} from '../../helpers/AddNode';
 
 
 export default {
@@ -139,14 +142,16 @@ export default {
       else this.slide = 'remoteNode';
     },
 
-    nodeSuccess(wallet) {
-      // TODO create user, node and wallet
-      console.log(wallet);
+    async nodeSuccess(wallet, node) {
+      const user = await createUser(this.name);
+      await createNode(node, user);
+      await createWallet(wallet, node.keystore.Id, user);
       this.slide = 'success';
     },
 
     goToDashboard() {
       console.log('called');
+      this.$router.push({ path: '/' });
     },
   },
 };
