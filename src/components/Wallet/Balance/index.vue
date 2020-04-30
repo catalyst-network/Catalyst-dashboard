@@ -4,7 +4,7 @@
       <q-avatar
         color="primary"
         text-color="secondary"
-        size="50px"
+        size="60px"
       >
         <img
           src="../../../assets/icon.png"
@@ -171,5 +171,6 @@ export default {
 <style>
 .balance {
   margin: 10px 0;
+  font-size: 18px;
 }
 </style>

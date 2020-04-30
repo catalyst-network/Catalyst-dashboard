@@ -15,7 +15,7 @@
         <span class="q-pl-sm">node account</span>
       </div>
       <div class="col text-right text-secondary text-weight-bold">
-        {{ wallet.balance }} KAT
+        {{ wallet.katBalance }} KAT
       </div>
     </div>
     <q-separator
@@ -48,7 +48,7 @@ export default {
 </script>
 <style lang="scss">
 .wallet-item {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
 
   .wallet-separator {

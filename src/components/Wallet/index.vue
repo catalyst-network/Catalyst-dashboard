@@ -10,7 +10,7 @@
           {{ $t('balance') }}
         </div>
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="q-pt-none">
         <Balance v-if="wallet" />
         <LoadKeystore v-else />
       </q-card-section>
