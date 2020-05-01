@@ -7,12 +7,12 @@
     >
       <q-card-section>
         <div class="text-h6 default-font-bold text-warning">
-          {{ $t('balance') }}
+          {{ send ? $t('send') : $t('balance') }}
         </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
-        <Balance v-if="wallet" />
-        <LoadKeystore v-else />
+        <Send @sendTransaction="sendTransaction" />
+        <!-- <Balance v-if="wallet" /> -->
       </q-card-section>
     </q-card>
   </div>
@@ -21,14 +21,16 @@
 <script>
 import QRCode from 'qrcode';
 import Wallet from '../../store/Wallet';
-import LoadKeystore from './LoadKeystore';
-import Balance from './Balance';
+// import LoadKeystore from './LoadKeystore';
+// import Balance from './Balance';
+import Send from './Send';
 
 export default {
   name: 'Wallet',
   components: {
-    LoadKeystore,
-    Balance,
+    // LoadKeystore,
+    // Balance,
+    Send,
   },
   data() {
     return {
@@ -36,6 +38,7 @@ export default {
       qrCodeDataURL: null,
       copied: 'copy',
       walletDialog: false,
+      send: true,
     };
   },
   computed: {
@@ -70,6 +73,10 @@ export default {
       setTimeout(() => {
         this.copied = this.$t('copy');
       }, 2000);
+    },
+
+    async sendTransaction(tx) {
+      console.log(tx);
     },
   },
 };

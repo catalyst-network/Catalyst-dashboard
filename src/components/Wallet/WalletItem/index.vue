@@ -40,7 +40,7 @@ export default {
 
   computed: {
     identicon() {
-      const icon = blockies.create({ seed: 'wallet.address' });
+      const icon = blockies.create({ seed: this.wallet.address });
       return icon.toDataURL();
     },
   },
