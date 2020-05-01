@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Model } from '@vuex-orm/core';
 import ERPC from '@etclabscore/ethereum-json-rpc';
 import {

@@ -79,6 +79,7 @@
         icon="fas fa-check-circle"
         class="q-mb-none q-pb-none"
         content-class="q-mb-none q-pb-none"
+        @click="createTx"
       >
         <q-tooltip
           class="q-mt-none q-pt-none"
@@ -92,6 +93,9 @@
 </template>
 <script>
 import blockies from 'blockies-identicon';
+import Wallet from '../../../store/Wallet';
+// import { getNonce, createTx } from '../../../SendTx';
+
 
 export default {
 
@@ -105,15 +109,19 @@ export default {
   },
 
   computed: {
+    wallet() {
+      return Wallet.all()[0];
+    },
     identicon() {
-      const icon = blockies.create({ seed: 'wallet.address' });
+      const icon = blockies.create({ seed: this.wallet.address });
       return icon.toDataURL();
     },
   },
 
   methods: {
     async createTx() {
-      console.log('tx');
+      const tx = await this.wallet.createTx(this.receiver, this.amount);
+      console.log(tx);
     },
   },
 };
