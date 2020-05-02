@@ -77,7 +77,8 @@ module.exports = function (ctx) {
         'QSelect',
         'QCarousel',
         'QCarouselControl',
-        'QCarouselSlide'
+        'QCarouselSlide',
+        'QSpinnerDots'
       ],
 
       directives: [

@@ -15,7 +15,7 @@
         node account
       </div>
       <div class="col text-right text-secondary text-weight-bold">
-        0 KAT
+        {{ wallet.katBalance }} KAT
       </div>
     </div>
     <div
@@ -121,7 +121,7 @@ export default {
   methods: {
     async createTx() {
       const tx = await this.wallet.createTx(this.receiver, this.amount);
-      console.log(tx);
+      this.$emit('sendTransaction', tx);
     },
   },
 };

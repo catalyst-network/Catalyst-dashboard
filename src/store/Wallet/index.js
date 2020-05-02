@@ -36,6 +36,11 @@ export default class Wallet extends Model {
     return bytesFromBase32String(this.secret);
   }
 
+  get provider() {
+    const { node } = this;
+    return new Web3(`http://${node.ipAddress}:${node.port}/api/eth/request`);
+  }
+
   async getNonce() {
     const { node } = this;
     const web3 = new Web3(`http://${node.ipAddress}:${node.port}/api/eth/request`);
@@ -43,13 +48,13 @@ export default class Wallet extends Model {
   }
 
   async createTx(to, value) {
+    const { numberToHex, toWei, bytesToHex } = Web3.utils;
     const Tx = await loadTxLib();
-    const nonce = (await this.getNonce()).toString();
-    console.log(nonce);
+    const nonce = await this.getNonce();
     const txData = {
-      nonce: '0x0',
+      nonce: `0x${parseInt(nonce, 16)}`,
       to,
-      value,
+      value: numberToHex(toWei(value.toString(), 'ether')),
       gasLimit: '0x520C',
       gasPrice: '0x5',
       data: '0x0',
@@ -58,6 +63,11 @@ export default class Wallet extends Model {
     const transaction = new Tx(txData);
     await transaction.sign(this.privateKey);
 
-    return transaction.serialize();
+    return bytesToHex(transaction.serialize());
+  }
+
+  async sendTx(tx) {
+    const web3 = this.provider;
+    return web3.eth.sendSignedTransaction(tx);
   }
 }

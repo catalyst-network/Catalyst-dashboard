@@ -11,9 +11,19 @@
         </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
-        <Send @sendTransaction="sendTransaction" />
-        <!-- <Balance v-if="wallet" /> -->
+        <Send
+          v-if="send"
+          @sendTransaction="sendTransaction"
+        />
+        <Balance v-if="!send" />
       </q-card-section>
+      <q-inner-loading :showing="sending">
+        <q-spinner-dots
+          color="secondary"
+          size="4em"
+        />
+        sending transaction...
+      </q-inner-loading>
     </q-card>
   </div>
 </template>
@@ -22,14 +32,14 @@
 import QRCode from 'qrcode';
 import Wallet from '../../store/Wallet';
 // import LoadKeystore from './LoadKeystore';
-// import Balance from './Balance';
+import Balance from './Balance';
 import Send from './Send';
 
 export default {
   name: 'Wallet',
   components: {
     // LoadKeystore,
-    // Balance,
+    Balance,
     Send,
   },
   data() {
@@ -39,6 +49,7 @@ export default {
       copied: 'copy',
       walletDialog: false,
       send: true,
+      sending: false,
     };
   },
   computed: {
@@ -76,7 +87,12 @@ export default {
     },
 
     async sendTransaction(tx) {
+      this.sending = true;
       console.log(tx);
+      // set loading
+      const txHash = await this.wallet.sendTx(tx);
+      console.log(txHash);
+      this.sending = false;
     },
   },
 };
@@ -86,4 +102,9 @@ export default {
 .balance {
   margin: 10px 0;
 }
+</style>
+<style lang="stylus">
+.bg-info .q-inner-loading
+  background: $primary;
+
 </style>
