@@ -12,10 +12,11 @@
       </q-card-section>
       <q-card-section class="q-pt-none">
         <Send
-          v-if="send"
+          v-if="showSend"
           @sendTransaction="sendTransaction"
         />
-        <Balance v-if="!send" />
+        <Balance v-if="showBalance" />
+        <TxSuccess v-if="showSent" />
       </q-card-section>
       <q-inner-loading :showing="sending">
         <q-spinner-dots
@@ -34,6 +35,7 @@ import Wallet from '../../store/Wallet';
 // import LoadKeystore from './LoadKeystore';
 import Balance from './Balance';
 import Send from './Send';
+import TxSuccess from './TxSuccess';
 
 export default {
   name: 'Wallet',
@@ -41,6 +43,7 @@ export default {
     // LoadKeystore,
     Balance,
     Send,
+    TxSuccess,
   },
   data() {
     return {
@@ -50,11 +53,21 @@ export default {
       walletDialog: false,
       send: true,
       sending: false,
+      sent: true,
     };
   },
   computed: {
     wallet() {
       return Wallet.all()[0];
+    },
+    showBalance() {
+      return !this.send && !this.sent;
+    },
+    showSend() {
+      return this.send && !this.sent;
+    },
+    showSent() {
+      return this.sent;
     },
   },
 
