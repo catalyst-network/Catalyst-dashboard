@@ -12,7 +12,7 @@
       transaction sent
     </div>
     <div class="row q-mt-sm q-mx-md justify-center break text-secondary">
-      0x3fc3cce36387377a1dd4197973c6db651087e88db51b8c7d6c9be1b951990ab5
+      {{ tx }}
     </div>
     <div class="row q-mt-sm justify-center">
       <q-btn
@@ -28,6 +28,12 @@
 <script>
 export default {
   name: 'TxSuccess',
+  props: {
+    tx: {
+      required: true,
+      type: String,
+    },
+  },
 
   methods: {
     back() {

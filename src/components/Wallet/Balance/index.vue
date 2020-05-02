@@ -34,7 +34,12 @@
         </q-tooltip>
       </div> -->
       <div class="col-auto text-center">
-        <WalletItem :wallet="wallet" />
+        <div @click="walletSend">
+          <WalletItem
+            :wallet="wallet"
+          />
+        </div>
+
         <!-- <q-btn
           v-clipboard="wallet.address"
           icon="content_copy"
@@ -163,6 +168,10 @@ export default {
       setTimeout(() => {
         this.copied = this.$t('copy');
       }, 2000);
+    },
+
+    walletSend() {
+      this.$emit('showSend');
     },
   },
 };
