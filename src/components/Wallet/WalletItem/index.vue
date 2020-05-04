@@ -50,6 +50,7 @@ export default {
 .wallet-item {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
+  width: 100%;
 
   .wallet-separator {
     background: #eeeeee26;

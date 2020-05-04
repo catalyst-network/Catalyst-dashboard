@@ -16,82 +16,16 @@
         {{ wallet.katBalance }} KAT
       </h6>
     </div>
-    <div class="column justify-center">
-      <!-- <div class="col-auto text-center ">
-        {{ $t('address') }}:
-      </div> -->
-      <!-- <div
-        v-clipboard="wallet.address"
-        class="col-auto text-caption break text-center"
-        @click="displayCopy"
-      >
-        {{ wallet.address }}
-        <q-tooltip
-          anchor="top middle"
-          self="bottom middle"
-        >
-          {{ copied }}
-        </q-tooltip>
-      </div> -->
-      <div class="col-auto text-center">
-        <div @click="walletSend">
-          <WalletItem
-            :wallet="wallet"
-          />
-        </div>
-
-        <!-- <q-btn
-          v-clipboard="wallet.address"
-          icon="content_copy"
-          size="sm"
-          flat
-          round
-          dense
-          style="padding-top: 0"
-          @click="displayCopy"
-        >
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-          >
-            {{ copied }}
-          </q-tooltip>
-        </q-btn> -->
-
-        <!-- <q-btn
-          icon="fas fa-qrcode"
-          size="sm"
-          flat
-          round
-          dense
-          style="padding-top: 0"
-          @click="qrDialog=true"
-        >
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-          >
-            {{ $t('qrCode') }}
-          </q-tooltip>
-        </q-btn> -->
-        <!-- <q-btn
-          icon="fas fa-paper-plane"
-          size="sm"
-          flat
-          round
-          dense
-          style="padding-top: 0"
-          @click="qrDialog=true"
-        >
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-          >
-            {{ $t('send transaction') }}
-          </q-tooltip>
-        </q-btn> -->
-      </div>
+    <div
+      class="row justify-center"
+      style="width: 100%"
+      @click="walletSend"
+    >
+      <WalletItem
+        :wallet="wallet"
+      />
     </div>
+
     <q-dialog v-model="qrDialog">
       <q-card>
         <q-card-section class="row items-center">
