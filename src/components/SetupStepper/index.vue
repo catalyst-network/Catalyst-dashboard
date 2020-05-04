@@ -10,6 +10,43 @@
       class="text-secondary setup-stepper rounded-borders"
     >
       <q-carousel-slide
+        name="entry"
+        class="column no-wrap flex-center"
+      >
+        <!-- <q-icon
+          name="style"
+          size="56px"
+        /> -->
+        <div
+          class=" text-h3 text-weight-bold text-center text-negative"
+          style="width: 100%"
+        >
+          Catalyst Dashboard
+        </div>
+        <!-- <div class="text-h6 text-negative q-mt-md text-center">
+          Let's setup your node
+        </div> -->
+        <div
+          class="q-pt-lg column justify-center text-negative"
+          style="width: 100%"
+        >
+          <div class="row justify-center">
+            <q-btn
+              unelevated
+              color="secondary"
+              label="Get Started"
+              @click="slide='name'"
+              @keydown.enter.prevent="slide='name'"
+            />
+          </div>
+          <div class="row justify-center q-mt-md">
+            <div class="q-pl-sm key-text flex flex-center">
+              Press Enter ↵
+            </div>
+          </div>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide
         name="name"
         class="column no-wrap flex-center"
       >
@@ -140,7 +177,7 @@ export default {
   },
   data() {
     return {
-      slide: 'name',
+      slide: 'entry',
       name: null,
       nodeName: null,
       key: {},
@@ -157,7 +194,18 @@ export default {
     },
   },
 
+  created() {
+    window.addEventListener('keyup', this.keyListener);
+  },
+
+
   methods: {
+    keyListener(event) {
+      if (this.slide === 'entry') {
+        if (event.which === 13) this.slide = 'name';
+      }
+    },
+
     selectNodeType(value) {
       if (value === 'local') this.slide = 'nodeName';
       else this.slide = 'remoteNode';
