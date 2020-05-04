@@ -88,7 +88,7 @@
             color="primary"
             text-color="negative"
             input-style="min-width: 400px; font-size:24px;"
-            @keydown.enter.prevent=" nodeName ? addLocalNode : null"
+            @keydown.enter.prevent=" nodeName ? addLocalNode() : null"
           />
         </div>
         <div
@@ -110,7 +110,7 @@
           :display="auth"
           :keystore="keystore"
           @authSuccess="localSuccess"
-          @authFail="() => {}"
+          @authFail="() => auth = false"
         />
       </q-carousel-slide>
       <q-carousel-slide

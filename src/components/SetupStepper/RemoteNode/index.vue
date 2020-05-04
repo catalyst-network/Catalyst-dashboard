@@ -57,7 +57,7 @@
           dense
           filled
           color="negative"
-          label="host (eg 77.68.110.175)"
+          label="host (eg 77.68.110.195)"
           class="q-mr-sm"
         >
           <template v-slot:prepend>
@@ -75,6 +75,7 @@
           dark
           dense
           filled
+          color="negative"
           label="port (eg 5005)"
           lazy-rules
         >
@@ -89,7 +90,7 @@
       </div>
     </div>
     <div
-      class="row q-mt-md justify-between text-negative"
+      class="row q-mt-md q-mb-xl justify-between text-negative"
       style="width: 100%; font-size: 18px;"
     >
       <div class="col-12">
@@ -115,8 +116,8 @@
     </div>
     <div
       v-if="showConfirm"
-      class="q-mt-md row text-center text-negative justify-center"
-      style="width: 100%"
+      class="q-mt-md row text-center text-negative justify-center absolute"
+      style="width: 100%; bottom: 0px"
     >
       <q-btn
         ref="confirmButton"
@@ -124,8 +125,8 @@
         unelevated
         color="secondary"
         label="OK✓"
-        @click="auth=true"
-        @keydown.enter.prevent="auth=true"
+        @click="authenticate()"
+        @keydown.enter.prevent="authenticate()"
       />
       <div class="q-pl-sm key-text flex flex-center">
         Press Enter ↵
@@ -140,6 +141,7 @@
   </div>
 </template>
 <script>
+import ERPC from '@etclabscore/ethereum-json-rpc';
 import AuthenticationModal from '../../AuthenticationModal';
 
 export default {
@@ -167,17 +169,36 @@ export default {
   },
 
   methods: {
+    async checkConnection() {
+      const rpc = new ERPC({
+        transport: {
+          host: this.remote.host,
+          port: this.remote.port,
+          type: 'http',
+          path: '/api/eth/request',
+        },
+      });
+      try {
+        const id = await rpc.eth_chainId();
+        console.log(id);
+        if (id) return true;
+        return false;
+      } catch (e) {
+        return false;
+      }
+    },
+
     async readKeyfile() {
       if (this.remote.keystore) {
         const keyJSON = await this.remote.keystore.text();
         this.remote.key = await JSON.parse(keyJSON);
         this.$refs.filePicker.blur();
-        if (this.showConfirm) this.authenticate();
+        if (this.showConfirm) await this.authenticate();
       }
     },
 
     async authenticate() {
-      this.auth = true;
+      if (await this.checkConnection()) this.auth = true;
     },
 
     authSuccess(wallet) {
