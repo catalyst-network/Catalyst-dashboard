@@ -51,8 +51,8 @@
       <q-select
         v-model="model"
         filled
-        :options="options"
-        label="Network:"
+        :options="nodes"
+        label="Selected Node:"
         label-color="white"
         color="secondary"
         options-selected-class="secondary"
@@ -89,7 +89,7 @@
 import { colors } from 'quasar';
 import { mapState } from 'vuex';
 import { loadNode, isSyncing, loadCharts } from '../../helpers/LoadNode';
-
+import Node from '../../store/Node';
 
 export default {
   name: 'Sidebar',
@@ -153,7 +153,38 @@ export default {
   computed: {
     ...mapState({
       darkMode: state => state.Settings.darkMode,
+      selectedNode: (state => state.Settings.selectedNode),
     }),
+    nodes() {
+      const nodes = Node.all();
+      return nodes.map(({
+        name, ipAddress, peerId, publicKey,
+      }) => ({
+        label: name,
+        value: {
+          ipAddress,
+          publicKey,
+          peerId,
+        },
+        description: peerId,
+      }));
+    },
+
+    node() {
+      const {
+        name, ipAddress, peerId, publicKey,
+      } = Node.find(this.selectedNode);
+      return {
+        label: name,
+        value: {
+          ipAddress,
+          publicKey,
+          peerId,
+        },
+        description: peerId,
+      };
+    },
+
     setMode: {
       get() {
         return !this.darkMode;
@@ -172,6 +203,7 @@ export default {
   },
 
   mounted() {
+    this.model = this.node;
     if (this.darkMode) {
       this.setDarkMode();
     } else {
