@@ -77,7 +77,7 @@ export default {
       sending: false,
       sent: false,
       sentTx: '',
-      sentFail: true,
+      sentFail: false,
     };
   },
   computed: {
@@ -145,15 +145,16 @@ export default {
       console.log(tx);
       // set loading
       try {
-        const txHash = await this.wallet.sendTx(tx);
-        console.log(txHash);
-        this.sentTx = txHash.hash;
+        const receipt = await this.wallet.sendTx(tx);
+        console.log('receipt:', receipt);
+        this.sentTx = receipt.transactionHash;
         this.sent = true;
+        this.sending = false;
       } catch (e) {
-        console.log(e);
+        console.erro(e);
         this.sentFail = true;
+        this.sending = false;
       }
-      this.sending = false;
     },
   },
 };

@@ -85,7 +85,6 @@ export default {
     async getWallet() {
       this.loading = true;
 
-      console.log('called');
       try {
         const wallet = await getWalletFromKeystore(this.keystore, this.password);
         console.log(wallet);

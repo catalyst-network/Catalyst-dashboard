@@ -182,6 +182,7 @@ export default {
 
     authSuccess(wallet) {
       this.auth = false;
+      this.remote.ipAddress = this.remote.host;
       this.$emit('nodeAdded', wallet, this.remote);
     },
 

@@ -43,4 +43,9 @@ export default class User extends Model {
       },
     };
   }
+
+  static async createUser(name) {
+    const user = await User.insert({ data: { name } });
+    return user.users[0].id;
+  }
 }

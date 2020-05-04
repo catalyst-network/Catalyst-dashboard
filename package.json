@@ -27,6 +27,7 @@
     "chart.js": "^2.8.0",
     "ethereumjs-util": "^6.2.0",
     "identicon.js": "^2.3.3",
+    "os": "^0.1.1",
     "qrcode": "^1.4.1",
     "quasar": "^1.10.0",
     "v-clipboard": "^2.2.2",

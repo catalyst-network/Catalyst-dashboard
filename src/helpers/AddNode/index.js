@@ -1,6 +1,22 @@
+/* eslint-disable global-require */
 import User from '../../store/User';
 import Node from '../../store/Node';
 import Wallet from '../../store/Wallet';
+
+const fs = require('fs');
+const homedir = require('os').homedir();
+
+
+export function getLocalKeystore() {
+  try {
+    const keyPath = `${homedir}/.catalyst/dfs/keys/onswyzq`;
+    const data = fs.readFileSync(keyPath, 'utf8');
+    return data;
+  } catch (e) {
+    console.error(e);
+    return e;
+  }
+}
 
 export async function loadKeystoreLib() {
   const keystoreLib = import('@catalyst-net-js/keystore');

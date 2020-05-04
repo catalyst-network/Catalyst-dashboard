@@ -68,6 +68,23 @@ export default class Wallet extends Model {
 
   async sendTx(tx) {
     const web3 = this.provider;
-    return web3.eth.sendSignedTransaction(tx);
+    return new Promise((resolve, reject) => {
+      web3.eth.sendSignedTransaction(tx)
+        .on('transactionHash', hash => resolve(hash))
+        .on('error', console.error)
+        .catch(reject);
+    });
+  }
+
+  static async createWallet(wallet, nodeId, userId) {
+    const newWallet = await Wallet.insert({
+      data: {
+        address: wallet.getAddressString(),
+        nodeId,
+        userId,
+        secret: wallet.getPrivateKeyString(),
+      },
+    });
+    return newWallet;
   }
 }

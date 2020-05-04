@@ -22,8 +22,9 @@
       class="row q-mt-sm justify-between text-negative"
       style="width: 100%; font-size: 18px;"
     >
-      <div class="col-12">
+      <div class="col-12 send-input">
         <q-input
+          ref="amountInput"
           v-model="amount"
           autofocus
           dark
@@ -31,6 +32,8 @@
           filled
           color="negative"
           label="amount to send"
+          lazy-rules
+          :rules="[ val => val && val < wallet.katBalance || 'not enough balance']"
         >
           <template v-slot:prepend>
             <q-icon
@@ -46,14 +49,17 @@
       class="row q-mt-sm justify-between text-negative"
       style="width: 100%; font-size: 18px;"
     >
-      <div class="col-12">
+      <div class="col-12 send-input">
         <q-input
+          ref="receiverInput"
           v-model="receiver"
           dark
           dense
           filled
           color="negative"
           label="catalyst address to receive"
+          lazy-rules
+          :rules="[ val => val && val.length === 42 || 'invalid address']"
         >
           <template v-slot:prepend>
             <q-icon
@@ -120,9 +126,17 @@ export default {
 
   methods: {
     async createTx() {
-      const tx = await this.wallet.createTx(this.receiver, this.amount);
-      this.$emit('sendTransaction', tx);
+      if (this.$refs.amountInput.hasError) {
+        console.log('error');
+      }
+      // const tx = await this.wallet.createTx(this.receiver, this.amount);
+      // this.$emit('sendTransaction', tx);
     },
   },
 };
 </script>
+<style lang="scss">
+.send-input .q-field--error .q-field__bottom {
+  display: none;
+}
+</style>

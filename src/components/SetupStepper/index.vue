@@ -88,7 +88,7 @@
             color="primary"
             text-color="negative"
             input-style="min-width: 400px; font-size:24px;"
-            @keydown.enter.prevent=" nodeName ? slide='node' : null"
+            @keydown.enter.prevent=" nodeName ? addLocalNode : null"
           />
         </div>
         <div
@@ -100,12 +100,18 @@
             unelevated
             color="secondary"
             label="OK✓"
-            @click="slide='node'"
+            @click="addLocalNode"
           />
           <div class="q-pl-sm key-text flex flex-center">
             Press Enter ↵
           </div>
         </div>
+        <AuthenticationModal
+          :display="auth"
+          :keystore="keystore"
+          @authSuccess="localSuccess"
+          @authFail="() => {}"
+        />
       </q-carousel-slide>
       <q-carousel-slide
         name="success"
@@ -120,19 +126,25 @@
 import NodeType from './NodeType';
 import RemoteNode from './RemoteNode';
 import Complete from './Complete';
-import {
-  createUser, createNode, createWallet,
-} from '../../helpers/AddNode';
+import AuthenticationModal from '../AuthenticationModal';
 
+import User from '../../store/User';
+import Node from '../../store/Node';
+import Wallet from '../../store/Wallet';
 
 export default {
   name: 'SetupStepper',
-  components: { NodeType, RemoteNode, Complete },
+  components: {
+    NodeType, RemoteNode, Complete, AuthenticationModal,
+  },
   data() {
     return {
       slide: 'name',
       name: null,
       nodeName: null,
+      key: {},
+      keystore: {},
+      auth: false,
     };
   },
 
@@ -142,10 +154,32 @@ export default {
       else this.slide = 'remoteNode';
     },
 
+    async addLocalNode() {
+      this.keystore = Node.getLocalKeystore();
+      this.auth = true;
+    },
+
+    async localSuccess(wallet) {
+      console.log(wallet);
+      const { BindAddress } = (Node.getConfig()).CatalystNodeConfiguration.Peer;
+      const { PublicIpAddress } = (Node.getConfig()).CatalystNodeConfiguration.Peer;
+      const node = {
+        name: this.nodeName,
+        host: BindAddress,
+        ipAddress: PublicIpAddress,
+        port: 5005,
+        key: {
+          Id: this.keystore.Id,
+        },
+      };
+      await this.nodeSuccess(wallet, node);
+      this.auth = false;
+    },
+
     async nodeSuccess(wallet, node) {
-      const user = await createUser(this.name);
-      await createNode(node, user, wallet);
-      await createWallet(wallet, node.key.Id, user);
+      const user = await User.createUser(this.name);
+      await Node.createNode(node, user, wallet);
+      await Wallet.createWallet(wallet, node.key.Id, user);
       this.slide = 'success';
     },
 
