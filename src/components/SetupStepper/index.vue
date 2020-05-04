@@ -3,10 +3,11 @@
     <q-carousel
       v-model="slide"
       animated
+      :arrows="showBackButton"
       control-type="flat"
       control-color="secondary"
       padding
-      class="text-secondary rounded-borders"
+      class="text-secondary setup-stepper rounded-borders"
     >
       <q-carousel-slide
         name="name"
@@ -148,6 +149,14 @@ export default {
     };
   },
 
+  computed: {
+    showBackButton() {
+      if (this.slide === 'node') return true;
+      if (this.slide === 'remoteNode') return true;
+      return false;
+    },
+  },
+
   methods: {
     selectNodeType(value) {
       if (value === 'local') this.slide = 'nodeName';
@@ -222,5 +231,14 @@ export default {
   border: 4px solid;
   width: fit-content;
   padding: 15px;
+}
+.setup-stepper {
+  .q-carousel__prev-arrow--horizontal {
+    align-items: start;
+  }
+
+  .q-carousel__next-arrow--horizontal {
+    display: none;
+  }
 }
 </style>

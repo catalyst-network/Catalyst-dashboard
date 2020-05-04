@@ -178,14 +178,10 @@ export default {
           path: '/api/eth/request',
         },
       });
-      try {
-        const id = await rpc.eth_chainId();
-        console.log(id);
-        if (id) return true;
-        return false;
-      } catch (e) {
-        return false;
-      }
+      return new Promise((resolve, reject) => {
+        rpc.eth_chainId().then(resolve, reject);
+        setTimeout(reject, 1000);
+      });
     },
 
     async readKeyfile() {
@@ -198,7 +194,14 @@ export default {
     },
 
     async authenticate() {
-      if (await this.checkConnection()) this.auth = true;
+      try {
+        if (await this.checkConnection()) this.auth = true;
+      } catch (e) {
+        this.$q.notify({
+          message: `Can't connect to ${this.remote.host}`,
+          color: 'red',
+        });
+      }
     },
 
     authSuccess(wallet) {
