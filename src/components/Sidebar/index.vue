@@ -75,6 +75,15 @@
         </template>
       </q-select>
     </q-list>
+    <div class="row justify-center">
+      <q-btn
+        flat
+        no-caps
+        icon="fas fa-plus-circle"
+        label="add node"
+        @click="newNode"
+      />
+    </div>
     <div class="row justify-center dark-mode">
       <q-toggle
         v-model="setMode"
@@ -166,7 +175,7 @@ export default {
           publicKey,
           peerId,
         },
-        description: peerId,
+        description: ipAddress,
       }));
     },
 
@@ -226,6 +235,7 @@ export default {
       colors.setBrand('info', '#ffffff');
       colors.setBrand('warning', '#19445b');
     },
+
     async changeNode(node) {
       this.$store.dispatch('Settings/setLoading', true);
 
@@ -234,6 +244,10 @@ export default {
       await loadCharts();
 
       this.$store.dispatch('Settings/setLoading', false);
+    },
+
+    newNode() {
+      this.$router.push({ path: '/setup' });
     },
   },
 };

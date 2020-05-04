@@ -161,6 +161,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 import NodeType from './NodeType';
 import RemoteNode from './RemoteNode';
 import Complete from './Complete';
@@ -187,6 +188,12 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      selectedNode: (state => state.Settings.selectedNode),
+    }),
+    user() {
+      return User.all()[0] || null;
+    },
     showBackButton() {
       if (this.slide === 'node') return true;
       if (this.slide === 'remoteNode') return true;
@@ -197,7 +204,9 @@ export default {
   created() {
     window.addEventListener('keyup', this.keyListener);
   },
-
+  mounted() {
+    if (this.selectedNode) this.slide = 'node';
+  },
 
   methods: {
     keyListener(event) {
@@ -233,7 +242,12 @@ export default {
     },
 
     async nodeSuccess(wallet, node) {
-      const user = await User.createUser(this.name);
+      let user;
+      if (!this.user) {
+        user = await User.createUser(this.name);
+      } else {
+        user = this.user.id;
+      }
       await Node.createNode(node, user, wallet);
       await Wallet.createWallet(wallet, node.key.Id, user);
       this.$store.dispatch('Settings/setSelectedNode', node.key.Id);
