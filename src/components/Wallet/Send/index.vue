@@ -33,7 +33,7 @@
           color="negative"
           label="amount to send"
           lazy-rules
-          :rules="[ val => val && val < wallet.katBalance || 'not enough balance']"
+          :rules="[ val => val && val < wallet.katBalance]"
         >
           <template v-slot:prepend>
             <q-icon
@@ -59,7 +59,7 @@
           color="negative"
           label="catalyst address to receive"
           lazy-rules
-          :rules="[ val => val && val.length === 42 || 'invalid address']"
+          :rules="[ val => val && val.length === 42]"
         >
           <template v-slot:prepend>
             <q-icon
@@ -81,15 +81,16 @@
       <q-btn
         round
         unelevated
+        :disable="!amount || !receiver"
         color="primary"
         icon="fas fa-check-circle"
-        class="q-mb-none q-pb-none"
-        content-class="q-mb-none q-pb-none"
         @click="createTx"
       >
         <q-tooltip
-          class="q-mt-none q-pt-none"
-          content-class="bg-primary q-pt-none q-mt-none"
+          content-style="background: none;"
+          anchor="bottom middle"
+          self="top middle"
+          :offset="[0, 0]"
         >
           Send Transaction
         </q-tooltip>
@@ -127,7 +128,15 @@ export default {
   methods: {
     async createTx() {
       if (this.$refs.amountInput.hasError) {
-        console.log('error');
+        this.$q.notify({
+          message: 'not enough balance',
+          color: 'red',
+        });
+      } else if (this.$refs.receiverInput.hasError) {
+        this.$q.notify({
+          message: 'invalid receiver address',
+          color: 'red',
+        });
       }
       // const tx = await this.wallet.createTx(this.receiver, this.amount);
       // this.$emit('sendTransaction', tx);
@@ -136,7 +145,12 @@ export default {
 };
 </script>
 <style lang="scss">
-.send-input .q-field--error .q-field__bottom {
+.send-input {
+   .q-field--error .q-field__bottom {
   display: none;
+  }
+  .q-field--with-bottom {
+    padding-bottom: 0;
+}
 }
 </style>
