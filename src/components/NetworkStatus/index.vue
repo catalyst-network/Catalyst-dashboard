@@ -108,9 +108,10 @@ export default {
   computed: {
     ...mapState({
       network: (state => state.Network),
+      selectedNode: (state => state.Settings.selectedNode),
     }),
     deltas() {
-      const { syncing } = Node.all()[0];
+      const { syncing } = Node.find(this.selectedNode);
       if (syncing) return `${parseInt(syncing.currentBlock, 16)} / ${parseInt(syncing.highestBlock, 16)}`;
       return this.network.ledgerCycles;
     },

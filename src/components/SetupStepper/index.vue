@@ -217,7 +217,6 @@ export default {
     },
 
     async localSuccess(wallet) {
-      console.log(wallet);
       const { BindAddress } = (Node.getConfig()).CatalystNodeConfiguration.Peer;
       const { PublicIpAddress } = (Node.getConfig()).CatalystNodeConfiguration.Peer;
       const node = {
@@ -237,6 +236,7 @@ export default {
       const user = await User.createUser(this.name);
       await Node.createNode(node, user, wallet);
       await Wallet.createWallet(wallet, node.key.Id, user);
+      this.$store.dispatch('Settings/setSelectedNode', node.key.Id);
       this.slide = 'success';
     },
 

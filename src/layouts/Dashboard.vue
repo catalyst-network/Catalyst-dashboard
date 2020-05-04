@@ -24,7 +24,6 @@
 import { mapState } from 'vuex';
 // import ERPC from '@etclabscore/ethereum-json-rpc';
 import Node from '../store/Node';
-import User from '../store/User';
 import RefreshPeers from '../helpers/UpdatePeers';
 import { refreshMempool, updateBalance } from '../helpers/UpdateMempool';
 import Charts from '../store/Charts';
@@ -48,9 +47,10 @@ export default {
   computed: {
     ...mapState({
       network: (state => state.Network),
+      selectedNode: (state => state.Settings.selectedNode),
     }),
     node() {
-      return Node.all()[0] ? Node.all()[0] : null;
+      return this.selectedNode ? Node.find(this.selectedNode) : null;
     },
     rpc() {
       return this.node ? this.node.rpc : null;
@@ -58,13 +58,9 @@ export default {
   },
 
   async mounted() {
+    console.log(this.node);
     Window.$store = this.$store;
     this.$store.dispatch('Settings/setLoading', true);
-    User.insert({
-      data: {
-        darkMode: true,
-      },
-    });
     // await loadNode('ETHAY56IVYMEFUZEJDCK7HEK5Y7G2B5FRYXL5HMWKA74ORWI7RZQ', '77.68.110.194');
     const update = () => {
       isSyncing();

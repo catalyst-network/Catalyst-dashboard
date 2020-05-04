@@ -24,8 +24,6 @@ import Node from './store/Node';
 // import { refreshMempool, updateBalance } from './helpers/UpdateMempool';
 // import Charts from './store/Charts';
 // import { loadNode, isSyncing, loadCharts } from './helpers/LoadNode';
-import { getLocalKeystore } from './helpers/AddNode';
-
 
 export default {
   name: 'App',
@@ -40,9 +38,10 @@ export default {
   computed: {
     ...mapState({
       network: (state => state.Network),
+      selectedNode: (state => state.Settings.selectedNode),
     }),
     node() {
-      return Node.all()[0] ? Node.all()[0] : null;
+      return this.selectedNode ? Node.find(this.selectedNode) : null;
     },
     rpc() {
       return this.node ? this.node.rpc : null;
@@ -50,7 +49,6 @@ export default {
   },
 
   async mounted() {
-    console.log(getLocalKeystore());
     Window.$store = this.$store;
     this.$store.dispatch('Settings/setLoading', true);
     if (!this.node) {
