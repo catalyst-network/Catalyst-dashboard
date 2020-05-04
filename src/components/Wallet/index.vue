@@ -145,9 +145,10 @@ export default {
       console.log(tx);
       // set loading
       try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
         const receipt = await this.wallet.sendTx(tx);
         console.log('receipt:', receipt);
-        this.sentTx = receipt.transactionHash;
+        this.sentTx = receipt;
         this.sent = true;
         this.sending = false;
       } catch (e) {

@@ -101,8 +101,6 @@
 <script>
 import blockies from 'blockies-identicon';
 import Wallet from '../../../store/Wallet';
-// import { getNonce, createTx } from '../../../SendTx';
-
 
 export default {
 
@@ -138,8 +136,8 @@ export default {
           color: 'red',
         });
       }
-      // const tx = await this.wallet.createTx(this.receiver, this.amount);
-      // this.$emit('sendTransaction', tx);
+      const tx = await this.wallet.createTx(this.receiver, this.amount);
+      this.$emit('sendTransaction', tx);
     },
   },
 };
