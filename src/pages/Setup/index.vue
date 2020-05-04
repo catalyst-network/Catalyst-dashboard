@@ -2,9 +2,9 @@
   <div class="q-pa-md">
     <div
       v-if="!loading"
-      class="column justify-center q-gutter-y-md"
+      class="column text-center justify-center"
     >
-      Dashboard Setup
+      <SetupStepper />
     </div>
     <q-inner-loading
       dark
@@ -20,9 +20,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import SetupStepper from '../../components/SetupStepper';
 
 export default {
   name: 'Setup',
+  components: {
+    SetupStepper,
+  },
   computed: {
     ...mapState({
       loading: (state => state.Settings.loading),

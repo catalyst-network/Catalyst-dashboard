@@ -75,6 +75,10 @@ module.exports = function (ctx) {
         'QInnerLoading',
         'QSpinner',
         'QSelect',
+        'QCarousel',
+        'QCarouselControl',
+        'QCarouselSlide',
+        'QSpinnerDots'
       ],
 
       directives: [
@@ -111,10 +115,6 @@ module.exports = function (ctx) {
           },
         });
 
-        const wasmExtensionRegExp = /\.wasm$/;
-
-        cfg.resolve.extensions.push('.wasm');
-
         // cfg.module.rules.forEach(rule => {
         //   (rule.oneOf || []).forEach(oneOf => {
         //   if (oneOf.loader && oneOf.loader.indexOf('file-loader') >= 0) {
@@ -125,18 +125,13 @@ module.exports = function (ctx) {
         // });
 
         // add a dedicated loader for WASM
-        cfg.module.rules.push({
-        test: wasmExtensionRegExp,
-        type: 'javascript/auto',
-        // include: path.resolve(__dirname, './src/'),
-        use: [{ loader: require.resolve('wasm-loader'), options: {} }]
-      });
 
         // cfg.entry = "./bootstrap.js";
         // cfg.output = {
         //   path: path.resolve(__dirname, "dist"),
         //   filename: "bootstrap.js",
         // };
+        
 
         cfg.resolve.alias = {
           ...cfg.resolve.alias,

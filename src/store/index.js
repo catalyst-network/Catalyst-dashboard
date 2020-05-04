@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexORM from '@vuex-orm/core';
 // import VuexPersist from 'vuex-persist';
+import User from './User';
 import Node from './Node';
 import Peer from './Peer';
 import Network from './Network';
@@ -21,6 +22,7 @@ const database = new VuexORM.Database();
 //   storage: localStorage,
 // });
 
+database.register(User);
 database.register(Node);
 database.register(Peer);
 database.register(Wallet);

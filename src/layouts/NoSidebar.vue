@@ -1,10 +1,10 @@
 <template>
   <q-layout
     view="hHh LpR fFf"
-    class="bg-accent"
+    class="bg-primary"
   >
     <q-page-container
-      class="text-negative"
+      class="flex flex-center"
     >
       <router-view />
     </q-page-container>

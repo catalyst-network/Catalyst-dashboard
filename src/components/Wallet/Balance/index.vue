@@ -4,7 +4,7 @@
       <q-avatar
         color="primary"
         text-color="secondary"
-        size="75px"
+        size="60px"
       >
         <img
           src="../../../assets/icon.png"
@@ -16,76 +16,16 @@
         {{ wallet.katBalance }} KAT
       </h6>
     </div>
-    <div class="column justify-center">
-      <!-- <div class="col-auto text-center ">
-        {{ $t('address') }}:
-      </div> -->
-      <div
-        v-clipboard="wallet.address"
-        class="col-auto text-caption break text-center"
-        @click="displayCopy"
-      >
-        {{ wallet.address }}
-        <q-tooltip
-          anchor="top middle"
-          self="bottom middle"
-        >
-          {{ copied }}
-        </q-tooltip>
-      </div>
-      <div class="col-auto q-pt-sm text-center">
-        <!-- <q-btn
-          v-clipboard="wallet.address"
-          icon="content_copy"
-          size="sm"
-          flat
-          round
-          dense
-          style="padding-top: 0"
-          @click="displayCopy"
-        >
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-          >
-            {{ copied }}
-          </q-tooltip>
-        </q-btn> -->
-
-        <q-btn
-          icon="fas fa-qrcode"
-          size="sm"
-          flat
-          round
-          dense
-          style="padding-top: 0"
-          @click="qrDialog=true"
-        >
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-          >
-            {{ $t('qrCode') }}
-          </q-tooltip>
-        </q-btn>
-        <!-- <q-btn
-          icon="fas fa-paper-plane"
-          size="sm"
-          flat
-          round
-          dense
-          style="padding-top: 0"
-          @click="qrDialog=true"
-        >
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-          >
-            {{ $t('send transaction') }}
-          </q-tooltip>
-        </q-btn> -->
-      </div>
+    <div
+      class="row justify-center"
+      style="width: 100%"
+      @click="walletSend"
+    >
+      <WalletItem
+        :wallet="wallet"
+      />
     </div>
+
     <q-dialog v-model="qrDialog">
       <q-card>
         <q-card-section class="row items-center">
@@ -116,9 +56,11 @@
 <script>
 import QRCode from 'qrcode';
 import Wallet from '../../../store/Wallet';
+import WalletItem from '../WalletItem';
 
 export default {
   name: 'Balance',
+  components: { WalletItem },
 
   data() {
     return {
@@ -161,6 +103,10 @@ export default {
         this.copied = this.$t('copy');
       }, 2000);
     },
+
+    walletSend() {
+      this.$emit('showSend');
+    },
   },
 };
 </script>
@@ -168,5 +114,6 @@ export default {
 <style>
 .balance {
   margin: 10px 0;
+  font-size: 18px;
 }
 </style>

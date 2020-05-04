@@ -7,6 +7,13 @@ const routes = [
       { path: '', component: () => import('pages/Main') },
     ],
   },
+  {
+    path: '/setup',
+    component: () => import('layouts/NoSidebar.vue'),
+    children: [
+      { path: '', component: () => import('pages/Setup') },
+    ],
+  },
 ];
 
 // Always leave this as last one

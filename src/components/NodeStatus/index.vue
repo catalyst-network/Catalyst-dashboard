@@ -42,7 +42,7 @@
           </div>
           <div
             v-if="node"
-            class="col overflow text-right text-caption"
+            class="q-ml-sm col overflow text-right text-caption"
           >
             {{ node.peerId }}
           </div>
@@ -86,11 +86,12 @@ export default {
 
   computed: {
     node() {
+      console.log(Node.all()[0]);
       return Node.all()[0];
     },
     peer() {
       if (this.node) {
-        return Peer.find(this.node.peerId);
+        return Peer.query().where('ipAddress', this.node.ipAddres).get()[0];
       }
       return null;
     },
@@ -125,5 +126,11 @@ export default {
   width: 10px;
   border-radius: 50%;
   display: inline-block;
+}
+
+.overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
