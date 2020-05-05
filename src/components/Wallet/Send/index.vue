@@ -99,6 +99,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 import blockies from 'blockies-identicon';
 import Wallet from '../../../store/Wallet';
 
@@ -114,8 +115,11 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      selectedNode: (state => state.Settings.selectedNode),
+    }),
     wallet() {
-      return Wallet.all()[0];
+      return Wallet.query().where('nodeId', this.selectedNode).get()[0];
     },
     identicon() {
       const icon = blockies.create({ seed: this.wallet.address });

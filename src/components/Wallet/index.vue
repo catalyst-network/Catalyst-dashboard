@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import QRCode from 'qrcode';
 import Wallet from '../../store/Wallet';
 // import LoadKeystore from './LoadKeystore';
@@ -81,8 +82,11 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      selectedNode: (state => state.Settings.selectedNode),
+    }),
     wallet() {
-      return Wallet.all()[0];
+      return Wallet.query().where('nodeId', this.selectedNode).get()[0];
     },
     showBalance() {
       return !this.send && !this.sent && !this.sentFail;
@@ -152,7 +156,7 @@ export default {
         this.sent = true;
         this.sending = false;
       } catch (e) {
-        console.erro(e);
+        console.error(e);
         this.sentFail = true;
         this.sending = false;
       }

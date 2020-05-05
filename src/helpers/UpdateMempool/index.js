@@ -56,10 +56,11 @@ function storeMempool(txs) {
 }
 
 export async function updateBalance(rpc) {
-  const { address } = Wallet.all()[0];
-  const balance = await rpc.eth_getBalance(address);
+  const { selectedNode } = Window.$store.state.Settings;
+  const wallet = Wallet.query().where('nodeId', selectedNode).get()[0];
+  const balance = await rpc.eth_getBalance(wallet.address);
   Wallet.update({
-    where: address,
+    where: wallet.address,
     data: { balance: parseInt(balance, 16) },
   });
 }

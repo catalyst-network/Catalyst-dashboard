@@ -51,8 +51,8 @@
       <q-select
         v-model="model"
         filled
-        :options="options"
-        label="Network:"
+        :options="nodes"
+        label="Selected Node:"
         label-color="white"
         color="secondary"
         options-selected-class="secondary"
@@ -75,6 +75,15 @@
         </template>
       </q-select>
     </q-list>
+    <div class="row justify-center">
+      <q-btn
+        flat
+        no-caps
+        icon="fas fa-plus-circle"
+        label="add node"
+        @click="newNode"
+      />
+    </div>
     <div class="row justify-center dark-mode">
       <q-toggle
         v-model="setMode"
@@ -88,8 +97,8 @@
 <script>
 import { colors } from 'quasar';
 import { mapState } from 'vuex';
-import { loadNode, isSyncing, loadCharts } from '../../helpers/LoadNode';
-
+import { isSyncing, loadCharts } from '../../helpers/LoadNode';
+import Node from '../../store/Node';
 
 export default {
   name: 'Sidebar',
@@ -153,7 +162,38 @@ export default {
   computed: {
     ...mapState({
       darkMode: state => state.Settings.darkMode,
+      selectedNode: (state => state.Settings.selectedNode),
     }),
+    nodes() {
+      const nodes = Node.all();
+      return nodes.map(({
+        name, ipAddress, peerId, publicKey,
+      }) => ({
+        label: name,
+        value: {
+          ipAddress,
+          publicKey,
+          peerId,
+        },
+        description: ipAddress,
+      }));
+    },
+
+    node() {
+      const {
+        name, ipAddress, peerId, publicKey,
+      } = Node.find(this.selectedNode);
+      return {
+        label: name,
+        value: {
+          ipAddress,
+          publicKey,
+          peerId,
+        },
+        description: peerId,
+      };
+    },
+
     setMode: {
       get() {
         return !this.darkMode;
@@ -172,6 +212,7 @@ export default {
   },
 
   mounted() {
+    this.model = this.node;
     if (this.darkMode) {
       this.setDarkMode();
     } else {
@@ -194,14 +235,19 @@ export default {
       colors.setBrand('info', '#ffffff');
       colors.setBrand('warning', '#19445b');
     },
+
     async changeNode(node) {
       this.$store.dispatch('Settings/setLoading', true);
-
-      await loadNode(node.value.publicKey, node.value.ipAddress);
+      this.$store.dispatch('Settings/setSelectedNode', node.value.peerId);
+      // await loadNode(node.value.publicKey, node.value.ipAddress);
       await isSyncing();
       await loadCharts();
 
       this.$store.dispatch('Settings/setLoading', false);
+    },
+
+    newNode() {
+      this.$router.push({ path: '/setup' });
     },
   },
 };

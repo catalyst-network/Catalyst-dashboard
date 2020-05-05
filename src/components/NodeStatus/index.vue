@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Node from '../../store/Node';
 import Peer from '../../store/Peer';
 
@@ -85,9 +86,12 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      network: (state => state.Network),
+      selectedNode: (state => state.Settings.selectedNode),
+    }),
     node() {
-      console.log(Node.all()[0]);
-      return Node.all()[0];
+      return Node.find(this.selectedNode);
     },
     peer() {
       if (this.node) {

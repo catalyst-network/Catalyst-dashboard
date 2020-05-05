@@ -11,11 +11,14 @@ import { bytesToBase32 } from '../../boot/base32';
 // }
 
 async function getPeers() {
-  const peerApi = await axios.get(`http://${Node.all()[0].ipAddress}:5005/api/Peer/GetAllPeers`);
+  const { selectedNode } = Window.$store.state.Settings;
+
+  const node = Node.find(selectedNode);
+  const peerApi = await axios.get(`http://${node.ipAddress}:5005/api/Peer/GetAllPeers`);
   console.log(peerApi);
   const peers = peerApi.data.map(peer => ({
     peerId: bytesToBase32(peer.PeerId.PublicKey),
-    nodeId: Node.all()[0].peerId,
+    nodeId: node.peerId,
     address: peer.PeerId.IpAddress,
     created: peer.Created,
     blacklisted: peer.Blacklisted,
