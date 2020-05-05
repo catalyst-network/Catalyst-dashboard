@@ -156,7 +156,7 @@ export default {
         this.sent = true;
         this.sending = false;
       } catch (e) {
-        console.erro(e);
+        console.error(e);
         this.sentFail = true;
         this.sending = false;
       }

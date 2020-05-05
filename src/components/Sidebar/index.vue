@@ -97,7 +97,7 @@
 <script>
 import { colors } from 'quasar';
 import { mapState } from 'vuex';
-import { loadNode, isSyncing, loadCharts } from '../../helpers/LoadNode';
+import { isSyncing, loadCharts } from '../../helpers/LoadNode';
 import Node from '../../store/Node';
 
 export default {
@@ -238,8 +238,8 @@ export default {
 
     async changeNode(node) {
       this.$store.dispatch('Settings/setLoading', true);
-
-      await loadNode(node.value.publicKey, node.value.ipAddress);
+      this.$store.dispatch('Settings/setSelectedNode', node.value.peerId);
+      // await loadNode(node.value.publicKey, node.value.ipAddress);
       await isSyncing();
       await loadCharts();
 

@@ -30,6 +30,7 @@ export async function loadNode(key, pubKey, ip) {
 
 export async function isSyncing() {
   const node = Window.$store.state.Settings.selectedNode;
+  console.log(Node.find(node));
   const { peerId, rpc } = Node.find(node);
 
   const syncing = await rpc.eth_syncing();

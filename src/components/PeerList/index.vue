@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import PeerListItem from './PeerListItem';
 import Node from '../../store/Node';
 import Peer from '../../store/Peer';
@@ -59,8 +60,11 @@ export default {
     PeerListItem,
   },
   computed: {
+    ...mapState({
+      selectedNode: (state => state.Settings.selectedNode),
+    }),
     node() {
-      return Node.query().withAll().first();
+      return Node.query().where('peerId', this.selectedNode).withAll().first();
     },
     peers() {
       if (this.node) return this.node.peers;
