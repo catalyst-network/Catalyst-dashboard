@@ -28,7 +28,7 @@
     >
       <div class="col-12">
         <q-input
-          v-model="remote.nodeName"
+          v-model="remote.name"
           autofocus
           dark
           dense
@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       remote: {
-        nodeName: null,
+        name: null,
         host: null,
         port: null,
         keystore: null,
