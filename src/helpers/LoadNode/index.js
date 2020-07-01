@@ -4,28 +4,34 @@ import Charts from '../../store/Charts';
 import { publicKeyToAddress, getBlocks } from '../Common';
 
 
-export async function loadNode(key, ip) {
+export async function loadNode(key, pubKey, ip) {
+  const { selectedNode } = Window.$store.state.Settings;
+
   Node.create({
     data: {
       status: 'online',
       version: '0.12',
       peerId: key,
+      publicKey: pubKey,
       ipAddress: ip,
       reputation: 97,
     },
   });
-  const address = publicKeyToAddress(Node.all()[0].peerId);
+  const node = Node.find(selectedNode);
+  const address = publicKeyToAddress(node.publicKey);
 
   Wallet.create({
     data: {
       address,
-      nodeId: Node.all()[0].peerId,
+      nodeId: node.peerId,
     },
   });
 }
 
 export async function isSyncing() {
-  const { peerId, rpc } = Node.all()[0];
+  const node = Window.$store.state.Settings.selectedNode;
+  console.log(Node.find(node));
+  const { peerId, rpc } = Node.find(node);
 
   const syncing = await rpc.eth_syncing();
   Node.update({
@@ -37,11 +43,12 @@ export async function isSyncing() {
 }
 
 export async function loadCharts() {
-  const { peerId, syncing } = Node.all()[0];
+  const node = Window.$store.state.Settings.selectedNode;
+  const { peerId, syncing, rpc } = Node.find(node);
   const charts = Charts.all();
   if ((!charts || charts[0]?.nodeId !== peerId) && !syncing) {
     console.log('add charts');
-    const rpc = Node.all()[0] ? Node.all()[0].rpc : null;
+    // const rpc = Node.all()[0] ? Node.all()[0].rpc : null;
 
     const blockHeight = await rpc.eth_blockNumber();
     Window.$store.dispatch('Network/setLedgerCycles', parseInt(blockHeight, 16));

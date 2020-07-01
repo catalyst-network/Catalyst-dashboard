@@ -126,6 +126,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import QRCode from 'qrcode';
 import Wallet from '../../store/Wallet';
 import LoadKeystore from '../Wallet/LoadKeystore';
@@ -144,8 +145,11 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      selectedNode: (state => state.Settings.selectedNode),
+    }),
     wallet() {
-      return Wallet.all()[0];
+      return Wallet.query().where('nodeId', this.selectedNode).get()[0];
     },
   },
 

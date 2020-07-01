@@ -92,7 +92,6 @@ export default {
         this.loading = false;
       } catch (e) {
         console.log(e);
-        this.$emit('authFail');
         this.password = null;
         this.error = true;
         this.errorMessage = e.message;
